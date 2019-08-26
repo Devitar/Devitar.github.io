@@ -1,9 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 //components
-import Navbar from 'react-bootstrap/Navbar';
+import MainMenu from './components/mainMenu';
 
 class App extends React.Component{
     abortController = new AbortController();
@@ -11,7 +10,7 @@ class App extends React.Component{
     render(){
         return(
           <div className="App">
-            <Navbar />
+            <MainMenu />
           </div>
         )
     }
