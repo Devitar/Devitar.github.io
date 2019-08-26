@@ -3,11 +3,11 @@ import { Menu } from 'semantic-ui-react';
 import '../index.css';
 
 //components
-import ContactMe from './contactMe';
+//import ContactMe from './contactMe';
 
-const pageComponents: {[index: string]: any} = {
-    'Contact': ContactMe,
-};
+// const pageComponents: {[index: string]: any} = {
+//     'Contact': ContactMe,
+// };
 
 export default class MainMenu extends Component {
     state = { activeItem: 'Portfolio' }
@@ -18,7 +18,7 @@ export default class MainMenu extends Component {
 
     render() {
         const activeItem: string = this.state.activeItem;
-        const activeContent = pageComponents[activeItem];
+        // const activeContent = pageComponents[activeItem];
 
         return (
         <div>
@@ -46,13 +46,18 @@ export default class MainMenu extends Component {
             </Menu>
 
             <div className='subHeader'>
-                This site is a work in progess. Some things are not yet functional. Sorry!
+                <p>This site is a work in progess. Some things are not yet functional. Sorry!</p>
+            </div>
+            <div className='subHeader'>
+                <a href='https://github.com/Devitar'>My GitHub!</a>
             </div>
 
             <div className='pageContent'>
-                { 
-
-                }
+                <p className="portfolioLink">My Portfolio Projects</p>
+                <a href='https://devincurtis.me/E-commerce-Store/' className='portfolioLink'>E-Commerce Store (React)</a>
+                <a href='https://dcurtis-user-manager-postgres.herokuapp.com' className='portfolioLink'>User Manager (PostgreSQL)</a>
+                <a href='https://devincurtis.me/ToDoApp/' className='portfolioLink'>To Do App (jQuery + Bootstrap)</a>
+                <a href='https://angularfire-example-b425d.firebaseapp.com/' className='portfolioLink'>Company Manager (Angular)(WIP)</a>
             </div>
 
         </div>
