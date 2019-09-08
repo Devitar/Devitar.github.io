@@ -54,10 +54,11 @@ export default class MainMenu extends Component {
 
             <div className='pageContent'>
                 <p className="portfolioLink">My Portfolio Projects</p>
-                <a href='https://devincurtis.me/E-commerce-Store/' className='portfolioLink'>E-Commerce Store (React)</a>
-                <a href='https://dcurtis-user-manager-postgres.herokuapp.com' className='portfolioLink'>User Manager (PostgreSQL)</a>
-                <a href='https://devincurtis.me/ToDoApp/' className='portfolioLink'>To Do App (jQuery + Bootstrap)</a>
-                <a href='https://angularfire-example-b425d.firebaseapp.com/' className='portfolioLink'>Company Manager (Angular)(WIP)</a>
+                <a href='https://ionic-ng-golf-app.firebaseapp.com/home' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>Golf Scorecard App</b> (Ionic + Angular) (Best viewed on mobile devices)</a>
+                <a href='https://devincurtis.me/E-commerce-Store/' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>E-Commerce Store</b> (React)</a>
+                <a href='https://dcurtis-user-manager-postgres.herokuapp.com' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>User Manager</b> (PostgreSQL)</a>
+                <a href='https://devincurtis.me/ToDoApp/' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>To Do App</b> (jQuery + Bootstrap)</a>
+                {/* <a href='https://angularfire-example-b425d.firebaseapp.com/' target="_blank" className='portfolioLink'><b>Company Manager</b> (Angular)(WIP)</a> */}
             </div>
 
         </div>
