@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
-import '../index.css';
+import '../components/scss/mainMenu.scss';
 
-//components
-//import ContactMe from './contactMe';
+// Components
+import ResumeLinkCard from '../components/resumeLinkCard';
 
-// const pageComponents: {[index: string]: any} = {
-//     'Contact': ContactMe,
-// };
-
+// Other data
+{/* <a href='https://ionic-ng-golf-app.firebaseapp.com/home' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>Golf Scorecard App</b> (Ionic + Angular) (Best viewed on mobile devices)</a>
+<a href='https://devincurtis.me/E-commerce-Store/' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>E-Commerce Store</b> (React)</a>
+<a href='https://dcurtis-user-manager-postgres.herokuapp.com' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>User Manager</b> (PostgreSQL)</a>
+<a href='https://devincurtis.me/ToDoApp/' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>To Do App</b> (jQuery + Bootstrap)</a> */}
+const data = [
+    {
+        title: 'Golf Scorecard App', 
+        subtitle: '(Ionic + Angular, Best viewed on mobile devices.)' +
+        'Play, track and save your golf scores using data from Utah golf courses.',
+        url: 'https://ionic-ng-golf-app.firebaseapp.com/home',
+        image: '',
+    },
+    {
+        title: 'E-Commerce Store', 
+        subtitle: '(React)' +
+        'Front end of a faux e-commerce store, using real products through an API.',
+        url: 'https://ionic-ng-golf-app.firebaseapp.com/home',
+        image: '',
+    }
+]
 export default class MainMenu extends Component {
     state = { activeItem: 'Portfolio' }
 
@@ -21,7 +38,7 @@ export default class MainMenu extends Component {
         // const activeContent = pageComponents[activeItem];
 
         return (
-        <div>
+        <div className="appRoot">
 
             <div className='mainHeader'>
                 Devin Curtis
@@ -53,11 +70,21 @@ export default class MainMenu extends Component {
             </div>
 
             <div className='pageContent'>
+                {
+                    data.map((value, index) => {
+                        return(
+                            <ResumeLinkCard 
+                                key={index}
+                                title={value.title} 
+                                subtitle={value.subtitle} 
+                                url={value.url} 
+                                image={value.image} 
+                            />
+                        )
+                    })
+                }
                 <p className="portfolioLink">My Portfolio Projects</p>
-                <a href='https://ionic-ng-golf-app.firebaseapp.com/home' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>Golf Scorecard App</b> (Ionic + Angular) (Best viewed on mobile devices)</a>
-                <a href='https://devincurtis.me/E-commerce-Store/' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>E-Commerce Store</b> (React)</a>
-                <a href='https://dcurtis-user-manager-postgres.herokuapp.com' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>User Manager</b> (PostgreSQL)</a>
-                <a href='https://devincurtis.me/ToDoApp/' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>To Do App</b> (jQuery + Bootstrap)</a>
+
                 {/* <a href='https://angularfire-example-b425d.firebaseapp.com/' target="_blank" className='portfolioLink'><b>Company Manager</b> (Angular)(WIP)</a> */}
             </div>
 
