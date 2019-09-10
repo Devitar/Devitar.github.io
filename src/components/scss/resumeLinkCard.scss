@@ -65,6 +65,12 @@
     display: none;
 }
 
+@media (max-width: 500px) {
+    .mainCard {
+        max-width: 95vw;
+        margin-bottom: 3%;
+    }
+}
 
 .cardContent:hover {
     .contentText {
