@@ -4,20 +4,33 @@ import '../components/scss/resumeLinkCard.scss';
 interface CardProps {
     title: string,
     subtitle: string,
+    subtitle2: string,
     url: string,
     image: string,
 };
 
-const ResumeLinkCard = ({ title, subtitle, url, image }: CardProps) => (
-    <div className="mainCard">
+function navigateToUrl(url: string) {
+    window.open(url,'');
+}
+
+const ResumeLinkCard = ({ title, subtitle, subtitle2, url, image }: CardProps) => (
+    <div 
+    className="mainCard"
+    onClick={() => navigateToUrl(url)}
+    >
         <div className="cardTitle">
-            {title}
+            {title} 
         </div>
         <div className="cardContent">
+            <div className="overlay"></div>
             <div className="contentText">
                 {subtitle}
+                <br />
+                {subtitle2}
             </div>
-            <img className="cardImage" src={url} alt="Portfolio Site Screenshot" />
+            <div className="imageContainer">
+                <img className="cardImage" src={image} alt="Portfolio Site Screenshot" />
+            </div>
         </div>
     </div>
 ) 

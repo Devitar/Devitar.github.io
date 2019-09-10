@@ -6,25 +6,39 @@ import '../components/scss/mainMenu.scss';
 import ResumeLinkCard from '../components/resumeLinkCard';
 
 // Other data
-{/* <a href='https://ionic-ng-golf-app.firebaseapp.com/home' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>Golf Scorecard App</b> (Ionic + Angular) (Best viewed on mobile devices)</a>
+/* <a href='https://ionic-ng-golf-app.firebaseapp.com/home' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>Golf Scorecard App</b> (Ionic + Angular) (Best viewed on mobile devices)</a>
 <a href='https://devincurtis.me/E-commerce-Store/' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>E-Commerce Store</b> (React)</a>
 <a href='https://dcurtis-user-manager-postgres.herokuapp.com' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>User Manager</b> (PostgreSQL)</a>
-<a href='https://devincurtis.me/ToDoApp/' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>To Do App</b> (jQuery + Bootstrap)</a> */}
+<a href='https://devincurtis.me/ToDoApp/' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>To Do App</b> (jQuery + Bootstrap)</a> */
 const data = [
     {
         title: 'Golf Scorecard App', 
-        subtitle: '(Ionic + Angular, Best viewed on mobile devices.)' +
-        'Play, track and save your golf scores using data from Utah golf courses.',
+        subtitle: '(Ionic + Angular, Best viewed on mobile devices.)',
+        subtitle2: 'Play, track and save your golf scores using data from Utah golf courses.',
         url: 'https://ionic-ng-golf-app.firebaseapp.com/home',
-        image: '',
+        image: require('../assets/images/golf-scorecard.png'),
     },
     {
         title: 'E-Commerce Store', 
-        subtitle: '(React)' +
-        'Front end of a faux e-commerce store, using real products through an API.',
-        url: 'https://ionic-ng-golf-app.firebaseapp.com/home',
-        image: '',
-    }
+        subtitle: '(React)',
+        subtitle2: 'Front end of a faux e-commerce store, using real products through an API.',
+        url: 'https://devincurtis.me/E-commerce-Store/',
+        image: require('../assets/images/e-commerce-store.png'),
+    },
+    {
+        title: 'User Manager', 
+        subtitle: '(PostgreSQL)',
+        subtitle2: 'A simple user manager app that saves in real time with Postgres.',
+        url: 'https://dcurtis-user-manager-postgres.herokuapp.com',
+        image: require('../assets/images/user-manager.png'),
+    },
+    {
+        title: 'To Do App', 
+        subtitle: '(jQuery + Bootstrap)',
+        subtitle2: 'A simple, responsive To Do app. Allows you to create tasks and task lists. Mark tasks as important, done and add and remove them as you see fit!',
+        url: 'https://devincurtis.me/ToDoApp/',
+        image: require('../assets/images/to-do-list.png'),
+    },
 ]
 export default class MainMenu extends Component {
     state = { activeItem: 'Portfolio' }
@@ -38,7 +52,7 @@ export default class MainMenu extends Component {
         // const activeContent = pageComponents[activeItem];
 
         return (
-        <div className="appRoot">
+        <div className='appRoot'>
 
             <div className='mainHeader'>
                 Devin Curtis
@@ -68,26 +82,27 @@ export default class MainMenu extends Component {
             <div className='subHeader'>
                 <a href='https://github.com/Devitar'>My GitHub!</a>
             </div>
-
             <div className='pageContent'>
-                {
-                    data.map((value, index) => {
-                        return(
-                            <ResumeLinkCard 
-                                key={index}
-                                title={value.title} 
-                                subtitle={value.subtitle} 
-                                url={value.url} 
-                                image={value.image} 
-                            />
-                        )
-                    })
-                }
-                <p className="portfolioLink">My Portfolio Projects</p>
 
-                {/* <a href='https://angularfire-example-b425d.firebaseapp.com/' target="_blank" className='portfolioLink'><b>Company Manager</b> (Angular)(WIP)</a> */}
+                <div className='flex-grid'>
+                    {
+                        data.map((value, index) => {
+                            return(
+                                <div className='col' key={index}>
+                                    <ResumeLinkCard
+                                        title={value.title} 
+                                        subtitle={value.subtitle}
+                                        subtitle2={value.subtitle2}
+                                        url={value.url} 
+                                        image={value.image} 
+                                    />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+
             </div>
-
         </div>
         )
     }
