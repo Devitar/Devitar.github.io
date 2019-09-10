@@ -41,69 +41,149 @@ const data = [
     },
 ]
 export default class MainMenu extends Component {
-    state = { activeItem: 'Portfolio' }
+    state = { 
+        activeItem: '',
+        width: 0,
+    }
+
+    constructor(props: any){
+        super(props);
+        this.state = {
+            activeItem: 'Portfolio',
+            width: window.innerWidth,
+        };
+    }
 
     handleItemClick = (e: any, { name }: any) => {
         this.setState({ activeItem: name }) 
     }
 
+    handleWindowSizeChange = () => {
+        this.setState({ width: window.innerWidth });
+    };
+
+    componentWillMount() {
+        window.addEventListener('resize', this.handleWindowSizeChange);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleWindowSizeChange);
+    }
+
     render() {
         const activeItem: string = this.state.activeItem;
-        // const activeContent = pageComponents[activeItem];
+        const { width } = this.state;
+        const isMobile = width <= 500;
 
-        return (
-        <div className='appRoot'>
+        if (isMobile) {
+            return(
+                <div className='appRoot'>
 
-            <div className='mainHeader'>
-                Devin Curtis
-            </div>
-
-            <Menu pointing secondary>
-            <Menu.Item
-                name='Portfolio'
-                active={activeItem === 'Portfolio'}
-                onClick={this.handleItemClick}
-            />
-            <Menu.Item
-                name='Resume'
-                active={activeItem === 'Resume'}
-                onClick={this.handleItemClick}
-            />
-            <Menu.Item
-                name='Contact'
-                active={activeItem === 'Contact'}
-                onClick={this.handleItemClick}
-            />
-            </Menu>
-
-            <div className='subHeader'>
-                <p>This site is a work in progess. Some things are not yet functional. Sorry!</p>
-            </div>
-            <div className='subHeader'>
-                <a href='https://github.com/Devitar'>My GitHub!</a>
-            </div>
-            <div className='pageContent'>
-
-                <div className='flex-grid'>
-                    {
-                        data.map((value, index) => {
-                            return(
-                                <div className='col' key={index}>
-                                    <ResumeLinkCard
-                                        title={value.title} 
-                                        subtitle={value.subtitle}
-                                        subtitle2={value.subtitle2}
-                                        url={value.url} 
-                                        image={value.image} 
-                                    />
-                                </div>
-                            )
-                        })
-                    }
+                <div className='mainHeader'>
+                    Devin Curtis
                 </div>
-
+    
+                <Menu pointing secondary>
+                <Menu.Item
+                    name='Portfolio'
+                    active={activeItem === 'Portfolio'}
+                    onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                    name='Resume'
+                    active={activeItem === 'Resume'}
+                    onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                    name='Contact'
+                    active={activeItem === 'Contact'}
+                    onClick={this.handleItemClick}
+                />
+                </Menu>
+    
+                <div className='subHeader'>
+                    <p>This site is a work in progess. Some things are not yet functional. Sorry!</p>
+                </div>
+                <div className='subHeader'>
+                    <a href='https://github.com/Devitar'>My GitHub!</a>
+                </div>
+                <div className='pageContent'>
+                    <div className='flex-grid-mobile'>
+                        {
+                            data.map((value, index) => {
+                                return(
+                                    <div className='col' key={index}>
+                                        <ResumeLinkCard
+                                            title={value.title} 
+                                            subtitle={value.subtitle}
+                                            subtitle2={value.subtitle2}
+                                            url={value.url} 
+                                            image={value.image} 
+                                        />
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+    
+                </div>
             </div>
-        </div>
-        )
+            )
+        } else {
+            return (
+                <div className='appRoot'>
+    
+                    <div className='mainHeader'>
+                        Devin Curtis
+                    </div>
+    
+                    <Menu pointing secondary>
+                    <Menu.Item
+                        name='Portfolio'
+                        active={activeItem === 'Portfolio'}
+                        onClick={this.handleItemClick}
+                    />
+                    <Menu.Item
+                        name='Resume'
+                        active={activeItem === 'Resume'}
+                        onClick={this.handleItemClick}
+                    />
+                    <Menu.Item
+                        name='Contact'
+                        active={activeItem === 'Contact'}
+                        onClick={this.handleItemClick}
+                    />
+                    </Menu>
+    
+                    <div className='subHeader'>
+                        <p>This site is a work in progess. Some things are not yet functional. Sorry!</p>
+                    </div>
+                    <div className='subHeader'>
+                        <a href='https://github.com/Devitar'>My GitHub!</a>
+                    </div>
+                    <div className='pageContent'>
+                        <div className='flex-grid'>
+                            {
+                                data.map((value, index) => {
+                                    return(
+                                        <div className='col' key={index}>
+                                            <ResumeLinkCard
+                                                title={value.title} 
+                                                subtitle={value.subtitle}
+                                                subtitle2={value.subtitle2}
+                                                url={value.url} 
+                                                image={value.image} 
+                                            />
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+    
+                    </div>
+                </div>
+            )
+
+        }
     }
 }
