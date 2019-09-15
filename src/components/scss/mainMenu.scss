@@ -30,6 +30,13 @@
 
 .flex-grid {
   display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .col {

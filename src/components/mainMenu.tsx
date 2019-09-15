@@ -26,6 +26,13 @@ const data = [
         image: require('../assets/images/e-commerce-store.png'),
     },
     {
+        title: 'Trivia App', 
+        subtitle: '(Angular)',
+        subtitle2: 'Play trivia by yourself or with friends, pick from several different categories and two different game modes!',
+        url: 'https://trivia-app-17b9d.firebaseapp.com/',
+        image: require('../assets/images/trivia-app.png'),
+    },
+    {
         title: 'User Manager', 
         subtitle: '(PostgreSQL)',
         subtitle2: 'A simple user manager app that saves in real time with Postgres.',
@@ -163,21 +170,48 @@ export default class MainMenu extends Component {
                     </div>
                     <div className='pageContent'>
                         <div className='flex-grid'>
-                            {
-                                data.map((value, index) => {
-                                    return(
-                                        <div className='col' key={index}>
-                                            <ResumeLinkCard
-                                                title={value.title} 
-                                                subtitle={value.subtitle}
-                                                subtitle2={value.subtitle2}
-                                                url={value.url} 
-                                                image={value.image} 
-                                            />
-                                        </div>
-                                    )
-                                })
-                            }
+                            <div className='row'>
+                                {
+                                    data.map((value, index) => {
+                                        console.log(index);
+                                        
+                                        if (index <= 3) {
+                                            return(
+                                                <div className='col' key={index}>
+                                                    <ResumeLinkCard
+                                                        title={value.title} 
+                                                        subtitle={value.subtitle}
+                                                        subtitle2={value.subtitle2}
+                                                        url={value.url} 
+                                                        image={value.image} 
+                                                    />
+                                                </div>
+                                            )
+                                        } else { return null; }
+                                    })
+                                }
+                            </div>
+                            <div className='row'>
+                                {
+                                    data.map((value, index) => {
+                                        console.log(index);
+                                        
+                                        if (index > 3) {
+                                            return(
+                                                <div className='col' key={index}>
+                                                    <ResumeLinkCard
+                                                        title={value.title} 
+                                                        subtitle={value.subtitle}
+                                                        subtitle2={value.subtitle2}
+                                                        url={value.url} 
+                                                        image={value.image} 
+                                                    />
+                                                </div>
+                                            )
+                                        } else { return null; }
+                                    })
+                                }
+                            </div>
                         </div>
     
                     </div>
