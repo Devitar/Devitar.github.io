@@ -28,31 +28,33 @@
   margin-top: 25px;
 }
 
-.flex-grid {
-  display: flex;
-  flex-direction: column;
-}
+// .flex-grid {
+//   display: flex;
+//   flex-direction: column;
+// }
 
-.row {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
+// .row {
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: flex-start;
+// }
 
-.col {
-  flex: 1;
-}
+// .col {
+//   flex: 1;
+// }
 
-.flex-grid-mobile {
-  display: flex;
-  flex-direction: column;
-  .col {
-    width: 90%;
-  }
-}
+// .flex-grid-mobile {
+//   display: flex;
+//   flex-direction: column;
+//   .col {
+//     width: 90%;
+//   }
+// }
 
 // @media (max-width: 400px) {
 //   .flex-grid {
 //     display: block;
 //   }
 // }
+
+@import '../../../node_modules/bulma/css/bulma.css';
