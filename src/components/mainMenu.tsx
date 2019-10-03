@@ -1,16 +1,13 @@
 import React, {Component} from 'react';
 import {Menu} from 'semantic-ui-react';
-import {Document, Page} from 'react-pdf';
 import '../components/scss/mainMenu.scss';
 
 // Components
 import ResumeLinkCard from '../components/resumeLinkCard';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-// Other data
-/* <a href='https://ionic-ng-golf-app.firebaseapp.com/home' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>Golf Scorecard App</b> (Ionic + Angular) (Best viewed on mobile devices)</a>
-<a href='https://devincurtis.me/E-commerce-Store/' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>E-Commerce Store</b> (React)</a>
-<a href='https://dcurtis-user-manager-postgres.herokuapp.com' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>User Manager</b> (PostgreSQL)</a>
-<a href='https://devincurtis.me/ToDoApp/' target="_blank" rel="noopener noreferrer" className='portfolioLink'><b>To Do App</b> (jQuery + Bootstrap)</a> */
 const data = [
     {
         title: "Golf Scorecard App",
@@ -47,8 +44,6 @@ const data = [
     }
 ];
 
-const resumePDF = require('../assets/pdf/Resume.pdf');
-
 export default class MainMenu extends Component {
     state = {
         activeItem: ""
@@ -64,18 +59,6 @@ export default class MainMenu extends Component {
     handleItemClick = (e : any, {name} : any) => {
         this.setState({activeItem: name});
     };
-
-    handleWindowSizeChange = () => {
-        this.setState({width: window.innerWidth});
-    };
-
-    componentWillMount() {
-        window.addEventListener("resize", this.handleWindowSizeChange);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.handleWindowSizeChange);
-    }
 
     render() {
         const activeItem : string = this.state.activeItem;
@@ -104,15 +87,10 @@ export default class MainMenu extends Component {
                     </div>
 
                     <div className="container">
-                        {/* <object
-                            data="./assets/pdf/Resume.pdf"
-                            type="application/pdf"
-                            width="100%"
-                            height="100%">
-                            This browser does not support PDF files.
-                        </object> */}
                         <Document
-                            file={resumePDF}
+                            file={require('../assets/pdf/Resume.pdf')}
+                            onLoadError={console.error}
+                            width={100}
                         >
                             <Page pageNumber={1} />
                             <Page pageNumber={2} />
