@@ -72,7 +72,7 @@ export default class MainMenu extends Component {
                         <Menu.Item name="Portfolio" active={false} onClick={this.handleItemClick}/>
                         <Menu.Item
                             name="Resume"
-                            active={activeItem === "Resume"}
+                            active={true}
                             onClick={this.handleItemClick}/>
                         <Menu.Item name="Contact" active={false} onClick={this.handleItemClick}/>
                     </Menu>
