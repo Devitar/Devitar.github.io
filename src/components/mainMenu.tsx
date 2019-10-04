@@ -44,15 +44,17 @@ const data = [
     }
 ];
 
+const resume = require('../assets/pdf/Resume.pdf');
+
 export default class MainMenu extends Component {
     state = {
-        activeItem: ""
+        activeItem: "",
     };
 
     constructor(props : any) {
         super(props);
         this.state = {
-            activeItem: "Portfolio"
+            activeItem: "Portfolio",
         };
     }
 
@@ -65,32 +67,45 @@ export default class MainMenu extends Component {
     };
 
     render() {
-        const activeItem : string = this.state.activeItem;
+        const {activeItem} = this.state;
+        let rwidth = Math.floor(window.innerWidth * 0.4);
+        if (rwidth < 400) {
+            rwidth = 400;
+        }
 
         if (activeItem === 'Resume') {
             return (
                 <div className="appRoot">
                     <div className="mainHeader">Devin Curtis</div>
+                    <div className="subHeader">
+                        <a className="githubLink" href="mailto:devin.curtis1210@gmail.com">
+                            devin.curtis1210@gmail.com
+                        </a>
+                        <button className="githubLink" onClick={() => this.ghlinkClick()}>
+                            My Github
+                        </button>
+                    </div>
 
                     <Menu pointing secondary>
                         <Menu.Item name="Portfolio" active={false} onClick={this.handleItemClick}/>
                         <Menu.Item name="Resume" active={true} onClick={this.handleItemClick}/> {/* <Menu.Item name="Contact" active={false} onClick={this.handleItemClick}/> */}
                     </Menu>
 
-                    <div className="subHeader">
-                        <button className="githubLink" onClick={() => this.ghlinkClick()}>
-                            My Github
-                        </button>
-                    </div>
-
                     <div className="container">
-                        <Document
-                            file={require('../assets/pdf/Resume.pdf')}
-                            onLoadError={console.error}
-                            width={100}>
-                            <Page pageNumber={1}/>
-                            <Page pageNumber={2}/>
-                        </Document>
+                        <div className="columns is-multiline">
+                            <div className="column is-one-half resumeContainer">
+                                <Document file={resume} onLoadError={console.error}>
+                                    <p>Page 1</p>
+                                    <Page pageNumber={1} width={rwidth}/>
+                                </Document>
+                            </div>
+                            <div className="column is-one-half resumeContainer">
+                                <Document file={resume} onLoadError={console.error}>
+                                    <p>Page 2</p>
+                                    <Page pageNumber={2} width={rwidth}/>
+                                </Document>
+                            </div>
+                        </div>
                     </div>
                 </div>
             );
@@ -98,6 +113,14 @@ export default class MainMenu extends Component {
             return (
                 <div className="appRoot">
                     <div className="mainHeader">Devin Curtis</div>
+                    <div className="subHeader">
+                        <a className="githubLink" href="mailto:devin.curtis1210@gmail.com">
+                            devin.curtis1210@gmail.com
+                        </a>
+                        <button className="githubLink" onClick={() => this.ghlinkClick()}>
+                            My Github
+                        </button>
+                    </div>
 
                     <Menu pointing secondary>
                         <Menu.Item
@@ -107,11 +130,6 @@ export default class MainMenu extends Component {
                         <Menu.Item name="Resume" active={false} onClick={this.handleItemClick}/> {/* <Menu.Item name="Contact" active={false} onClick={this.handleItemClick}/> */}
                     </Menu>
 
-                    <div className="subHeader">
-                        <button className="githubLink" onClick={() => this.ghlinkClick()}>
-                            My Github
-                        </button>
-                    </div>
                     <div className="container">
                         <div className="columns is-multiline">
                             {data.map((value, index) => {
