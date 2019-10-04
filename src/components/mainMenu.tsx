@@ -4,7 +4,7 @@ import '../components/scss/mainMenu.scss';
 
 // Components
 import ResumeLinkCard from '../components/resumeLinkCard';
-import { Document, Page, pdfjs } from 'react-pdf';
+import {Document, Page, pdfjs} from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -60,6 +60,10 @@ export default class MainMenu extends Component {
         this.setState({activeItem: name});
     };
 
+    ghlinkClick = () => {
+        window.open("https://github.com/Devitar", '');
+    };
+
     render() {
         const activeItem : string = this.state.activeItem;
 
@@ -70,30 +74,22 @@ export default class MainMenu extends Component {
 
                     <Menu pointing secondary>
                         <Menu.Item name="Portfolio" active={false} onClick={this.handleItemClick}/>
-                        <Menu.Item
-                            name="Resume"
-                            active={true}
-                            onClick={this.handleItemClick}/>
-                        <Menu.Item name="Contact" active={false} onClick={this.handleItemClick}/>
+                        <Menu.Item name="Resume" active={true} onClick={this.handleItemClick}/> {/* <Menu.Item name="Contact" active={false} onClick={this.handleItemClick}/> */}
                     </Menu>
 
                     <div className="subHeader">
-                        <p>
-                            This site is a work in progess. Some things are not yet functional. Sorry!
-                        </p>
-                    </div>
-                    <div className="subHeader">
-                        <a href="https://github.com/Devitar">My GitHub!</a>
+                        <button className="githubLink" onClick={() => this.ghlinkClick()}>
+                            My Github
+                        </button>
                     </div>
 
                     <div className="container">
                         <Document
                             file={require('../assets/pdf/Resume.pdf')}
                             onLoadError={console.error}
-                            width={100}
-                        >
-                            <Page pageNumber={1} />
-                            <Page pageNumber={2} />
+                            width={100}>
+                            <Page pageNumber={1}/>
+                            <Page pageNumber={2}/>
                         </Document>
                     </div>
                 </div>
@@ -108,17 +104,13 @@ export default class MainMenu extends Component {
                             name="Portfolio"
                             active={activeItem === "Portfolio"}
                             onClick={this.handleItemClick}/>
-                        <Menu.Item name="Resume" active={false} onClick={this.handleItemClick}/>
-                        <Menu.Item name="Contact" active={false} onClick={this.handleItemClick}/>
+                        <Menu.Item name="Resume" active={false} onClick={this.handleItemClick}/> {/* <Menu.Item name="Contact" active={false} onClick={this.handleItemClick}/> */}
                     </Menu>
 
                     <div className="subHeader">
-                        <p>
-                            This site is a work in progess. Some things are not yet functional. Sorry!
-                        </p>
-                    </div>
-                    <div className="subHeader">
-                        <a href="https://github.com/Devitar">My GitHub!</a>
+                        <button className="githubLink" onClick={() => this.ghlinkClick()}>
+                            My Github
+                        </button>
                     </div>
                     <div className="container">
                         <div className="columns is-multiline">
