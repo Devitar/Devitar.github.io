@@ -1,97 +1,98 @@
-@import '../../index.css';
+@import "../../index.css";
 
 .mainCard {
-    // width: 80%;
-    // height: 50%;
-    // min-height: 200px;
-    // border-radius: 15px;
-    // // -webkit-box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
-    // // -moz-box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
-    // // box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
-    // box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    // margin: 1%;
-    padding: 0;
-    height: 33vh;
-    max-width: 25vw;
-    border-radius: 15px;
-    // -webkit-box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
-    // -moz-box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
-    // box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    margin: 2%;
-    background-color: rgb(255,255,255);
+  // width: 80%;
+  // height: 50%;
+  // min-height: 200px;
+  // border-radius: 15px;
+  // // -webkit-box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
+  // // -moz-box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
+  // // box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
+  // box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  // margin: 1%;
+  padding: 0;
+  height: 33vh;
+  max-width: 25vw;
+  border-radius: 15px;
+  // -webkit-box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
+  // -moz-box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
+  // box-shadow: 7px 7px 8px -6px rgba(0,0,0,0.58);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  margin: 2%;
+  background-color: rgb(255, 255, 255);
 }
 
 .cardTitle {
-    width: 100%;
-    height: 6%;
-    text-align: center;
-    display: block;
-    font-family: 'Livvic';
+  width: 100%;
+  height: 6%;
+  text-align: center;
+  display: block;
+  font-family: "Livvic";
 }
 
 .cardContent {
-    // width: 100%;
-    // height: 94%;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    color: black;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    height: 100%;
-    max-width: 100%;
-    position: relative;
+  // width: 100%;
+  // height: 94%;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 100%;
+  max-width: 100%;
+  position: relative;
 }
 
 .imageContainer {
-    width: 100%;
-    min-height: 55%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
+  width: 100%;
+  min-height: 55%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
 }
 
 .cardImage {
-    max-height: 75%;
-    object-fit: scale-down;
+  height: 75%;
 }
 
 .contentText {
-    display: none;
+  display: none;
 }
 
 .overlay {
-    display: none;
+  display: none;
 }
 
 @media (max-width: 500px) {
-    .mainCard {
-        max-width: 95vw;
-        margin-bottom: 3%;
-    }
+  .mainCard {
+    max-width: 95vw;
+    margin-bottom: 3%;
+  }
 }
 
 .cardContent:hover {
-    .contentText {
-        display: block;
-        position: absolute;  
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        color: white;
-        font-family: 'Livvic';
-    }
-    .overlay {
-        background-color: rgba(0,0,0,0.5);
-        display: block;
-        position: absolute;  
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        height: 89%;
-        width: 100%;
-        border-radius: 0 0 15px 15px;
-    }
+  .contentText {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: "Livvic";
+  }
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 89%;
+    width: 100%;
+    border-radius: 0 0 15px 15px;
+  }
 }
