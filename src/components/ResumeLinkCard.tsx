@@ -36,10 +36,10 @@ const ResumeLinkCard = ({ title, subtitle, subtitle2, url, image }: Props) => (
 const MainCard = styled.div`
   padding: 0;
   height: 33vh;
-  max-width: 25vw;
+  width: 300px;
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  margin: 2%;
+  margin: 18px;
   background-color: rgb(255, 255, 255);
 
   @media (max-width: 500px) {
