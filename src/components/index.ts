@@ -1,4 +1,4 @@
-export { default as Header } from "./header";
-export { default as NavBar } from "./navBar";
-export { default as PDFDocument } from "./pdfDocument";
+export { default as Header } from "./Header";
+export { default as NavBar } from "./NavBar";
+export { default as PDFDocument } from "./PDFDocument";
 export { default as View } from "./View";

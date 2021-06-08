@@ -5,7 +5,7 @@ import * as Views from "../views";
 /** Controls displaying of views and navigation. */
 const NavBar = () => {
   const ViewType = Views as Record<string, () => ReactNode>;
-  const [currentRoute, setCurrentRoute] = useState<string>("HomePage");
+  const [currentRoute, setCurrentRoute] = useState<string>("Portfolio");
 
   const getRoutes = useCallback(() => {
     const viewNames = Object.keys(Views);

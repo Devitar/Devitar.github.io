@@ -8,7 +8,7 @@ type Props = {
   /** Text displayed on the header of the page. */
   headerText?: string;
   /** Padding applied to the X axis of the page. */
-  padding?: number;
+  paddingX?: number;
   /** Centers content in the body of the view. Default: true */
   center?: boolean;
   children?: ReactNode;
@@ -27,27 +27,29 @@ const View = ({ headerText, children, ...passThrough }: Props) => {
 /** Styles */
 
 const ViewStyle = styled.div`
-  height: 100vh;
+  height: auto;
   width: 100vw;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  background-color: rgb(245, 245, 245);
 `;
 
 type BodyStyleType = {
-  padding?: number;
+  paddingX?: number;
   center?: boolean;
 };
 const BodyStyle = styled.div<BodyStyleType>`
   width: 100%;
-  height: auto;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   align-items: ${({ center }) => {
     if (center === undefined) center = true;
     return center ? "center" : undefined;
   }};
-  padding: 12px ${({ padding }) => (padding ? `${padding}px` : "0px")} 0px
-    ${({ padding }) => (padding ? `${padding}px` : "0px")};
+  padding: 24px ${({ paddingX }) => (paddingX ? `${paddingX}px` : "0px")} 0px
+    ${({ paddingX }) => (paddingX ? `${paddingX}px` : "0px")};
 `;
 
 /** Exports */
