@@ -3,6 +3,10 @@ import styled from "styled-components";
 import { Divider } from ".";
 import * as Views from "../views";
 
+/** Constants */
+
+export const NAV_BAR_HEIGHT = 55;
+
 /** Controls displaying of views and navigation. */
 const NavBar = () => {
   const ViewType = Views as Record<string, () => ReactNode>;
@@ -66,7 +70,7 @@ const PageWrapper = styled.div`
 
 const NavBarStyle = styled.div`
   width: 100vw;
-  height: 55px;
+  height: ${() => `${NAV_BAR_HEIGHT}px`};
   font-size: 22px;
   background-color: #e4e4e4;
   display: flex;

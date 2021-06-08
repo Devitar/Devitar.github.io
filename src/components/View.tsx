@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 import { Header } from ".";
+import { HEADER_HEIGHT } from "./Header";
+import { NAV_BAR_HEIGHT } from "./NavBar";
 
 /** Types */
 
@@ -15,14 +17,21 @@ type Props = {
 };
 
 /** Base view component. */
-const View = ({ headerText, children, ...passThrough }: Props) => (
-  <ViewStyle>
-    {headerText && <Header text={headerText} />}
-    <BodyStyle minHeight={window.innerHeight - 110} {...passThrough}>
-      {children}
-    </BodyStyle>
-  </ViewStyle>
-);
+const View = ({ headerText, children, ...passThrough }: Props) => {
+  const windowHeight = window.innerHeight;
+  const heightCalc = headerText
+    ? windowHeight - (NAV_BAR_HEIGHT + HEADER_HEIGHT)
+    : windowHeight - NAV_BAR_HEIGHT;
+
+  return (
+    <ViewStyle>
+      {headerText && <Header text={headerText} />}
+      <BodyStyle minHeight={heightCalc} {...passThrough}>
+        {children}
+      </BodyStyle>
+    </ViewStyle>
+  );
+};
 
 /** Styles */
 

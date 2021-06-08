@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+/** Constants */
+
+export const HEADER_HEIGHT = 55;
+
 /** Types */
 
 type Props = {
@@ -13,7 +17,7 @@ const Header = ({ text }: Props) => <HeaderStyle>{text}</HeaderStyle>;
 
 const HeaderStyle = styled.div`
   width: 100%;
-  height: 55px;
+  height: ${() => `${HEADER_HEIGHT}px`};
   min-height: 55px;
   font-size: 22px;
   background-color: #e4e4e4;
