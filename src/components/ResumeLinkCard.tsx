@@ -13,13 +13,9 @@ type Props = {
   image: string;
 };
 
-function navigateToUrl(url: string) {
-  window.open(url, "");
-}
-
 /** Displays a project and project information in a compact card. */
 const ResumeLinkCard = ({ title, subtitle, subtitle2, url, image }: Props) => (
-  <MainCard onClick={() => navigateToUrl(url)}>
+  <MainCard onClick={() => window.open(url, "")}>
     <CardTitle>{title}</CardTitle>
     <CardContent>
       <Overlay />
