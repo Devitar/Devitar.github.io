@@ -1,6 +1,6 @@
 import { Fragment, ReactNode, useCallback, useState } from "react";
 import styled from "styled-components";
-import { Divider } from ".";
+import { Divider, Text } from ".";
 import * as Views from "../views";
 
 /** Constants */
@@ -37,7 +37,15 @@ const NavBar = () => {
               : undefined,
         }}
       >
-        {getRoutes()}
+        <NavBarItemContainer>{getRoutes()}</NavBarItemContainer>
+        <NavBarItemContainer style={{ flexDirection: "column" }}>
+          <Text align="right" fontSize={22}>
+            Devin Curtis
+          </Text>
+          <Text fontSize={24} link="email">
+            devin.curtis1210@gmail.com
+          </Text>
+        </NavBarItemContainer>
       </NavBarStyle>
       {ViewType[currentRoute]?.()}
     </PageWrapper>
@@ -75,30 +83,35 @@ const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
 const NavBarStyle = styled.div`
   width: 100vw;
   height: ${() => `${NAV_BAR_HEIGHT}px`};
-  font-size: 22px;
   background-color: #e4e4e4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+`;
+const NavBarItemContainer = styled.div`
+  height: ${() => `${NAV_BAR_HEIGHT}px`};
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 8px 0px 0px 18px;
-  z-index: 2;
+  padding: 8px 8px 8px 18px;
   box-sizing: border-box;
 `;
-
 const NavBarItemStyle = styled.div<{ isSelected: boolean }>`
   user-select: none;
   cursor: pointer;
   height: 100%;
+  font-size: 22px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   box-sizing: border-box;
   padding-bottom: 8px;
   margin-bottom: 8px;
+
   border-bottom: ${({ isSelected }) =>
     isSelected ? "1px solid black" : "none"};
 

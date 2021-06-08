@@ -21,17 +21,13 @@ const Divider = ({ color = "black", spacing = 12, vertical = false }: Props) =>
 
 /** Styles */
 
-type DividerProps = {
-  color: string;
-  spacing: number;
-};
-const HorizontalDivider = styled.div<DividerProps>`
+const HorizontalDivider = styled.div<Omit<Props, "vertical">>`
   width: 100%;
   height: 1px;
   background-color: ${({ color }) => color};
   margin: ${({ spacing }) => `${spacing}px 0px ${spacing}px 0px`};
 `;
-const VerticalDivider = styled.div<DividerProps>`
+const VerticalDivider = styled.div<Omit<Props, "vertical">>`
   width: 1px;
   height: 100%;
   background-color: ${({ color }) => color};

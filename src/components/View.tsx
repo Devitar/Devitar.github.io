@@ -19,6 +19,11 @@ type Props = {
   center?: boolean;
   children?: ReactNode;
 };
+type BodyStyleType = {
+  paddingX?: number;
+  center?: boolean;
+  minHeight: number;
+};
 
 /** Base view component. */
 const View = ({ headerText, children, ...passThrough }: Props) => {
@@ -47,12 +52,6 @@ const ViewStyle = styled.div`
   box-sizing: border-box;
   background-color: rgb(245, 245, 245);
 `;
-
-type BodyStyleType = {
-  paddingX?: number;
-  center?: boolean;
-  minHeight: number;
-};
 const BodyStyle = styled.div<BodyStyleType>`
   min-height: ${({ minHeight }) => `${minHeight}px`};
   height: auto;
