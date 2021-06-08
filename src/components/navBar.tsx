@@ -5,7 +5,7 @@ import * as Views from "../views";
 
 /** Constants */
 
-export const NAV_BAR_HEIGHT = 55;
+export const NAV_BAR_HEIGHT = window.innerWidth < 600 ? 90 : 55;
 
 /** Controls displaying of views and navigation. */
 const NavBar = () => {
@@ -22,7 +22,7 @@ const NavBar = () => {
           viewName={viewName}
           isSelected={currentRoute === viewName}
         />
-        <Divider vertical spacing={24} />
+        {index !== viewNames.length - 1 && <Divider vertical spacing={24} />}
       </Fragment>
     ));
   }, [currentRoute]);
@@ -38,14 +38,16 @@ const NavBar = () => {
         }}
       >
         <NavBarItemContainer>{getRoutes()}</NavBarItemContainer>
-        <NavBarItemContainer style={{ flexDirection: "column" }}>
-          <Text align="right" fontSize={22}>
-            Devin Curtis
-          </Text>
-          <Text fontSize={24} link="email">
-            devin.curtis1210@gmail.com
-          </Text>
-        </NavBarItemContainer>
+        {window.innerWidth > 600 && (
+          <NavBarItemContainer style={{ flexDirection: "column" }}>
+            <Text align="right" fontSize={22}>
+              Devin Curtis
+            </Text>
+            <Text fontSize={24} link="email">
+              devin.curtis1210@gmail.com
+            </Text>
+          </NavBarItemContainer>
+        )}
       </NavBarStyle>
       {ViewType[currentRoute]?.()}
     </PageWrapper>
@@ -111,6 +113,7 @@ const NavBarItemStyle = styled.div<{ isSelected: boolean }>`
   box-sizing: border-box;
   padding-bottom: 8px;
   margin-bottom: 8px;
+  text-align: center;
 
   border-bottom: ${({ isSelected }) =>
     isSelected ? "1px solid black" : "none"};

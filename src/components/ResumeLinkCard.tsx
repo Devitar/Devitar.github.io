@@ -1,0 +1,111 @@
+import styled from "styled-components";
+
+type Props = {
+  /** The title of the card, displayed at the top. */
+  title: string;
+  /** The first subtitle for the hover state of the card. */
+  subtitle: string;
+  /** The second subtitle for the hover state of the card. */
+  subtitle2: string;
+  /** The url to navigate to when the card is clicked on. */
+  url: string;
+  /** The image to display on the card. */
+  image: string;
+};
+
+function navigateToUrl(url: string) {
+  window.open(url, "");
+}
+
+/** Displays a project and project information in a compact card. */
+const ResumeLinkCard = ({ title, subtitle, subtitle2, url, image }: Props) => (
+  <MainCard onClick={() => navigateToUrl(url)}>
+    <CardTitle>{title}</CardTitle>
+    <CardContent>
+      <Overlay />
+      <ContentText>
+        {subtitle}
+        <br />
+        {subtitle2}
+      </ContentText>
+      <ImageContainer>
+        <CardImage src={image} alt="Portfolio Site Screenshot" />
+      </ImageContainer>
+    </CardContent>
+  </MainCard>
+);
+
+/** Styles */
+
+const MainCard = styled.div`
+  padding: 0;
+  height: 33vh;
+  max-width: 25vw;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  margin: 2%;
+  background-color: rgb(255, 255, 255);
+
+  @media (max-width: 500px) {
+    max-width: 95vw;
+    margin-bottom: 3%;
+  }
+`;
+const CardTitle = styled.div`
+  width: 100%;
+  height: 6%;
+  text-align: center;
+  display: block;
+  font-family: "Livvic";
+`;
+const CardContent = styled.div`
+  color: black;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 100%;
+  max-width: 100%;
+  position: relative;
+`;
+const ContentText = styled.div`
+  display: none;
+
+  ${CardContent}:hover & {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: "Livvic";
+  }
+`;
+const Overlay = styled.div`
+  display: none;
+
+  ${CardContent}:hover & {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 89%;
+    width: 100%;
+    border-radius: 0 0 15px 15px;
+  }
+`;
+const ImageContainer = styled.div`
+  width: 100%;
+  min-height: 55%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
+`;
+const CardImage = styled.img`
+  height: 75%;
+`;
+
+export default ResumeLinkCard;

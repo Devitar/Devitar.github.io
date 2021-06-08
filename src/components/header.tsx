@@ -35,11 +35,11 @@ const HeaderText = styled.div`
   align-items: center;
 
   opacity: 0;
-  animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
-  -webkit-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
-  -moz-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
-  -o-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
-  -ms-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  animation: fadeIn ${FADE_IN_TIME / 2}s linear 250ms forwards;
+  -webkit-animation: fadeIn ${FADE_IN_TIME / 2}s linear 250ms forwards;
+  -moz-animation: fadeIn ${FADE_IN_TIME / 2}s linear 250ms forwards;
+  -o-animation: fadeIn ${FADE_IN_TIME / 2}s linear 250ms forwards;
+  -ms-animation: fadeIn ${FADE_IN_TIME / 2}s linear 250ms forwards;
   @keyframes fadeIn {
     0% {
       opacity: 0;
