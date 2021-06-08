@@ -1,5 +1,6 @@
-import React, { ReactNode, useCallback, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import styled from "styled-components";
+import { Divider } from ".";
 import * as Views from "../views";
 
 /** Controls displaying of views and navigation. */
@@ -11,12 +12,15 @@ const NavBar = () => {
     const viewNames = Object.keys(Views);
 
     return viewNames.map((viewName, index) => (
-      <NavBarItem
-        key={index}
-        onRouteSelect={setCurrentRoute}
-        viewName={viewName}
-        isSelected={currentRoute === viewName}
-      />
+      <>
+        <NavBarItem
+          key={index}
+          onRouteSelect={setCurrentRoute}
+          viewName={viewName}
+          isSelected={currentRoute === viewName}
+        />
+        <Divider vertical spacing={24} />
+      </>
     ));
   }, [currentRoute]);
 
@@ -70,16 +74,12 @@ const NavBarStyle = styled.div`
   align-items: center;
   padding-left: 18px;
   z-index: 2;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 `;
 
 const NavBarItemStyle = styled.div<{ isSelected: boolean }>`
   user-select: none;
   cursor: pointer;
-  border-right: 1px solid black;
-  padding-right: 12px;
-  margin-right: 12px;
   border-bottom: ${({ isSelected }) =>
     isSelected ? "1px solid black" : "none"};
 `;

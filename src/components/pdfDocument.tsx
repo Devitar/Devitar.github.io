@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import styled from "styled-components";
 

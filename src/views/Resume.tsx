@@ -1,4 +1,3 @@
-import React from "react";
 import { PDFDocument, View } from "../components";
 import resume from "../assets/Resume.pdf";
 

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import styled from "styled-components";
 import { Header } from ".";
 
@@ -15,19 +15,18 @@ type Props = {
 };
 
 /** Base view component. */
-const View = ({ headerText, children, ...passThrough }: Props) => {
-  return (
-    <ViewStyle>
-      {headerText && <Header text={headerText} />}
-      <BodyStyle {...passThrough}>{children}</BodyStyle>
-    </ViewStyle>
-  );
-};
+const View = ({ headerText, children, ...passThrough }: Props) => (
+  <ViewStyle>
+    {headerText && <Header text={headerText} />}
+    <BodyStyle minHeight={window.innerHeight - 110} {...passThrough}>
+      {children}
+    </BodyStyle>
+  </ViewStyle>
+);
 
 /** Styles */
 
 const ViewStyle = styled.div`
-  height: auto;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -38,8 +37,11 @@ const ViewStyle = styled.div`
 type BodyStyleType = {
   paddingX?: number;
   center?: boolean;
+  minHeight: number;
 };
 const BodyStyle = styled.div<BodyStyleType>`
+  min-height: ${({ minHeight }) => `${minHeight}px`};
+  height: auto;
   width: 100%;
   display: flex;
   flex-direction: column;

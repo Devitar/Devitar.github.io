@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "../components";
 
 /** The main page of the app. */
