@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useState } from "react";
+import { Fragment, ReactNode, useCallback, useState } from "react";
 import styled from "styled-components";
 import { Divider } from ".";
 import * as Views from "../views";
@@ -16,21 +16,29 @@ const NavBar = () => {
     const viewNames = Object.keys(Views);
 
     return viewNames.map((viewName, index) => (
-      <>
+      <Fragment key={index}>
         <NavBarItem
-          key={index}
           onRouteSelect={setCurrentRoute}
           viewName={viewName}
           isSelected={currentRoute === viewName}
         />
         <Divider vertical spacing={24} />
-      </>
+      </Fragment>
     ));
   }, [currentRoute]);
 
   return (
     <PageWrapper>
-      <NavBarStyle>{getRoutes()}</NavBarStyle>
+      <NavBarStyle
+        style={{
+          boxShadow:
+            window.innerWidth < 600
+              ? "0px 1px 21px 0px rgba(0, 0, 0, 0.4)"
+              : undefined,
+        }}
+      >
+        {getRoutes()}
+      </NavBarStyle>
       {ViewType[currentRoute]?.()}
     </PageWrapper>
   );
@@ -76,7 +84,7 @@ const NavBarStyle = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 18px;
+  padding: 8px 0px 0px 18px;
   z-index: 2;
   box-sizing: border-box;
 `;
@@ -84,8 +92,20 @@ const NavBarStyle = styled.div`
 const NavBarItemStyle = styled.div<{ isSelected: boolean }>`
   user-select: none;
   cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
   border-bottom: ${({ isSelected }) =>
     isSelected ? "1px solid black" : "none"};
+
+  transition: transform 250ms;
+  :hover {
+    transform: translateY(-10px);
+  }
 `;
 
 /** Exports */

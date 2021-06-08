@@ -4,6 +4,10 @@ import { Header } from ".";
 import { HEADER_HEIGHT } from "./Header";
 import { NAV_BAR_HEIGHT } from "./NavBar";
 
+/** Constants */
+
+export const FADE_IN_TIME = 0.45;
+
 /** Types */
 
 type Props = {
@@ -19,13 +23,14 @@ type Props = {
 /** Base view component. */
 const View = ({ headerText, children, ...passThrough }: Props) => {
   const windowHeight = window.innerHeight;
-  const heightCalc = headerText
-    ? windowHeight - (NAV_BAR_HEIGHT + HEADER_HEIGHT)
-    : windowHeight - NAV_BAR_HEIGHT;
+  const heightCalc =
+    headerText && window.innerWidth > 600
+      ? windowHeight - (NAV_BAR_HEIGHT + HEADER_HEIGHT)
+      : windowHeight - NAV_BAR_HEIGHT;
 
   return (
-    <ViewStyle>
-      {headerText && <Header text={headerText} />}
+    <ViewStyle key={Math.random()}>
+      {headerText && window.innerWidth > 600 && <Header text={headerText} />}
       <BodyStyle minHeight={heightCalc} {...passThrough}>
         {children}
       </BodyStyle>
@@ -61,6 +66,53 @@ const BodyStyle = styled.div<BodyStyleType>`
   }};
   padding: 24px ${({ paddingX }) => (paddingX ? `${paddingX}px` : "0px")} 0px
     ${({ paddingX }) => (paddingX ? `${paddingX}px` : "0px")};
+
+  opacity: 0;
+  animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  -webkit-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  -moz-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  -o-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  -ms-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-moz-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-webkit-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-o-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-ms-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 /** Exports */
