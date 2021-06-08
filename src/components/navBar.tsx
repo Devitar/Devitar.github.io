@@ -11,6 +11,7 @@ export const NAV_BAR_HEIGHT = window.innerWidth < 600 ? 90 : 55;
 const NavBar = () => {
   const ViewType = Views as Record<string, () => ReactNode>;
   const [currentRoute, setCurrentRoute] = useState<string>("Portfolio");
+  const isSmall = window.innerWidth < 600;
 
   const getRoutes = useCallback(() => {
     const viewNames = Object.keys(Views);
@@ -21,11 +22,12 @@ const NavBar = () => {
           onRouteSelect={setCurrentRoute}
           viewName={viewName}
           isSelected={currentRoute === viewName}
+          isSmall={isSmall}
         />
         {index !== viewNames.length - 1 && <Divider vertical spacing={24} />}
       </Fragment>
     ));
-  }, [currentRoute]);
+  }, [currentRoute, isSmall]);
 
   return (
     <PageWrapper>
@@ -38,13 +40,13 @@ const NavBar = () => {
         }}
       >
         <NavBarItemContainer>{getRoutes()}</NavBarItemContainer>
-        {window.innerWidth > 600 && (
+        {!isSmall && (
           <NavBarItemContainer style={{ flexDirection: "column" }}>
             <Text align="right" fontSize={22}>
               Devin Curtis
             </Text>
-            <Text fontSize={24} link="email">
-              devin.curtis1210@gmail.com
+            <Text fontSize={24} link mask="My LinkedIn">
+              https://www.linkedin.com/in/devin-curtis/
             </Text>
           </NavBarItemContainer>
         )}
@@ -58,16 +60,22 @@ type NavBarItemProps = {
   viewName: string;
   onRouteSelect: (viewName: string) => void;
   isSelected: boolean;
+  isSmall: boolean;
 };
 const NavBarItem = ({
   viewName,
   onRouteSelect,
   isSelected,
+  isSmall,
 }: NavBarItemProps) => {
-  const formatRouteName = useCallback(
-    () => viewName.replace(/((?<=[a-z])[A-Z]|[A-Z](?=[a-z]))/g, " $1"),
-    [viewName]
-  );
+  const formatRouteName = useCallback(() => {
+    const formattedViewName = viewName
+      .replace(/((?<=[a-z])[A-Z]|[A-Z](?=[a-z]))/g, " $1")
+      .trim();
+    const shortenedViewName = formattedViewName.replace(/ .*/, "");
+
+    return isSmall ? shortenedViewName : formattedViewName;
+  }, [isSmall, viewName]);
 
   return (
     <NavBarItemStyle
@@ -120,7 +128,7 @@ const NavBarItemStyle = styled.div<{ isSelected: boolean }>`
 
   transition: transform 250ms;
   :hover {
-    transform: translateY(-10px);
+    transform: translateY(-4px);
   }
 `;
 

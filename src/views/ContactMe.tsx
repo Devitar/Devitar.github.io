@@ -14,6 +14,10 @@ const ContactMe = () => (
     <Text fontSize={24} link mask="My Github">
       https://github.com/Devitar
     </Text>
+    <Divider color="rgba(0,0,0,0.25)" />
+    <Text fontSize={24} link mask="My LinkedIn">
+      https://www.linkedin.com/in/devin-curtis/
+    </Text>
   </View>
 );
 
