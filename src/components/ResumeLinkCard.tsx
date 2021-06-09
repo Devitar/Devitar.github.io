@@ -41,6 +41,7 @@ const MainCard = styled.div`
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   margin: 18px;
   background-color: rgb(255, 255, 255);
+  overflow: hidden;
 
   @media (max-width: 500px) {
     max-width: 95vw;
@@ -62,33 +63,34 @@ const CardContent = styled.div`
   height: 100%;
   max-width: 100%;
   position: relative;
+  padding-top: 5px;
 `;
 const ContentText = styled.div`
   display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-family: "Livvic";
 
   ${CardContent}:hover & {
     display: block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-family: "Livvic";
   }
 `;
 const Overlay = styled.div`
   display: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 89%;
+  width: 100%;
+  border-radius: 0 0 15px 15px;
 
   ${CardContent}:hover & {
-    background-color: rgba(0, 0, 0, 0.5);
     display: block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    height: 89%;
-    width: 100%;
-    border-radius: 0 0 15px 15px;
   }
 `;
 const ImageContainer = styled.div`
@@ -102,6 +104,7 @@ const ImageContainer = styled.div`
 `;
 const CardImage = styled.img`
   height: 75%;
+  width: 75%;
 `;
 
 export default ResumeLinkCard;

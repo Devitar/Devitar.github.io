@@ -68,47 +68,12 @@ const BodyStyle = styled.div<BodyStyleType>`
 
   opacity: 0;
   animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
-  -webkit-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
-  -moz-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
-  -o-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
-  -ms-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  transition: linear;
   @keyframes fadeIn {
-    0% {
+    from {
       opacity: 0;
     }
-    100% {
-      opacity: 1;
-    }
-  }
-  @-moz-keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  @-webkit-keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  @-o-keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  @-ms-keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
+    to {
       opacity: 1;
     }
   }

@@ -14,7 +14,11 @@ type Props = {
 /** Displays items in a grid, changing to a column on small screens. */
 const Grid = ({ center = true, gutter = 16, children }: Props) => {
   const wrapChild = useCallback(
-    (child: ReactNode) => <FlexColumn gutter={gutter}>{child}</FlexColumn>,
+    (child: ReactNode) => (
+      <FlexColumn key={Math.random()} gutter={gutter}>
+        {child}
+      </FlexColumn>
+    ),
     [gutter]
   );
 
