@@ -69,9 +69,7 @@ const NavBarItem = ({
   isSmall,
 }: NavBarItemProps) => {
   const formatRouteName = useCallback(() => {
-    const formattedViewName = viewName
-      .replace(/((?<=[a-z])[A-Z]|[A-Z](?=[a-z]))/g, " $1")
-      .trim();
+    const formattedViewName = viewName.replace(/([A-Z]+)/g, " $1").trim();
     const shortenedViewName = formattedViewName.replace(/ .*/, "");
 
     return isSmall ? shortenedViewName : formattedViewName;
