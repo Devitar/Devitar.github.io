@@ -1,28 +1,56 @@
-import React, { ReactNode, useCallback, useState } from "react";
+import { Fragment, ReactNode, useCallback, useState } from "react";
 import styled from "styled-components";
+import { Divider, Text } from ".";
 import * as Views from "../views";
+
+/** Constants */
+
+export const NAV_BAR_HEIGHT = window.innerWidth < 600 ? 90 : 55;
 
 /** Controls displaying of views and navigation. */
 const NavBar = () => {
   const ViewType = Views as Record<string, () => ReactNode>;
-  const [currentRoute, setCurrentRoute] = useState<string>("HomePage");
+  const [currentRoute, setCurrentRoute] = useState<string>("Portfolio");
+  const isSmall = window.innerWidth < 600;
 
   const getRoutes = useCallback(() => {
     const viewNames = Object.keys(Views);
 
     return viewNames.map((viewName, index) => (
-      <NavBarItem
-        key={index}
-        onRouteSelect={setCurrentRoute}
-        viewName={viewName}
-        isSelected={currentRoute === viewName}
-      />
+      <Fragment key={index}>
+        <NavBarItem
+          onRouteSelect={setCurrentRoute}
+          viewName={viewName}
+          isSelected={currentRoute === viewName}
+          isSmall={isSmall}
+        />
+        {index !== viewNames.length - 1 && <Divider vertical spacing={24} />}
+      </Fragment>
     ));
-  }, [currentRoute]);
+  }, [currentRoute, isSmall]);
 
   return (
     <PageWrapper>
-      <NavBarStyle>{getRoutes()}</NavBarStyle>
+      <NavBarStyle
+        style={{
+          boxShadow:
+            window.innerWidth < 600
+              ? "0px 1px 21px 0px rgba(0, 0, 0, 0.4)"
+              : undefined,
+        }}
+      >
+        <NavBarItemContainer>{getRoutes()}</NavBarItemContainer>
+        {!isSmall && (
+          <NavBarItemContainer style={{ flexDirection: "column" }}>
+            <Text align="right" fontSize={22}>
+              Devin Curtis
+            </Text>
+            <Text fontSize={24} link mask="My LinkedIn">
+              https://www.linkedin.com/in/devin-curtis/
+            </Text>
+          </NavBarItemContainer>
+        )}
+      </NavBarStyle>
       {ViewType[currentRoute]?.()}
     </PageWrapper>
   );
@@ -32,16 +60,22 @@ type NavBarItemProps = {
   viewName: string;
   onRouteSelect: (viewName: string) => void;
   isSelected: boolean;
+  isSmall: boolean;
 };
 const NavBarItem = ({
   viewName,
   onRouteSelect,
   isSelected,
+  isSmall,
 }: NavBarItemProps) => {
-  const formatRouteName = useCallback(
-    () => viewName.replace(/((?<=[a-z])[A-Z]|[A-Z](?=[a-z]))/g, " $1"),
-    [viewName]
-  );
+  const formatRouteName = useCallback(() => {
+    const formattedViewName = viewName
+      .replace(/((?<=[a-z])[A-Z]|[A-Z](?=[a-z]))/g, " $1")
+      .trim();
+    const shortenedViewName = formattedViewName.replace(/ .*/, "");
+
+    return isSmall ? shortenedViewName : formattedViewName;
+  }, [isSmall, viewName]);
 
   return (
     <NavBarItemStyle
@@ -59,29 +93,43 @@ const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
 const NavBarStyle = styled.div`
   width: 100vw;
-  height: 55px;
-  font-size: 22px;
+  height: ${() => `${NAV_BAR_HEIGHT}px`};
   background-color: #e4e4e4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+`;
+const NavBarItemContainer = styled.div`
+  height: ${() => `${NAV_BAR_HEIGHT}px`};
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 18px;
-  z-index: 2;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 8px 8px 8px 18px;
   box-sizing: border-box;
 `;
-
 const NavBarItemStyle = styled.div<{ isSelected: boolean }>`
   user-select: none;
   cursor: pointer;
-  border-right: 1px solid black;
-  padding-right: 12px;
-  margin-right: 12px;
+  height: 100%;
+  font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  text-align: center;
+
   border-bottom: ${({ isSelected }) =>
     isSelected ? "1px solid black" : "none"};
+
+  transition: transform 250ms;
+  :hover {
+    transform: translateY(-4px);
+  }
 `;
 
 /** Exports */

@@ -1,6 +1,12 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import styled from "styled-components";
 import { Header } from ".";
+import { HEADER_HEIGHT } from "./Header";
+import { NAV_BAR_HEIGHT } from "./NavBar";
+
+/** Constants */
+
+export const FADE_IN_TIME = 0.45;
 
 /** Types */
 
@@ -8,18 +14,31 @@ type Props = {
   /** Text displayed on the header of the page. */
   headerText?: string;
   /** Padding applied to the X axis of the page. */
-  padding?: number;
+  paddingX?: number;
   /** Centers content in the body of the view. Default: true */
   center?: boolean;
   children?: ReactNode;
 };
+type BodyStyleType = {
+  paddingX?: number;
+  center?: boolean;
+  minHeight: number;
+};
 
 /** Base view component. */
 const View = ({ headerText, children, ...passThrough }: Props) => {
+  const windowHeight = window.innerHeight;
+  const heightCalc =
+    headerText && window.innerWidth > 600
+      ? windowHeight - (NAV_BAR_HEIGHT + HEADER_HEIGHT)
+      : windowHeight - NAV_BAR_HEIGHT;
+
   return (
-    <ViewStyle>
-      {headerText && <Header text={headerText} />}
-      <BodyStyle {...passThrough}>{children}</BodyStyle>
+    <ViewStyle key={Math.random()}>
+      {headerText && window.innerWidth > 600 && <Header text={headerText} />}
+      <BodyStyle minHeight={heightCalc} {...passThrough}>
+        {children}
+      </BodyStyle>
     </ViewStyle>
   );
 };
@@ -27,27 +46,72 @@ const View = ({ headerText, children, ...passThrough }: Props) => {
 /** Styles */
 
 const ViewStyle = styled.div`
-  height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  background-color: rgb(245, 245, 245);
 `;
-
-type BodyStyleType = {
-  padding?: number;
-  center?: boolean;
-};
 const BodyStyle = styled.div<BodyStyleType>`
-  width: 100%;
+  min-height: ${({ minHeight }) => `${minHeight}px`};
   height: auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   align-items: ${({ center }) => {
     if (center === undefined) center = true;
     return center ? "center" : undefined;
   }};
-  padding: 12px ${({ padding }) => (padding ? `${padding}px` : "0px")} 0px
-    ${({ padding }) => (padding ? `${padding}px` : "0px")};
+  padding: 24px ${({ paddingX }) => (paddingX ? `${paddingX}px` : "0px")} 0px
+    ${({ paddingX }) => (paddingX ? `${paddingX}px` : "0px")};
+
+  opacity: 0;
+  animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  -webkit-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  -moz-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  -o-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  -ms-animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-moz-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-webkit-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-o-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-ms-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 /** Exports */

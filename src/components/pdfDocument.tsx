@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import styled from "styled-components";
 
@@ -58,12 +58,14 @@ const PDFDocument = ({
 const Container = styled.div<{ showBorder: boolean }>`
   display: flex;
   flex-direction: column;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   border: ${({ showBorder }) =>
     showBorder ? "1px solid rgba(0, 0, 0, 0.25)" : undefined};
-  margin-bottom: 8px;
 `;
 const PageText = styled.div`
   padding: 4px;
+  background-color: #e4e4e4;
 `;
 
 /** Hooks */
