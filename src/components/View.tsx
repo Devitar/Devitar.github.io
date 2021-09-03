@@ -50,7 +50,8 @@ const ViewStyle = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  background-color: rgb(245, 245, 245);
+  /* Invisible, to show the background image. */
+  background-color: rgba(245, 245, 245, 0);
 `;
 const BodyStyle = styled.div<BodyStyleType>`
   min-height: ${({ minHeight }) => `${minHeight}px`};

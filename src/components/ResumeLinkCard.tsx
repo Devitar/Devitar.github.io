@@ -11,10 +11,12 @@ type Props = {
   url: string;
   /** The image to display on the card. */
   image: string;
+  /** Size of the inner image */
+  imgSize?: string;
 };
 
 /** Displays a project and project information in a compact card. */
-const ResumeLinkCard = ({ title, subtitle, subtitle2, url, image }: Props) => (
+const ResumeLinkCard = ({ title, subtitle, subtitle2, url, image, imgSize = "75%" }: Props) => (
   <MainCard onClick={() => window.open(url, "")}>
     <CardTitle>{title}</CardTitle>
     <CardContent>
@@ -25,7 +27,7 @@ const ResumeLinkCard = ({ title, subtitle, subtitle2, url, image }: Props) => (
         {subtitle2}
       </ContentText>
       <ImageContainer>
-        <CardImage src={image} alt="Portfolio Site Screenshot" />
+        <CardImage width={imgSize} src={image} alt="Portfolio Site Screenshot" />
       </ImageContainer>
     </CardContent>
   </MainCard>
@@ -35,8 +37,8 @@ const ResumeLinkCard = ({ title, subtitle, subtitle2, url, image }: Props) => (
 
 const MainCard = styled.div`
   padding: 0;
-  height: 275px;
-  width: 300px;
+  height: 375px;
+  width: 365px;
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   margin: 18px;
@@ -54,6 +56,7 @@ const CardTitle = styled.div`
   text-align: center;
   display: block;
   font-family: "Livvic";
+  font-size: 24px;
 `;
 const CardContent = styled.div`
   color: black;
@@ -73,6 +76,7 @@ const ContentText = styled.div`
   transform: translate(-50%, -50%);
   color: white;
   font-family: "Livvic";
+  font-size: 20px;
 
   ${CardContent}:hover & {
     display: block;
@@ -86,7 +90,7 @@ const Overlay = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   height: 89%;
-  width: 100%;
+  width: 105%;
   border-radius: 0 0 15px 15px;
 
   ${CardContent}:hover & {
@@ -95,16 +99,16 @@ const Overlay = styled.div`
 `;
 const ImageContainer = styled.div`
   width: 100%;
-  min-height: 55%;
+  height: 90%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   object-fit: contain;
 `;
-const CardImage = styled.img`
+const CardImage = styled.img<{width: string}>`
   height: 75%;
-  width: 75%;
+  width: ${({width}) => width};
 `;
 
 export default ResumeLinkCard;

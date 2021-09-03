@@ -5,7 +5,7 @@ import * as Views from "../views";
 
 /** Constants */
 
-export const NAV_BAR_HEIGHT = window.innerWidth < 600 ? 90 : 55;
+export const NAV_BAR_HEIGHT = window.innerWidth < 600 ? 90 : 75;
 
 /** Controls displaying of views and navigation. */
 const NavBar = () => {
@@ -42,10 +42,10 @@ const NavBar = () => {
         <NavBarItemContainer>{getRoutes()}</NavBarItemContainer>
         {!isSmall && (
           <NavBarItemContainer style={{ flexDirection: "column" }}>
-            <Text align="right" fontSize={22}>
+            <Text align="right" fontSize={32}>
               Devin Curtis
             </Text>
-            <Text fontSize={24} link mask="My LinkedIn">
+            <Text fontSize={26} link mask="My LinkedIn">
               https://www.linkedin.com/in/devin-curtis/
             </Text>
           </NavBarItemContainer>
@@ -99,6 +99,9 @@ const NavBarStyle = styled.div`
   justify-content: space-between;
   align-items: center;
   z-index: 2;
+  /* Disable these if the views have headers. */
+  box-shadow: 0px 1px 21px 0px rgba(0, 0, 0, 0.4);
+  border-radius: 0px 0px 15px 15px;
 `;
 const NavBarItemContainer = styled.div`
   height: ${() => `${NAV_BAR_HEIGHT}px`};
@@ -120,6 +123,8 @@ const NavBarItemStyle = styled.div<{ isSelected: boolean }>`
   padding-bottom: 8px;
   margin-bottom: 8px;
   text-align: center;
+
+  color: ${({isSelected}) => isSelected ? "RGBA(0, 0, 0, 1)" : "RGBA(0, 0, 0, 0.5)"};
 
   border-bottom: ${({ isSelected }) =>
     isSelected ? "1px solid black" : "none"};

@@ -1,15 +1,33 @@
 @import url("https://fonts.googleapis.com/css?family=Livvic&display=swap");
 
-body {
+html, body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Livvic", "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(245, 245, 245);
+  overflow: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  monospace;
+}
+
+.app_background_container {
+  background-image: url("./assets/images/Forest.jpeg");
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
+  width: 102vw;
+  left: -1vw;
+  position: absolute;
+  box-sizing: border-box;
+  object-fit: contain;
+  height: 102vh;
+}
+.app_background {
+  height: 100%;
+  width: 100%;
 }

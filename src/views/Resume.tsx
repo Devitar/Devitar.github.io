@@ -1,12 +1,19 @@
 import { PDFDocument, View } from "../components";
-import resume from "../assets/Resume.pdf";
+import resume from "../assets/Resume-Devin-Curtis.pdf";
 
-/** Basic about me page. */
-const Resume = () => (
-  <View headerText="Resume" paddingX={24}>
-    <PDFDocument pdf={resume} numberOfPages={2} showPageNumber />
-  </View>
-);
+/** Page containing my resume. */
+const Resume = () => {
+  const isSmall = window.innerWidth < 600;
+  return(
+    <View>
+      {isSmall
+        ? (<PDFDocument pdf={resume} numberOfPages={2} showPageNumber />)
+        : (<PDFDocument row pdf={resume} numberOfPages={2} showPageNumber widthAlpha={0.49} />)
+      }
+      
+    </View>
+  );
+}
 
 /** Exports */
 

@@ -21,6 +21,8 @@ type Props = {
   showPageNumber?: boolean;
   /** Shows a border around each page of the PDF. Default: true */
   showPageBorder?: boolean;
+  /** Shows PDF pages in a row instead of column. */
+  row?: boolean;
 };
 
 /** Displays a PDF. */
@@ -31,13 +33,15 @@ const PDFDocument = ({
   widthAlpha = 0.75,
   showPageNumber = false,
   showPageBorder = true,
+  row = false,
 }: Props) => {
   const { width } = usePDFWidth(widthAlpha, maxWidth);
 
   /** Creates an array of react-pdf Document elements. */
   const renderDocuments = useCallback(
     () =>
-      Array(numberOfPages)
+    <Wrapper row={row}>
+      {Array(numberOfPages)
         .fill(1)
         .map((_, i) => (
           <Container showBorder={showPageBorder} key={i}>
@@ -46,8 +50,9 @@ const PDFDocument = ({
               <Page pageNumber={i + 1} width={width} />
             </Document>
           </Container>
-        )),
-    [numberOfPages, pdf, showPageBorder, showPageNumber, width]
+        ))}
+        </Wrapper>,
+    [numberOfPages, pdf, row, showPageBorder, showPageNumber, width]
   );
 
   return <>{renderDocuments()}</>;
@@ -55,6 +60,13 @@ const PDFDocument = ({
 
 /** Styles */
 
+const Wrapper = styled.div<{row: boolean}>`
+  display: flex;
+  flex-direction: ${({row}) => row ? "row" : "column"};
+  justify-content: space-evenly;
+  width: 100%;
+  max-height: 1000px;
+`
 const Container = styled.div<{ showBorder: boolean }>`
   display: flex;
   flex-direction: column;
@@ -72,7 +84,7 @@ const PageText = styled.div`
 
 /** Converts an alpha number into a pixel width measurement of the screen's width. */
 const usePDFWidth = (widthAlpha: number, maxWidth: number) => {
-  const screenWidth = window.innerWidth;
+  const screenWidth = window.innerWidth < 1350 ? window.innerWidth : 1350;
   const remainder = 1 - widthAlpha;
   const width = Math.min(screenWidth - screenWidth * remainder, maxWidth);
 
