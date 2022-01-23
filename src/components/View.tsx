@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 import { Header } from ".";
-import { HEADER_HEIGHT } from "./Header";
-import { NAV_BAR_HEIGHT } from "./NavBar";
+import { HEADER_HEIGHT } from "./header";
+import { NAV_BAR_HEIGHT } from "./navBar";
 
 /** Constants */
 
