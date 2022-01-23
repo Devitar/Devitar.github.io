@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
-import { Header } from ".";
-import { HEADER_HEIGHT } from "./header";
-import { NAV_BAR_HEIGHT } from "./navBar";
+import { NAV_BAR_HEIGHT } from "./";
+import ViewHeader, { HEADER_HEIGHT } from "./ViewHeader";
 
 /** Constants */
 
@@ -35,7 +34,7 @@ const View = ({ headerText, children, ...passThrough }: Props) => {
 
   return (
     <ViewStyle key={Math.random()}>
-      {headerText && window.innerWidth > 600 && <Header text={headerText} />}
+      {headerText && window.innerWidth > 600 && <ViewHeader text={headerText} />}
       <BodyStyle minHeight={heightCalc} {...passThrough}>
         {children}
       </BodyStyle>
