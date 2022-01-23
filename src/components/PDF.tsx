@@ -26,7 +26,7 @@ type Props = {
 };
 
 /** Displays a PDF. */
-const PDFDocument = ({
+const PDF = ({
   numberOfPages = 1,
   pdf,
   maxWidth = 850,
@@ -93,4 +93,4 @@ const usePDFWidth = (widthAlpha: number, maxWidth: number) => {
 
 /** Exports */
 
-export default PDFDocument;
+export default PDF;
