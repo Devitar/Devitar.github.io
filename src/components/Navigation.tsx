@@ -8,14 +8,21 @@ import * as Views from "../views";
 
 export const NAV_BAR_HEIGHT = window.innerWidth < 600 ? 90 : 75;
 
+/** Order in which the pages appear in the nav bar and content. */
+const NAV_ORDER = {
+  "Portfolio": 1,
+  "Resume": 2,
+  "ContactMe": 3,
+} as Record<string, number>
+
 /** Controls displaying of views and navigation. */
 const NavBar = () => {
   const ViewType = Views as Record<string, (viewName: string) => ReactNode>;
-  const [currentRoute, setCurrentRoute] = useState<string>("Portfolio");
+  const [currentRoute, setCurrentRoute] = useState<string>(Object.keys(NAV_ORDER)[0]);
   const isSmall = window.innerWidth < 600;
 
   const getRoutes = useCallback(() => {
-    const viewNames = Object.keys(Views);
+    const viewNames = Object.keys(Views).sort((a, b) => NAV_ORDER[a] - NAV_ORDER[b]);
 
     return viewNames.map((viewName, index) => (
       <Fragment key={index}>
@@ -40,7 +47,7 @@ const NavBar = () => {
     })
   }, [currentRoute])
 
-  const renderPages = useCallback(() => Object.keys(ViewType).map(viewName => ViewType[viewName](viewName)), [ViewType])
+  const renderPages = useCallback(() => Object.keys(ViewType).sort((a, b) => NAV_ORDER[a] - NAV_ORDER[b]).map(viewName => ViewType[viewName](viewName)), [ViewType])
 
   return (
     <PageWrapper>
