@@ -1,4 +1,4 @@
-import { Grid, ResumeLinkCard, View } from "../components";
+import { FlipCard, Grid, View } from "../components";
 import { PROJECT_DATA } from "../assets/ProjectData";
 
 /** The main page of the app. Shows my projects. */
@@ -7,13 +7,12 @@ const Portfolio = (viewName: string) => {
     <View viewId={viewName}>
       <Grid>
         {PROJECT_DATA.map((value, index) => (
-          <ResumeLinkCard
+          <FlipCard
             title={value.title}
             subtitle={value.subtitle}
             subtitle2={value.subtitle2}
             url={value.url}
             image={value.image}
-            imgSize={value.imgWidth}
             key={index}
           />
         ))}
