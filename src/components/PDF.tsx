@@ -6,6 +6,8 @@ import styled from "styled-components";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
+const PDFWidth = window.innerWidth < 600 ? 1 : 0.75;
+
 /** Types */
 
 type Props = {
@@ -30,7 +32,7 @@ const PDF = ({
   numberOfPages = 1,
   pdf,
   maxWidth = 850,
-  widthAlpha = 0.75,
+  widthAlpha = PDFWidth,
   showPageNumber = false,
   showPageBorder = true,
   row = false,
@@ -65,7 +67,6 @@ const Wrapper = styled.div<{row: boolean}>`
   flex-direction: ${({row}) => row ? "row" : "column"};
   justify-content: space-evenly;
   width: 100%;
-  max-height: 1000px;
 `
 const Container = styled.div<{ showBorder: boolean }>`
   display: flex;
