@@ -12,7 +12,7 @@ type Props = {
 };
 
 /** Renders text as a header. */
-const Header = ({ text }: Props) => (
+const ViewHeader = ({ text }: Props) => (
   <HeaderStyle>
     <HeaderText>{text}</HeaderText>
   </HeaderStyle>
@@ -49,4 +49,4 @@ const HeaderText = styled.div`
 
 /** Exports */
 
-export default Header;
+export default ViewHeader;

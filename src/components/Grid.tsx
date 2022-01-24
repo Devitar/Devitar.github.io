@@ -37,7 +37,7 @@ const FlexGrid = styled.div<{ center: boolean }>`
   justify-content: ${({ center }) => (center ? "center" : undefined)};
 
   @media (max-width: 600px) {
-    display: block;
+    align-items: center;
   }
 `;
 const FlexColumn = styled.div<{ gutter: number }>`

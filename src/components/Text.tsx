@@ -6,8 +6,11 @@ import styled from "styled-components";
 type Props = {
   /** Whether to justify the text to the center, left, right, top or bottom. Default: left */
   align?: "center" | "left" | "right";
+  /** Sets a background color on the text (for readability in some situations). */
+  backgroundColor?: string;
   /** Bolds the text. Default: false */
   bold?: boolean;
+  children?: ReactNode;
   /** Colors the text. Default: black */
   color?: string;
   /** Sets the font size in pixels. Default: 14 */
@@ -19,22 +22,22 @@ type Props = {
   mask?: string;
   /** Indicates whether to open a link in a new tab or not. Default: true */
   newTab?: boolean;
-  children?: ReactNode;
 };
 
 /** A malleable component for rendering text or links. */
 const Text = ({
   align = "left",
+  backgroundColor,
   bold = false,
+  children,
   color = "black",
   fontSize = 14,
   link = false,
   mask,
   newTab = true,
-  children,
 }: Props) =>
   !link ? (
-    <TextRenderer align={align} bold={bold} color={color} fontSize={fontSize}>
+    <TextRenderer align={align} bold={bold} color={color} fontSize={fontSize} backgroundColor={backgroundColor}>
       {children}
     </TextRenderer>
   ) : (
@@ -49,6 +52,8 @@ const Text = ({
           : (children as string)
       }
       target={newTab ? "_blank" : undefined}
+      backgroundColor={backgroundColor}
+      color={color}
     >
       {mask ? mask : children}
     </LinkRenderer>
@@ -57,20 +62,20 @@ const Text = ({
 /** Styles */
 
 const TextRenderer = styled.div<Omit<Props, "children" | "link">>`
-  background-color: transparent;
-  display: flex;
-  text-align: ${({ align }) => align};
-  font-weight: ${({ bold }) => (bold ? "bold" : 400)};
-  font-size: ${({ fontSize }) => `${fontSize}px`};
+  background-color: ${({ backgroundColor }) => backgroundColor ?? "transparent"};
   color: ${({ color }) => color};
+  display: flex;
+  font-size: ${({ fontSize }) => `${fontSize}px`};
+  font-weight: ${({ bold }) => (bold ? "bold" : 400)};
+  text-align: ${({ align }) => align};
 `;
 const LinkRenderer = styled.a<Omit<Props, "children" | "link">>`
-  background-color: transparent;
-  display: flex;
-  text-align: ${({ align }) => align};
-  font-weight: ${({ bold }) => (bold ? "bold" : 400)};
-  font-size: ${({ fontSize }) => `${fontSize}px`};
+  background-color: ${({ backgroundColor }) => backgroundColor ?? "transparent"};
   color: ${({ color }) => color};
+  display: flex;
+  font-size: ${({ fontSize }) => `${fontSize}px`};
+  font-weight: ${({ bold }) => (bold ? "bold" : 400)};
+  text-align: ${({ align }) => align};
 `;
 
 /** Exports */

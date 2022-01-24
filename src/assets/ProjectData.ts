@@ -1,4 +1,3 @@
-import bacon from "./images/bacon.png";
 import golfscorecard from "./images/golf-scorecard.png";
 import ecommerce from "./images/e-commerce-store.png";
 import trivia from "./images/trivia-app.png";
@@ -6,15 +5,6 @@ import usermanager from "./images/user-manager.png";
 import todoapp from "./images/to-do-list.png";
 
 export const PROJECT_DATA = [
-  {
-    title: "Bacon App",
-    subtitle: "(React, Cordova)",
-    subtitle2:
-      "Cross platform app (iOS, Android, Web) for finding temp work!",
-    url: "https://app.bacon.work",
-    image: bacon,
-    imgWidth: "40%",
-  },
   {
     title: "Golf Scorecard App",
     subtitle: "(Ionic + Angular, Best viewed on mobile devices.)",
