@@ -1,4 +1,5 @@
-import { Fragment, ReactNode, useCallback, useState } from "react";
+import { Fragment, ReactNode, useCallback, useEffect, useState } from "react";
+import { scroller } from "react-scroll";
 import styled from "styled-components";
 import { Divider, Text } from ".";
 import * as Views from "../views";
@@ -9,7 +10,7 @@ export const NAV_BAR_HEIGHT = window.innerWidth < 600 ? 90 : 75;
 
 /** Controls displaying of views and navigation. */
 const NavBar = () => {
-  const ViewType = Views as Record<string, () => ReactNode>;
+  const ViewType = Views as Record<string, (viewName: string) => ReactNode>;
   const [currentRoute, setCurrentRoute] = useState<string>("Portfolio");
   const isSmall = window.innerWidth < 600;
 
@@ -29,8 +30,22 @@ const NavBar = () => {
     ));
   }, [currentRoute, isSmall]);
 
+  /* Scroll to position of current selected route */
+  useEffect(() => {
+    scroller.scrollTo(currentRoute, {
+      duration: 1200,
+      delay: 40,
+      smooth: true,
+      offset: -NAV_BAR_HEIGHT,
+    })
+  }, [currentRoute])
+
+  const renderPages = useCallback(() => Object.keys(ViewType).map(viewName => ViewType[viewName](viewName)), [ViewType])
+
   return (
     <PageWrapper>
+      {/* Spacer for the fixed nav bar, so the first page's content isn't underneath. */}
+      <div style={{ height: NAV_BAR_HEIGHT }}></div>
       <NavBarStyle
         style={{
           boxShadow:
@@ -51,7 +66,7 @@ const NavBar = () => {
           </NavBarItemContainer>
         )}
       </NavBarStyle>
-      {ViewType[currentRoute]?.()}
+      {renderPages()}
     </PageWrapper>
   );
 };
@@ -92,13 +107,14 @@ const PageWrapper = styled.div`
   flex-direction: column;
 `;
 const NavBarStyle = styled.div`
-  width: 100vw;
+  width: 100%;
   height: ${() => `${NAV_BAR_HEIGHT}px`};
   background-color: #e4e4e4;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 2;
+  z-index: 10;
+  position: fixed;
   /* Disable these if the views have headers. */
   box-shadow: 0px 1px 21px 0px rgba(0, 0, 0, 0.4);
   border-radius: 0px 0px 15px 15px;
@@ -124,7 +140,7 @@ const NavBarItemStyle = styled.div<{ isSelected: boolean }>`
   margin-bottom: 8px;
   text-align: center;
 
-  color: ${({isSelected}) => isSelected ? "RGBA(0, 0, 0, 1)" : "RGBA(0, 0, 0, 0.5)"};
+  color: ${({ isSelected }) => isSelected ? "RGBA(0, 0, 0, 1)" : "RGBA(0, 0, 0, 0.5)"};
 
   border-bottom: ${({ isSelected }) =>
     isSelected ? "1px solid black" : "none"};

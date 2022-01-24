@@ -8,7 +8,6 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(245, 245, 245);
-  overflow: hidden;
 }
 
 code {
@@ -22,7 +21,7 @@ code {
   -webkit-filter: blur(6px);
   width: 102vw;
   left: -1vw;
-  position: absolute;
+  position: fixed;
   box-sizing: border-box;
   object-fit: contain;
   height: 102vh;

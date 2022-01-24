@@ -1,8 +1,8 @@
 import { Divider, Text, View } from "../components";
 
 /** Contact me page. */
-const ContactMe = () => (
-  <View>
+const ContactMe = (viewName: string) => (
+  <View viewId={viewName}>
     <Text fontSize={24} link="email">
       devin.curtis1210@gmail.com
     </Text>

@@ -16,6 +16,8 @@ type Props = {
   paddingX?: number;
   /** Centers content in the body of the view. Default: true */
   center?: boolean;
+  /** Passes the name of the view as the ID. */
+  viewId: string;
   children?: ReactNode;
 };
 type BodyStyleType = {
@@ -25,7 +27,7 @@ type BodyStyleType = {
 };
 
 /** Base view component. */
-const View = ({ headerText, children, ...passThrough }: Props) => {
+const View = ({ viewId, headerText, children, ...passThrough }: Props) => {
   const windowHeight = window.innerHeight;
   const heightCalc =
     headerText && window.innerWidth > 600
@@ -33,7 +35,7 @@ const View = ({ headerText, children, ...passThrough }: Props) => {
       : windowHeight - NAV_BAR_HEIGHT;
 
   return (
-    <ViewStyle key={Math.random()}>
+    <ViewStyle key={Math.random()} id={viewId}>
       {headerText && window.innerWidth > 600 && <ViewHeader text={headerText} />}
       <BodyStyle minHeight={heightCalc} {...passThrough}>
         {children}
@@ -45,10 +47,11 @@ const View = ({ headerText, children, ...passThrough }: Props) => {
 /** Styles */
 
 const ViewStyle = styled.div`
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  z-index: 2;
   /* Invisible, to show the background image. */
   background-color: rgba(245, 245, 245, 0);
 `;
@@ -66,8 +69,9 @@ const BodyStyle = styled.div<BodyStyleType>`
   padding: 24px ${({ paddingX }) => (paddingX ? `${paddingX}px` : "0px")} 0px
     ${({ paddingX }) => (paddingX ? `${paddingX}px` : "0px")};
 
-  opacity: 0;
-  animation: fadeIn ${FADE_IN_TIME}s linear 250ms forwards;
+  /* Disabled for conversion to single page app. */
+  /* opacity: 0;
+  animation: fadeIn ${FADE_IN_TIME}s linear 10ms forwards;
   transition: linear;
   @keyframes fadeIn {
     from {
@@ -76,7 +80,7 @@ const BodyStyle = styled.div<BodyStyleType>`
     to {
       opacity: 1;
     }
-  }
+  } */
 `;
 
 /** Exports */
