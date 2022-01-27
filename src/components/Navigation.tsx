@@ -1,5 +1,5 @@
-import { Fragment, ReactNode, useCallback, useEffect, useState } from "react";
-import { scroller } from "react-scroll";
+import { Fragment, ReactNode, useCallback } from "react";
+import { Link as ScrollLink } from "react-scroll";
 import styled from "styled-components";
 import { Divider, Text } from ".";
 import * as Views from "../views";
@@ -9,16 +9,15 @@ import * as Views from "../views";
 export const NAV_BAR_HEIGHT = window.innerWidth < 600 ? 90 : 75;
 
 /** Order in which the pages appear in the nav bar and content. */
-const NAV_ORDER = {
+const NAV_ORDER: Record<string, number> = {
   "Portfolio": 1,
   "Resume": 2,
   "ContactMe": 3,
-} as Record<string, number>
+}
 
 /** Controls displaying of views and navigation. */
 const NavBar = () => {
   const ViewType = Views as Record<string, (viewName: string) => ReactNode>;
-  const [currentRoute, setCurrentRoute] = useState<string>(Object.keys(NAV_ORDER)[0]);
   const isSmall = window.innerWidth < 600;
 
   const getRoutes = useCallback(() => {
@@ -26,28 +25,24 @@ const NavBar = () => {
 
     return viewNames.map((viewName, index) => (
       <Fragment key={index}>
-        <NavBarItem
-          onRouteSelect={setCurrentRoute}
-          viewName={viewName}
-          isSelected={currentRoute === viewName}
-          isSmall={isSmall}
-        />
+        <NavBarItemWrapper>
+          <ScrollLink to={viewName} spy smooth duration={800} offset={-NAV_BAR_HEIGHT}>
+            <NavBarItem
+              viewName={viewName}
+              isSmall={isSmall}
+            />
+          </ScrollLink>
+        </NavBarItemWrapper>
         {index !== viewNames.length - 1 && <Divider vertical spacing={24} />}
       </Fragment>
     ));
-  }, [currentRoute, isSmall]);
+  }, [isSmall]);
 
-  /* Scroll to position of current selected route */
-  useEffect(() => {
-    scroller.scrollTo(currentRoute, {
-      duration: 1200,
-      delay: 40,
-      smooth: true,
-      offset: -NAV_BAR_HEIGHT,
-    })
-  }, [currentRoute])
-
-  const renderPages = useCallback(() => Object.keys(ViewType).sort((a, b) => NAV_ORDER[a] - NAV_ORDER[b]).map(viewName => ViewType[viewName](viewName)), [ViewType])
+  const renderPages = useCallback(() => 
+    Object.keys(ViewType)
+      .sort((a, b) => NAV_ORDER[a] - NAV_ORDER[b])
+      .map(viewName => ViewType[viewName](viewName))
+  , [ViewType])
 
   return (
     <PageWrapper>
@@ -80,14 +75,10 @@ const NavBar = () => {
 
 type NavBarItemProps = {
   viewName: string;
-  onRouteSelect: (viewName: string) => void;
-  isSelected: boolean;
   isSmall: boolean;
 };
 const NavBarItem = ({
   viewName,
-  onRouteSelect,
-  isSelected,
   isSmall,
 }: NavBarItemProps) => {
   const formatRouteName = useCallback(() => {
@@ -98,10 +89,7 @@ const NavBarItem = ({
   }, [isSmall, viewName]);
 
   return (
-    <NavBarItemStyle
-      isSelected={isSelected}
-      onClick={() => onRouteSelect(viewName)}
-    >
+    <NavBarItemStyle>
       {formatRouteName()}
     </NavBarItemStyle>
   );
@@ -134,7 +122,13 @@ const NavBarItemContainer = styled.div`
   padding: 8px 8px 8px 18px;
   box-sizing: border-box;
 `;
-const NavBarItemStyle = styled.div<{ isSelected: boolean }>`
+const NavBarItemWrapper = styled.div`
+  .active div {
+    color: RGBA(0, 0, 0, 1);
+    border-bottom: 1px solid black;
+  }
+`
+const NavBarItemStyle = styled.div`
   user-select: none;
   cursor: pointer;
   height: 100%;
@@ -147,13 +141,12 @@ const NavBarItemStyle = styled.div<{ isSelected: boolean }>`
   margin-bottom: 8px;
   text-align: center;
 
-  color: ${({ isSelected }) => isSelected ? "RGBA(0, 0, 0, 1)" : "RGBA(0, 0, 0, 0.5)"};
-
-  border-bottom: ${({ isSelected }) =>
-    isSelected ? "1px solid black" : "none"};
+  /* These will swap out based on if the ScrollLink above it is 'active'. */
+  color: RGBA(0, 0, 0, 0.5);
+  border-bottom: none;
 
   transition: transform 250ms;
-  :hover {
+  &:hover {
     transform: translateY(-4px);
   }
 `;

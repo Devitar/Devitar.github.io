@@ -5,10 +5,10 @@ import resume from "../assets/Resume-Devin-Curtis.pdf";
 const Resume = (viewName: string) => {
   const isSmall = window.innerWidth < 600;
   return(
-    <View viewId={viewName}>
+    <View viewId={viewName} key={Math.random()}>
       {isSmall
-        ? (<PDF pdf={resume} numberOfPages={2} showPageNumber />)
-        : (<PDF row pdf={resume} numberOfPages={2} showPageNumber widthAlpha={0.49} />)
+        ? (<PDF pdf={resume} numberOfPages={1} />)
+        : (<PDF row pdf={resume} numberOfPages={1} widthAlpha={0.65} />)
       }
       
     </View>

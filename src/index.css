@@ -16,7 +16,6 @@ code {
 }
 
 .app_background_container {
-  background-image: url("./assets/images/Forest.jpeg");
   filter: blur(6px);
   -webkit-filter: blur(6px);
   width: 102vw;

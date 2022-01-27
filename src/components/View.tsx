@@ -35,7 +35,7 @@ const View = ({ viewId, headerText, children, ...passThrough }: Props) => {
       : windowHeight - NAV_BAR_HEIGHT;
 
   return (
-    <ViewStyle key={Math.random()} id={viewId}>
+    <ViewStyle id={viewId}>
       {headerText && window.innerWidth > 600 && <ViewHeader text={headerText} />}
       <BodyStyle minHeight={heightCalc} {...passThrough}>
         {children}
