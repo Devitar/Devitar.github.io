@@ -9,11 +9,11 @@ import * as Views from "../views";
 export const NAV_BAR_HEIGHT = window.innerWidth < 600 ? 90 : 75;
 
 /** Order in which the pages appear in the nav bar and content. */
-const NAV_ORDER = {
+const NAV_ORDER: Record<string, number> = {
   "Portfolio": 1,
   "Resume": 2,
   "ContactMe": 3,
-} as Record<string, number>
+}
 
 /** Controls displaying of views and navigation. */
 const NavBar = () => {
@@ -47,7 +47,11 @@ const NavBar = () => {
     })
   }, [currentRoute])
 
-  const renderPages = useCallback(() => Object.keys(ViewType).sort((a, b) => NAV_ORDER[a] - NAV_ORDER[b]).map(viewName => ViewType[viewName](viewName)), [ViewType])
+  const renderPages = useCallback(() => 
+    Object.keys(ViewType)
+      .sort((a, b) => NAV_ORDER[a] - NAV_ORDER[b])
+      .map(viewName => ViewType[viewName](viewName))
+  , [ViewType])
 
   return (
     <PageWrapper>
