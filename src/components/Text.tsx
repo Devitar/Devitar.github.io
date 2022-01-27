@@ -16,7 +16,7 @@ type Props = {
   /** Sets the font size in pixels. Default: 14 */
   fontSize?: number;
   /** Flags the text as a link (of a certain type if chosen, will use a generic if not),
-   * and will be rendered as an <a> tag instead. Default: false */
+   * and will be rendered as an `<a>` tag instead. Default: false */
   link?: boolean | "email" | "telephone" | "textMessage";
   /** Masks a link with different text. Ignored if the text is not a link. */
   mask?: string;
