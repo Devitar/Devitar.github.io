@@ -1,22 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.92ef172d.css",
-    "main.js": "/static/js/main.bf2e90fc.js",
-    "static/js/787.1ed0c42c.chunk.js": "/static/js/787.1ed0c42c.chunk.js",
-    "static/media/Forest.jpeg": "/static/media/Forest.342de34e4673c707a87c.jpeg",
-    "static/media/to-do-list.png": "/static/media/to-do-list.85796a00ecabcc64b4ea.png",
-    "static/media/trivia-app.png": "/static/media/trivia-app.93d9d0ac19f5286c8c61.png",
-    "static/media/e-commerce-store.png": "/static/media/e-commerce-store.1a4cddb04e07aba728ca.png",
-    "static/media/golf-scorecard.png": "/static/media/golf-scorecard.87d8fb8b49570a06c060.png",
-    "static/media/Resume-Devin-Curtis.pdf": "/static/media/Resume-Devin-Curtis.7a7570fe632deac48dcf.pdf",
-    "static/media/user-manager.png": "/static/media/user-manager.8312a9a7b80cc5f04a09.png",
+    "main.css": "/static/css/main.b59cb5b7.css",
+    "main.js": "/static/js/main.e053ad49.js",
+    "static/media/Forest.webp": "/static/media/Forest.84cca11fbc72fa7bd86d.webp",
+    "static/media/Resume-Devin-Curtis.pdf": "/static/media/Resume-Devin-Curtis.1987a15912fdfe8be581.pdf",
+    "static/media/e-commerce-store.webp": "/static/media/e-commerce-store.427b0c00228d34546a48.webp",
+    "static/media/to-do-list.webp": "/static/media/to-do-list.695dbf8609282807fdb3.webp",
+    "static/media/trivia-app.webp": "/static/media/trivia-app.584b05a9a00c7932fb72.webp",
+    "static/media/user-manager.webp": "/static/media/user-manager.94cf64189c93dc1d5b39.webp",
+    "static/media/golf-scorecard.webp": "/static/media/golf-scorecard.8a37570ca44da3c62ae0.webp",
     "index.html": "/index.html",
-    "main.92ef172d.css.map": "/static/css/main.92ef172d.css.map",
-    "main.bf2e90fc.js.map": "/static/js/main.bf2e90fc.js.map",
-    "787.1ed0c42c.chunk.js.map": "/static/js/787.1ed0c42c.chunk.js.map"
+    "main.b59cb5b7.css.map": "/static/css/main.b59cb5b7.css.map",
+    "main.e053ad49.js.map": "/static/js/main.e053ad49.js.map"
   },
   "entrypoints": [
-    "static/css/main.92ef172d.css",
-    "static/js/main.bf2e90fc.js"
+    "static/css/main.b59cb5b7.css",
+    "static/js/main.e053ad49.js"
   ]
 }
