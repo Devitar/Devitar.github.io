@@ -1,6 +1,6 @@
 import { NavBar } from "./components";
 import './index.css'
-import forest from "./assets/images/Forest.jpeg"
+import forest from "./assets/images/Forest.webp"
 
 const App = () => {
 

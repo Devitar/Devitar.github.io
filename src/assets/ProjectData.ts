@@ -1,8 +1,8 @@
-import golfscorecard from "./images/golf-scorecard.png";
-import ecommerce from "./images/e-commerce-store.png";
-import trivia from "./images/trivia-app.png";
-import usermanager from "./images/user-manager.png";
-import todoapp from "./images/to-do-list.png";
+import golfscorecard from "./images/golf-scorecard.webp";
+import ecommerce from "./images/e-commerce-store.webp";
+import trivia from "./images/trivia-app.webp";
+import usermanager from "./images/user-manager.webp";
+import todoapp from "./images/to-do-list.webp";
 
 export const PROJECT_DATA = [
   {

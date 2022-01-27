@@ -4,7 +4,7 @@ import { PROJECT_DATA } from "../assets/ProjectData";
 /** The main page of the app. Shows my projects. */
 const Portfolio = (viewName: string) => {
   return (
-    <View viewId={viewName}>
+    <View viewId={viewName} key={Math.random()}>
       <Grid>
         {PROJECT_DATA.map((value, index) => (
           <FlipCard
