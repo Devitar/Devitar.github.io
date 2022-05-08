@@ -1,10 +1,19 @@
-import golfscorecard from "./images/golf-scorecard.webp";
 import ecommerce from "./images/e-commerce-store.webp";
+import golfscorecard from "./images/golf-scorecard.webp";
+import hangman from "./images/hangman.webp";
+import todoapp from "./images/to-do-list.webp";
 import trivia from "./images/trivia-app.webp";
 import usermanager from "./images/user-manager.webp";
-import todoapp from "./images/to-do-list.webp";
 
 export const PROJECT_DATA = [
+  {
+    title: "Hangman Game",
+    subtitle: "(Elm)",
+    subtitle2:
+      "A classic game of hangman.",
+    url: "https://devincurtis.tech/hangman/",
+    image: hangman,
+  },
   {
     title: "Golf Scorecard App",
     subtitle: "(Ionic + Angular, Best viewed on mobile devices.)",
