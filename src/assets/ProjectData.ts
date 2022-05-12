@@ -5,6 +5,7 @@ import todoapp from "./images/to-do-list.webp";
 import trivia from "./images/trivia-app.webp";
 import usermanager from "./images/user-manager.webp";
 
+
 export const PROJECT_DATA = [
   {
     title: "Hangman Game",
