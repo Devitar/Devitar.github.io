@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "/static/css/main.b59cb5b7.css",
-    "main.js": "/static/js/main.fb69361d.js",
+    "main.css": "/static/css/main.0603646f.css",
+    "main.js": "/static/js/main.8bde77d7.js",
     "static/media/Forest.webp": "/static/media/Forest.84cca11fbc72fa7bd86d.webp",
+    "static/media/Comfortaa-VariableFont_wght.ttf": "/static/media/Comfortaa-VariableFont_wght.42599e57da15daf79164.ttf",
     "static/media/Resume-Devin-Curtis.pdf": "/static/media/Resume-Devin-Curtis.1987a15912fdfe8be581.pdf",
     "static/media/e-commerce-store.webp": "/static/media/e-commerce-store.427b0c00228d34546a48.webp",
     "static/media/hangman.webp": "/static/media/hangman.7f9a476425fae0e577da.webp",
@@ -11,11 +12,11 @@
     "static/media/user-manager.webp": "/static/media/user-manager.94cf64189c93dc1d5b39.webp",
     "static/media/golf-scorecard.webp": "/static/media/golf-scorecard.8a37570ca44da3c62ae0.webp",
     "index.html": "/index.html",
-    "main.b59cb5b7.css.map": "/static/css/main.b59cb5b7.css.map",
-    "main.fb69361d.js.map": "/static/js/main.fb69361d.js.map"
+    "main.0603646f.css.map": "/static/css/main.0603646f.css.map",
+    "main.8bde77d7.js.map": "/static/js/main.8bde77d7.js.map"
   },
   "entrypoints": [
-    "static/css/main.b59cb5b7.css",
-    "static/js/main.fb69361d.js"
+    "static/css/main.0603646f.css",
+    "static/js/main.8bde77d7.js"
   ]
 }
