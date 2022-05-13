@@ -1,4 +1,4 @@
-import { NavBar, NewNavV } from "./components";
+import { NewNavV } from "./components";
 import './index.css'
 import forest from "./assets/images/Forest.webp"
 

@@ -27,21 +27,21 @@ const Navigation = () => {
                 <ul>
                     <List className={`list ${activeIcon === 1 ? 'active' : ''}`} color="#d73b3e" >
                         <Icon className="icon">
-                            <ScrollLink to={"Portfolio"} spy smooth duration={800} onSetActive={() => setActiveIcon(1)} onClick={() => setActiveIcon(1)}>
+                            <ScrollLink to={"Portfolio"} spy smooth duration={800} onSetActive={() => setActiveIcon(1)}>
                                 <p>Portfolio</p>
                             </ScrollLink>
                         </Icon>
                     </List>
                     <List className={`list ${activeIcon === 2 ? 'active' : ''}`} color="#3cb371">
                         <Icon className="icon">
-                            <ScrollLink to={"Resume"} spy smooth duration={800} onSetActive={() => setActiveIcon(2)} onClick={() => setActiveIcon(2)}>
+                            <ScrollLink to={"Resume"} spy smooth duration={800} onSetActive={() => setActiveIcon(2)}>
                                 <p>Resume</p>
                             </ScrollLink>
                         </Icon>
                     </List>
                     <List className={`list ${activeIcon === 3 ? 'active' : ''}`} color="#4169e1">
                         <Icon className="icon">
-                            <ScrollLink to={"ContactMe"} spy smooth duration={800} onSetActive={() => setActiveIcon(3)} onClick={() => setActiveIcon(3)}>
+                            <ScrollLink to={"ContactMe"} spy smooth duration={800} onSetActive={() => setActiveIcon(3)}>
                                 <p>Contact</p>
                             </ScrollLink>
                         </Icon>
