@@ -6,3 +6,6 @@ export { default as PDF } from "./PDF";
 export { default as Text } from "./Text";
 export { default as View, FADE_IN_TIME } from "./View";
 export { default as FlipCard } from "./FlipCard"
+
+export { default as NewNav } from "./NewNavigation"
+export { default as NewNavV } from "./NewNavigationV"

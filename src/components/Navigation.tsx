@@ -6,7 +6,8 @@ import * as Views from "../views";
 
 /** Constants */
 
-export const NAV_BAR_HEIGHT = window.innerWidth < 600 ? 90 : 75;
+export const NAV_BAR_HEIGHT = 0;
+// export const NAV_BAR_HEIGHT = window.innerWidth < 600 ? 90 : 75;
 
 /** Order in which the pages appear in the nav bar and content. */
 const NAV_ORDER: Record<string, number> = {
@@ -38,11 +39,11 @@ const NavBar = () => {
     ));
   }, [isSmall]);
 
-  const renderPages = useCallback(() => 
+  const renderPages = useCallback(() =>
     Object.keys(ViewType)
       .sort((a, b) => NAV_ORDER[a] - NAV_ORDER[b])
       .map(viewName => ViewType[viewName](viewName))
-  , [ViewType])
+    , [ViewType])
 
   return (
     <PageWrapper>
