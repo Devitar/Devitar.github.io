@@ -23,7 +23,6 @@ const Grid = ({ center = true, gutter = 16, children }: Props) => {
   );
 
   return (
-    // <FlexGrid center={center}>{children}</FlexGrid>
     <FlexGrid center={center}>{children.map((c) => wrapChild(c))}</FlexGrid>
   );
 };
@@ -33,6 +32,7 @@ const Grid = ({ center = true, gutter = 16, children }: Props) => {
 const FlexGrid = styled.div<{ center: boolean }>`
   display: flex;
   flex-wrap: wrap;
+  max-width: 1250px;
   width: 100%;
   justify-content: ${({ center }) => (center ? "center" : undefined)};
 

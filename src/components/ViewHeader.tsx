@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FADE_IN_TIME } from "./View";
 
 /** Constants */
 
@@ -35,7 +34,7 @@ const HeaderText = styled.div`
   align-items: center;
 
   opacity: 0;
-  animation: fadeIn ${FADE_IN_TIME / 2}s linear 250ms forwards;
+  animation: fadeIn ${0.45 / 2}s linear 250ms forwards;
   transition: linear;
   @keyframes fadeIn {
     0% {
