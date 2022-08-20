@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/static/css/main.0603646f.css",
-    "main.js": "/static/js/main.8bde77d7.js",
-    "static/media/Forest.webp": "/static/media/Forest.84cca11fbc72fa7bd86d.webp",
+    "main.js": "/static/js/main.3d05104f.js",
     "static/media/Comfortaa-VariableFont_wght.ttf": "/static/media/Comfortaa-VariableFont_wght.42599e57da15daf79164.ttf",
-    "static/media/Resume-Devin-Curtis.pdf": "/static/media/Resume-Devin-Curtis.1987a15912fdfe8be581.pdf",
+    "static/media/Resume-Devin-Curtis.pdf": "/static/media/Resume-Devin-Curtis.1ed896be2cdaedf91a03.pdf",
     "static/media/e-commerce-store.webp": "/static/media/e-commerce-store.427b0c00228d34546a48.webp",
     "static/media/hangman.webp": "/static/media/hangman.7f9a476425fae0e577da.webp",
     "static/media/to-do-list.webp": "/static/media/to-do-list.695dbf8609282807fdb3.webp",
     "static/media/trivia-app.webp": "/static/media/trivia-app.584b05a9a00c7932fb72.webp",
     "static/media/user-manager.webp": "/static/media/user-manager.94cf64189c93dc1d5b39.webp",
+    "static/media/Forest.webp": "/static/media/Forest.593c76dea82e671a26bd.webp",
     "static/media/golf-scorecard.webp": "/static/media/golf-scorecard.8a37570ca44da3c62ae0.webp",
     "index.html": "/index.html",
     "main.0603646f.css.map": "/static/css/main.0603646f.css.map",
-    "main.8bde77d7.js.map": "/static/js/main.8bde77d7.js.map"
+    "main.3d05104f.js.map": "/static/js/main.3d05104f.js.map"
   },
   "entrypoints": [
     "static/css/main.0603646f.css",
-    "static/js/main.8bde77d7.js"
+    "static/js/main.3d05104f.js"
   ]
 }
