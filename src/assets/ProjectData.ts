@@ -4,8 +4,17 @@ import hangman from "./images/hangman.webp";
 import todoapp from "./images/to-do-list.webp";
 import trivia from "./images/trivia-app.webp";
 import usermanager from "./images/user-manager.webp";
+import ffthumbnail from "./images/thumbnail-ff.webp"
 
 export const PROJECT_DATA = [
+  {
+    title: "Furry Frenzy",
+    subtitle: "(Roblox)",
+    subtitle2:
+      "An adventure platformer created in the Roblox engine. You have been shrunk down to the size of a hamster and must escape various pet cages!",
+    url: "https://www.roblox.com/games/14521459910/Furry-Frenzy-Obby",
+    image: ffthumbnail,
+  },
   {
     title: "Hangman Game",
     subtitle: "(Elm)",
@@ -14,15 +23,15 @@ export const PROJECT_DATA = [
     url: "https://devincurtis.tech/hangman/",
     image: hangman,
   },
-  {
-    title: "Golf Scorecard App",
-    subtitle: "(Ionic + Angular, Best viewed on mobile devices.)",
-    subtitle2:
-      "Play, track and save your golf scores using data from Utah golf courses.",
-    url: "https://ionic-ng-golf-app.firebaseapp.com/home",
-    image: golfscorecard,
-    imgWidth: "40%",
-  },
+  // {
+  //   title: "Golf Scorecard App",
+  //   subtitle: "(Ionic + Angular, Best viewed on mobile devices.)",
+  //   subtitle2:
+  //     "Play, track and save your golf scores using data from Utah golf courses.",
+  //   url: "https://ionic-ng-golf-app.firebaseapp.com/home",
+  //   image: golfscorecard,
+  //   imgWidth: "40%",
+  // },
   {
     title: "E-Commerce Store",
     subtitle: "(React)",
@@ -40,14 +49,14 @@ export const PROJECT_DATA = [
     url: "https://trivia-app-17b9d.firebaseapp.com/",
     image: trivia,
   },
-  {
-    title: "User Manager",
-    subtitle: "(PostgreSQL)",
-    subtitle2:
-      "A simple user manager app that saves in real time with Postgres.",
-    url: "https://dcurtis-user-manager-postgres.herokuapp.com",
-    image: usermanager,
-  },
+  // {
+  //   title: "User Manager",
+  //   subtitle: "(PostgreSQL)",
+  //   subtitle2:
+  //     "A simple user manager app that saves in real time with Postgres.",
+  //   url: "https://dcurtis-user-manager-postgres.herokuapp.com",
+  //   image: usermanager,
+  // },
   {
     title: "To Do App",
     subtitle: "(jQuery + Bootstrap)",

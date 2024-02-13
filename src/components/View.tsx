@@ -52,6 +52,7 @@ const ViewStyle = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  margin-bottom: 8px;
   width: 100%;
   z-index: 2;
 

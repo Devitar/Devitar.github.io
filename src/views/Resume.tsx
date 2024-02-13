@@ -1,5 +1,5 @@
 import { PDF, View } from "../components";
-import resume from "../assets/Resume-Devin-Curtis.pdf";
+import resume from "../assets/Resume-Devin-Curtis-02-2024.pdf";
 
 /** Page containing my resume. */
 const Resume = (viewName: string) => {

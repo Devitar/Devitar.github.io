@@ -38,6 +38,7 @@ const Navigation = () => {
                 smooth
                 duration={800}
                 onSetActive={() => setActiveIcon(1)}
+                
               >
                 <p>Portfolio</p>
               </ScrollLink>
