@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import styled from "styled-components";
+import { type ReactNode } from "react";
+import "./Text.css";
 
 /** Types */
 
@@ -37,11 +37,21 @@ const Text = ({
   newTab = true,
 }: Props) =>
   !link ? (
-    <TextRenderer align={align} bold={bold} color={color} fontSize={fontSize} backgroundColor={backgroundColor}>
+    <div
+      className="text-renderer"
+      style={{
+        backgroundColor: backgroundColor ?? "transparent",
+        color: color,
+        fontSize: `${fontSize}px`,
+        fontWeight: bold ? "bold" : 400,
+        textAlign: align,
+      }}
+    >
       {children}
-    </TextRenderer>
+    </div>
   ) : (
-    <LinkRenderer
+    <a
+      className="link-renderer"
       href={
         link === "email"
           ? `mailto:${children as string}`
@@ -52,31 +62,17 @@ const Text = ({
           : (children as string)
       }
       target={newTab ? "_blank" : undefined}
-      backgroundColor={backgroundColor}
-      color={color}
+      style={{
+        backgroundColor: backgroundColor ?? "transparent",
+        color: color,
+        fontSize: `${fontSize}px`,
+        fontWeight: bold ? "bold" : 400,
+        textAlign: align,
+      }}
     >
       {mask ? mask : children}
-    </LinkRenderer>
+    </a>
   );
-
-/** Styles */
-
-const TextRenderer = styled.div<Omit<Props, "children" | "link">>`
-  background-color: ${({ backgroundColor }) => backgroundColor ?? "transparent"};
-  color: ${({ color }) => color};
-  display: flex;
-  font-size: ${({ fontSize }) => `${fontSize}px`};
-  font-weight: ${({ bold }) => (bold ? "bold" : 400)};
-  text-align: ${({ align }) => align};
-`;
-const LinkRenderer = styled.a<Omit<Props, "children" | "link">>`
-  background-color: ${({ backgroundColor }) => backgroundColor ?? "transparent"};
-  color: ${({ color }) => color};
-  display: flex;
-  font-size: ${({ fontSize }) => `${fontSize}px`};
-  font-weight: ${({ bold }) => (bold ? "bold" : 400)};
-  text-align: ${({ align }) => align};
-`;
 
 /** Exports */
 

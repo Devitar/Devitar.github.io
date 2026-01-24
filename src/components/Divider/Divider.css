@@ -1,0 +1,9 @@
+.horizontal-divider {
+  width: 100%;
+  height: 1px;
+}
+
+.vertical-divider {
+  width: 1px;
+  height: 100%;
+}

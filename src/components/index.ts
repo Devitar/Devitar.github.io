@@ -1,9 +1,9 @@
-export { default as Divider } from "./Divider";
-export { default as FlipCard } from "./FlipCard";
-export { default as Grid } from "./Grid";
-export { default as Navigation } from "./Navigation";
-export { default as PDF } from "./PDF";
-export { default as Text } from "./Text";
-export { default as View } from "./View";
-export { default as ViewHeader } from "./ViewHeader";
-
+export { default as Divider } from "./Divider/Divider";
+export { default as FlipCard } from "./FlipCard/FlipCard";
+export { default as Grid } from "./Grid/Grid";
+export { default as Navigation } from "./Navigation/Navigation";
+export { default as PDF } from "./PDF/PDF";
+export { default as Text } from "./Text/Text";
+export { default as View } from "./View/View";
+export { default as ViewHeader } from "./ViewHeader/ViewHeader";
+export { default as Test } from "./Test"

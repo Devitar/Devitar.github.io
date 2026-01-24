@@ -1,0 +1,28 @@
+.pdf-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.pdf-wrapper.pdf-row {
+  flex-direction: row;
+}
+
+.pdf-wrapper.pdf-column {
+  flex-direction: column;
+}
+
+.pdf-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.pdf-container.pdf-with-border {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.pdf-page-text {
+  padding: 4px;
+  background-color: #e4e4e4;
+}

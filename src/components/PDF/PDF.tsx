@@ -1,10 +1,12 @@
 import { useCallback } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-import styled from "styled-components";
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import "react-pdf/dist/Page/TextLayer.css";
+import "./PDF.css";
 
 /** Config */
 
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const PDFWidth = window.innerWidth < 600 ? 1 : 0.75;
 
@@ -42,44 +44,23 @@ const PDF = ({
   /** Creates an array of react-pdf Document elements. */
   const renderDocuments = useCallback(
     () =>
-    <Wrapper row={row}>
+    <div className={`pdf-wrapper ${row ? "pdf-row" : "pdf-column"}`}>
       {Array(numberOfPages)
         .fill(1)
         .map((_, i) => (
-          <Container showBorder={showPageBorder} key={i}>
-            {showPageNumber && <PageText>{`Page ${i + 1}`}</PageText>}
-            <Document file={pdf} onLoadError={console.log}>
+          <div className={`pdf-container ${showPageBorder ? "pdf-with-border" : ""}`} key={i}>
+            {showPageNumber && <div className="pdf-page-text">{`Page ${i + 1}`}</div>}
+            <Document file={pdf} onLoadError={console.error}>
               <Page pageNumber={i + 1} width={width} />
             </Document>
-          </Container>
+          </div>
         ))}
-        </Wrapper>,
+        </div>,
     [numberOfPages, pdf, row, showPageBorder, showPageNumber, width]
   );
 
   return <>{renderDocuments()}</>;
 };
-
-/** Styles */
-
-const Wrapper = styled.div<{row: boolean}>`
-  display: flex;
-  flex-direction: ${({row}) => row ? "row" : "column"};
-  justify-content: space-evenly;
-  width: 100%;
-`
-const Container = styled.div<{ showBorder: boolean }>`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  border: ${({ showBorder }) =>
-    showBorder ? "1px solid rgba(0, 0, 0, 0.25)" : undefined};
-`;
-const PageText = styled.div`
-  padding: 4px;
-  background-color: #e4e4e4;
-`;
 
 /** Hooks */
 

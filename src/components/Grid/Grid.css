@@ -1,0 +1,20 @@
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1250px;
+  width: 100%;
+}
+
+.grid-container.grid-center {
+  justify-content: center;
+}
+
+.grid-column {
+  /* Margin is dynamically set via inline style */
+}
+
+@media (max-width: 600px) {
+  .grid-container {
+    align-items: center;
+  }
+}
