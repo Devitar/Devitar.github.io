@@ -4,20 +4,20 @@ import { Link as ScrollLink } from "react-scroll";
 import * as Views from "../views";
 
 /** Order in which the pages appear in the nav bar and content. */
-const NAV_ORDER: Record<string, number> = {
+const NAV_ORDER = {
   Portfolio: 1,
   Resume: 2,
   ContactMe: 3,
-};
+} as const;
 
 /** Component */
 const Navigation = () => {
   const [activeIcon, setActiveIcon] = useState<number>(1);
-  const ViewType = Views as Record<string, (viewName: string) => ReactNode>;
+  const ViewType = Views as Record<keyof typeof NAV_ORDER, (viewName: string) => ReactNode>;
 
   const renderPages = useMemo(
     () =>
-      Object.keys(ViewType)
+      (Object.keys(ViewType) as Array<keyof typeof ViewType>)
         .sort((a, b) => NAV_ORDER[a] - NAV_ORDER[b])
         .map((viewName) => ViewType[viewName](viewName)),
     [ViewType]
