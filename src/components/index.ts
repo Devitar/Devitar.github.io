@@ -6,4 +6,4 @@ export { default as PDF } from "./PDF/PDF";
 export { default as Text } from "./Text/Text";
 export { default as View } from "./View/View";
 export { default as ViewHeader } from "./ViewHeader/ViewHeader";
-// export { default as Test } from "./Test"
+export { default as Test } from "./Test"

@@ -1,31 +1,181 @@
-import { useRef, useState } from 'react'
-import { Canvas, useFrame, type ThreeElements } from '@react-three/fiber'
+import { useRef, useEffect, useState } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { PerspectiveCamera } from '@react-three/drei'
+import * as THREE from 'three'
+import { parseGIF, decompressFrames } from 'gifuct-js'
+import "./Test.css"
+import fireGif from '../assets/images/fire.gif'
 
-// function Box(props: ThreeElements['mesh']) {
-//   const ref = useRef<THREE.Mesh>(null!)
-//   const [hovered, hover] = useState(false)
-//   const [clicked, click] = useState(false)
-//   useFrame((state, delta) => (ref.current.rotation.x += delta))
-//   return (
-//     <mesh
-//       {...props}
-//       ref={ref}
-//       scale={clicked ? 1.5 : 1}
-//       onClick={(event) => click(!clicked)}
-//       onPointerOver={(event) => hover(true)}
-//       onPointerOut={(event) => hover(false)}>
-//       <boxGeometry args={[1, 1, 1]} />
-//       <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
-//     </mesh>
-//   )
-// }
+function FlickeringLight({ position, color, baseIntensity = 1 }: { position: [number, number, number], color: string, baseIntensity?: number }) {
+  const lightRef = useRef<THREE.PointLight>(null!)
+
+  useFrame((state) => {
+    if (lightRef.current) {
+      // Create flickering effect using sine waves with different frequencies
+      const flicker1 = Math.sin(state.clock.elapsedTime * 8) * 0.1
+      const flicker2 = Math.sin(state.clock.elapsedTime * 13) * 0.05
+      const flicker3 = Math.sin(state.clock.elapsedTime * 20) * 0.03
+
+      lightRef.current.intensity = baseIntensity + flicker1 + flicker2 + flicker3
+    }
+  })
+
+  return <pointLight ref={lightRef} position={position} color={color} />
+}
+
+function useGifTexture(url: string, interval: number = 100) {
+  const [texture, setTexture] = useState<THREE.CanvasTexture | null>(null)
+  const [frames, setFrames] = useState<any[]>([])
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const currentFrameRef = useRef(0)
+  const lastFrameTimeRef = useRef(0)
+
+  useEffect(() => {
+    const canvas = document.createElement('canvas')
+    canvasRef.current = canvas
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    fetch(url)
+      .then(resp => resp.arrayBuffer())
+      .then(buff => {
+        const gif = parseGIF(buff)
+        const frames = decompressFrames(gif, true)
+        setFrames(frames)
+
+        if (frames.length > 0) {
+          canvas.width = frames[0].dims.width
+          canvas.height = frames[0].dims.height
+          const tex = new THREE.CanvasTexture(canvas)
+          tex.minFilter = THREE.LinearFilter
+          tex.magFilter = THREE.NearestFilter
+          setTexture(tex)
+        }
+      })
+      .catch(console.error)
+  }, [url])
+
+  useFrame((state) => {
+    if (!frames.length || !canvasRef.current || !texture) return
+
+    // Only update frame if enough time has passed
+    const currentTime = state.clock.elapsedTime * 1000 // Convert to milliseconds
+    if (currentTime - lastFrameTimeRef.current < interval) return
+
+    lastFrameTimeRef.current = currentTime
+
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const frame = frames[currentFrameRef.current]
+    const imageData = new ImageData(
+      new Uint8ClampedArray(frame.patch),
+      frame.dims.width,
+      frame.dims.height
+    )
+
+    ctx.putImageData(imageData, 0, 0)
+    texture.needsUpdate = true
+
+    currentFrameRef.current = (currentFrameRef.current + 1) % frames.length
+  })
+
+  return texture
+}
+
+function FireSprite({ position }: { position: [number, number, number] }) {
+  const texture = useGifTexture(fireGif, 50)
+
+  if (!texture) return null
+
+  return (
+    <sprite position={position} scale={[0.15, 0.1, 0.15]}>
+      <spriteMaterial map={texture} transparent sizeAttenuation={false} />
+    </sprite>
+  )
+}
+
+//       <group name="flashlight" position={[0.18, 0.06, 2.57]} rotation={[-1.3446253347470072, -0.1497907014217364, -0.30376392625385]} scale={[0.57, 0.57, 0.57]}>
+//   {/* Flashlight body */}
+//   <mesh scale={[1, 0.45, 1]} position={[0.0129733619910496, -0.00527906290348988, 0]}>
+//     <cylinderGeometry args={[0.01, 0.01, 0.15, 8]} />
+//     <meshStandardMaterial color={"#555555"} />
+//   </mesh>
+//   {/* Flashlight head */}
+//   <mesh position={[0.0139417451462573, 0.0212736204050017, 0]} scale={[1.35, 0.45, 1.39]} rotation={[3.121669280381995, 0.007306405590103245, 0.018904953205471604]}>
+//     <coneGeometry args={[0.015, 0.03, 8]} />
+//     <meshStandardMaterial color={"#666666"} />
+//   </mesh>
+//   {/* Flashlight beam */}
+//   <spotLight
+//     position={[0.0149383325902224, 0.0162121137644282, 0]}
+//     target-position={[1, 1, 0]}
+//     angle={0.4}
+//     penumbra={0.5}
+//     intensity={2}
+//     distance={3}
+//     color={"#fff8e7"}
+//     castShadow
+//   />
+// </group>
 
 export default function Scene() {
   return (
-    <>
+    <Canvas className='main-canvas'>
+      {/* GLOBAL */}
+
+      <PerspectiveCamera makeDefault position={[0.12, 0.03, 3.16]} rotation={[0.26179938779914946, 0.13962634015954647, 3.503543193473437e-18]} />
+
       {/* CAMP */}
 
-      <pointLight name={"campfire_light"} position={[0, 0.03, 2.73]} intensity={1} color={"#dfa811"} />
+      <FlickeringLight position={[0, 0.03, 2.73]} color={"#dfa811"} baseIntensity={1} />
+      <FireSprite position={[0, 0.025, 2.73]} />
+
+      {/* Campfire logs bundle */}
+      <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]}>
+        {/* Logs arranged in a circular pattern radiating from center */}
+        {/* Log 1 - Right */}
+        <mesh position={[0.06, 0.008, 0]} rotation={[0, 0, Math.PI / 2]}>
+          <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />
+          <meshStandardMaterial color={"#3d2817"} />
+        </mesh>
+        {/* Log 2 - Left */}
+        <mesh position={[-0.06, 0.008, 0]} rotation={[0, 0, Math.PI / 2]}>
+          <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />
+          <meshStandardMaterial color={"#42301a"} />
+        </mesh>
+        {/* Log 3 - Front */}
+        <mesh position={[0, 0.008, 0.06]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />
+          <meshStandardMaterial color={"#3d2817"} />
+        </mesh>
+        {/* Log 4 - Back */}
+        <mesh position={[0, 0.008, -0.06]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />
+          <meshStandardMaterial color={"#42301a"} />
+        </mesh>
+        {/* Log 5 - Front-Right diagonal */}
+        <mesh position={[0.042, 0.008, 0.042]} rotation={[Math.PI / 2, 0, Math.PI / 4]}>
+          <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />
+          <meshStandardMaterial color={"#3d2817"} />
+        </mesh>
+        {/* Log 6 - Front-Left diagonal */}
+        <mesh position={[-0.042, 0.008, 0.042]} rotation={[Math.PI / 2, 0, -Math.PI / 4]}>
+          <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />
+          <meshStandardMaterial color={"#42301a"} />
+        </mesh>
+        {/* Log 7 - Back-Right diagonal */}
+        <mesh position={[0.042, 0.008, -0.042]} rotation={[Math.PI / 2, 0, -Math.PI / 4]}>
+          <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />
+          <meshStandardMaterial color={"#3d2817"} />
+        </mesh>
+        {/* Log 8 - Back-Left diagonal */}
+        <mesh position={[-0.042, 0.008, -0.042]} rotation={[Math.PI / 2, 0, Math.PI / 4]}>
+          <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />
+          <meshStandardMaterial color={"#42301a"} />
+        </mesh>
+      </group>
 
       <mesh name={"log"} position={[0.1, 0.03, 2.52]} rotation={[3.0152557600895867e-17, -0.40142572795869585, 1.5707963267948966]} scale={[0.6, 0.39, 0.6]}>
         <cylinderGeometry args={[0.05, 0.05, 0.6, 16]} />
@@ -703,6 +853,6 @@ export default function Scene() {
           <meshStandardMaterial color={"#521d00"} />
         </mesh>
       </group>
-    </>
+    </Canvas>
   );
 }
