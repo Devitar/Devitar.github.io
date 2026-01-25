@@ -1,4 +1,4 @@
-import { Test, View } from "../components";
+import { View } from "../components";
 
 /** Contact me page. */
 const ContactMe = (viewName: string) => (
