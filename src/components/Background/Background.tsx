@@ -5,6 +5,7 @@ import { PerspectiveCamera } from '@react-three/drei'
 /** Subcomponents */
 import FireSprite from "./subcomponents/FireSprite"
 import FlickeringLight from "./subcomponents/FlickeringLight"
+import TwinklingStar from "./subcomponents/TwinklingStar"
 
 //       <group name="flashlight" position={[0.18, 0.06, 2.57]} rotation={[-1.3446253347470072, -0.1497907014217364, -0.30376392625385]} scale={[0.57, 0.57, 0.57]}>
 //   {/* Flashlight body */}
@@ -137,60 +138,22 @@ export default function Scene() {
         <pointLight intensity={2} />
       </mesh>
       <group name="big_dipper" position={[-1.18, 1.95, -0.63]} rotation={[-0.057859925759693155, 0.07155343523626997, -0.2801141128557414]}>
-        <mesh position={[0, 0, 0]} scale={[0.05, 0.05, 0.01]} name={"megrez"}>
-          <boxGeometry />
-          <meshBasicMaterial color={"#ffffff"} />
-        </mesh>
-        <mesh position={[0.4, 0, 0]} scale={[0.05, 0.05, 0.01]} name={"dubhe"}>
-          <boxGeometry />
-          <meshBasicMaterial color={"#ffffff"} />
-        </mesh>
-        <mesh position={[0.45, -0.3, 0]} scale={[0.05, 0.05, 0.01]} name={"merak"}>
-          <boxGeometry />
-          <meshBasicMaterial color={"#ffffff"} />
-        </mesh>
-        <mesh position={[0.05, -0.3, 0]} scale={[0.05, 0.05, 0.01]} name={"phecda"}>
-          <boxGeometry />
-          <meshBasicMaterial color={"#ffffff"} />
-        </mesh>
-        <mesh position={[-0.21, 0.2, 0]} scale={[0.05, 0.05, 0.01]} name={"alioth"}>
-          <boxGeometry />
-          <meshBasicMaterial color={"#ffffff"} />
-        </mesh>
-        <mesh position={[-0.48, 0.46, 0]} scale={[0.05, 0.05, 0.01]} name={"mizar"}>
-          <boxGeometry />
-          <meshBasicMaterial color={"#ffffff"} />
-        </mesh>
-        <mesh position={[-0.82, 0.5, 0]} scale={[0.05, 0.05, 0.01]} name={"alkaid"}>
-          <boxGeometry />
-          <meshBasicMaterial color={"#ffffff"} />
-        </mesh>
+        <TwinklingStar position={[0, 0, 0]} name={"megrez"} />
+        <TwinklingStar position={[0.4, 0, 0]} name={"dubhe"} />
+        <TwinklingStar position={[0.45, -0.3, 0]} name={"merak"} />
+        <TwinklingStar position={[0.05, -0.3, 0]} name={"phecda"} />
+        <TwinklingStar position={[-0.21, 0.2, 0]} name={"alioth"} />
+        <TwinklingStar position={[-0.48, 0.46, 0]} name={"mizar"} />
+        <TwinklingStar position={[-0.82, 0.5, 0]} name={"alkaid"} />
       </group>
-      <mesh position={[0.07, 1.68, -0.63]} scale={[0.05, 0.05, 0.01]} name={"star"}>
-        <boxGeometry />
-        <meshBasicMaterial color={"#ffffff"} />
-      </mesh><mesh position={[-1.1, 1.01, -0.63]} scale={[0.05, 0.05, 0.01]} name={"star"}>
-        <boxGeometry />
-        <meshBasicMaterial color={"#ffffff"} />
-      </mesh><mesh position={[0.52, 0.66, -0.63]} scale={[0.05, 0.05, 0.01]} name={"star"}>
-        <boxGeometry />
-        <meshBasicMaterial color={"#ffffff"} />
-      </mesh><mesh position={[1.35, 1.35, -0.63]} scale={[0.05, 0.05, 0.01]} name={"star"}>
-        <boxGeometry />
-        <meshBasicMaterial color={"#ffffff"} />
-      </mesh><mesh position={[0.57, 3.22, -0.63]} scale={[0.05, 0.05, 0.01]} name={"star"}>
-        <boxGeometry />
-        <meshBasicMaterial color={"#ffffff"} />
-      </mesh><mesh position={[1.87, 3.05, -0.63]} scale={[0.05, 0.05, 0.01]} name={"star"}>
-        <boxGeometry />
-        <meshBasicMaterial color={"#ffffff"} />
-      </mesh><mesh position={[2.42, 1.78, -0.63]} scale={[0.05, 0.05, 0.01]} name={"star"}>
-        <boxGeometry />
-        <meshBasicMaterial color={"#ffffff"} />
-      </mesh><mesh position={[-2.83, 1.78, -0.63]} scale={[0.05, 0.05, 0.01]} name={"star"}>
-        <boxGeometry />
-        <meshBasicMaterial color={"#ffffff"} />
-      </mesh>
+      <TwinklingStar position={[0.07, 1.68, -0.63]} />
+      <TwinklingStar position={[-1.1, 1.01, -0.63]} />
+      <TwinklingStar position={[0.52, 0.66, -0.63]} />
+      <TwinklingStar position={[1.35, 1.35, -0.63]} />
+      <TwinklingStar position={[0.57, 3.22, -0.63]} />
+      <TwinklingStar position={[1.87, 3.05, -0.63]} />
+      <TwinklingStar position={[2.42, 1.78, -0.63]} />
+      <TwinklingStar position={[-2.83, 1.78, -0.63]} />
 
       {/* ENVIRONMENT */}
 
