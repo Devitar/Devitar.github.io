@@ -1,7 +1,14 @@
-import { useGifTexture } from "~/utils"
-import fireGif from '~/assets/images/fire.gif'
+import { useGifTexture } from "~/utils";
+import fireGif from "~/assets/images/fire.gif";
 
-const FireSprite = ({ position }: { position: [number, number, number] }) => {
+/** Types */
+
+type Props = {
+  position: [number, number, number]
+}
+
+/** A sprite that displays an animated fire GIF. */
+const FireSprite = ({ position }: Props) => {
   const texture = useGifTexture(fireGif, 50)
 
   if (!texture) return null
@@ -13,4 +20,6 @@ const FireSprite = ({ position }: { position: [number, number, number] }) => {
   )
 }
 
-export default FireSprite
+/** Exports */
+
+export default FireSprite;

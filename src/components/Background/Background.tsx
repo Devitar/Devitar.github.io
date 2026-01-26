@@ -1,36 +1,15 @@
-import "./Background.css"
-import { Canvas } from '@react-three/fiber'
-import { PerspectiveCamera } from '@react-three/drei'
+import "./Background.css";
+import { Canvas } from '@react-three/fiber';
+import { PerspectiveCamera } from '@react-three/drei';
 
 /** Subcomponents */
-import FireSprite from "./subcomponents/FireSprite"
-import FlickeringLight from "./subcomponents/FlickeringLight"
-import TwinklingStar from "./subcomponents/TwinklingStar"
 
-//       <group name="flashlight" position={[0.18, 0.06, 2.57]} rotation={[-1.3446253347470072, -0.1497907014217364, -0.30376392625385]} scale={[0.57, 0.57, 0.57]}>
-//   {/* Flashlight body */}
-//   <mesh scale={[1, 0.45, 1]} position={[0.0129733619910496, -0.00527906290348988, 0]}>
-//     <cylinderGeometry args={[0.01, 0.01, 0.15, 8]} />
-//     <meshStandardMaterial color={"#555555"} />
-//   </mesh>
-//   {/* Flashlight head */}
-//   <mesh position={[0.0139417451462573, 0.0212736204050017, 0]} scale={[1.35, 0.45, 1.39]} rotation={[3.121669280381995, 0.007306405590103245, 0.018904953205471604]}>
-//     <coneGeometry args={[0.015, 0.03, 8]} />
-//     <meshStandardMaterial color={"#666666"} />
-//   </mesh>
-//   {/* Flashlight beam */}
-//   <spotLight
-//     position={[0.0149383325902224, 0.0162121137644282, 0]}
-//     target-position={[1, 1, 0]}
-//     angle={0.4}
-//     penumbra={0.5}
-//     intensity={2}
-//     distance={3}
-//     color={"#fff8e7"}
-//     castShadow
-//   />
-// </group>
+import FireSprite from "./subcomponents/FireSprite";
+import FlickeringLight from "./subcomponents/FlickeringLight";
+import TwinklingStar from "./subcomponents/TwinklingStar";
+// import Flashlight from "./subcomponents/Flashlight";
 
+/** Renders a 3D camping scene with twinkling stars, campfire, and environment. */
 export default function Scene() {
   return (
     <Canvas className='main-canvas'>
@@ -42,6 +21,7 @@ export default function Scene() {
 
       <FlickeringLight position={[0, 0.03, 2.73]} color={"#dfa811"} baseIntensity={1} />
       <FireSprite position={[0, 0.025, 2.73]} />
+      {/* Uncomment to add flashlight: <Flashlight position={[0.18, 0.06, 2.57]} rotation={[-1.34, -0.15, -0.30]} scale={[0.57, 0.57, 0.57]} /> */}
 
       {/* Campfire logs bundle */}
       <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]}>

@@ -1,8 +1,17 @@
-import { useRef } from "react"
-import { useFrame } from "@react-three/fiber"
-import { PointLight } from "three"
+import { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { PointLight } from "three";
 
-const FlickeringLight = ({ position, color, baseIntensity = 1 }: { position: [number, number, number], color: string, baseIntensity?: number }) => {
+/** Types */
+
+type Props = {
+  position: [number, number, number]
+  color: string
+  baseIntensity?: number
+}
+
+/** A point light that flickers like a campfire. */
+const FlickeringLight = ({ position, color, baseIntensity = 1 }: Props) => {
   const lightRef = useRef<PointLight>(null!)
 
   useFrame((state) => {
@@ -19,4 +28,6 @@ const FlickeringLight = ({ position, color, baseIntensity = 1 }: { position: [nu
   return <pointLight ref={lightRef} position={position} color={color} />
 }
 
-export default FlickeringLight
+/** Exports */
+
+export default FlickeringLight;

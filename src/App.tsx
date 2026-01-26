@@ -1,5 +1,6 @@
 import { Background, Navigation } from "~/components";
 
+/** The root application component. */
 const App = () => (
   <div className="app">
     <div className="app_background_container">
@@ -9,5 +10,7 @@ const App = () => (
     <Navigation />
   </div>
 );
+
+/** Exports */
 
 export default App;

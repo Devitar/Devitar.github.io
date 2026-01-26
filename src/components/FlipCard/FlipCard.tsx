@@ -15,8 +15,7 @@ type Props = {
     image: string;
 };
 
-/** Component */
-
+/** A card that flips to reveal an image and button on hover. */
 const FlipCard = ({ title, subtitle, subtitle2, url, image }: Props) => {
 
     return (
@@ -38,4 +37,4 @@ const FlipCard = ({ title, subtitle, subtitle2, url, image }: Props) => {
 
 /** Exports */
 
-export default FlipCard
+export default FlipCard;

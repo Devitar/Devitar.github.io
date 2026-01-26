@@ -48,7 +48,6 @@ const View = ({
       >
         {children}
       </div>
-      <div style={{}}></div>
     </div>
   );
 };

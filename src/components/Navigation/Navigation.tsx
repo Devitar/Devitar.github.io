@@ -12,7 +12,7 @@ const NAV_ORDER = {
 /** Types  */
 const ViewType = Views as Record<keyof typeof NAV_ORDER, (viewName: string) => ReactNode>;
 
-/** Component */
+/** Renders the navigation and pages based on NAV_ORDER. */
 const Navigation = () => {
   const renderPages = useMemo(
     () =>
