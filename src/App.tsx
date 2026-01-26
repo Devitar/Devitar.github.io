@@ -1,5 +1,5 @@
 import { Background, Navigation } from "~/components";
-import { 
+import {
   createContext,
   type Dispatch,
   type SetStateAction,
@@ -28,9 +28,9 @@ export const AppContext = createContext<AppContextType>({
     isBookOpen: true,
   },
   set: {
-    setIsFireOn: () => {},
-    setIsNightTime: () => {},
-    setIsBookOpen: () => {},
+    setIsFireOn: () => { },
+    setIsNightTime: () => { },
+    setIsBookOpen: () => { },
   },
 });
 
@@ -42,7 +42,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <AppContext.Provider value={{ 
+      <AppContext.Provider value={{
         get: { isFireOn, isNightTime, isBookOpen },
         set: { setIsFireOn, setIsNightTime, setIsBookOpen }
       }}>

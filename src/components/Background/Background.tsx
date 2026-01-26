@@ -38,8 +38,8 @@ export default function Scene() {
   const cameraPosition: [number, number, number] = isMobile
     ? [0.075, getCameraY(), 3]
     : [0.21, 0.03, 3.04];
-  const cameraRotation: [number, number, number] = isMobile 
-    ? [0.1, 0.125, 0] 
+  const cameraRotation: [number, number, number] = isMobile
+    ? [0.1, 0.125, 0]
     : [0.27925268031909284, 0.13962634015954653, 0];
 
   return (

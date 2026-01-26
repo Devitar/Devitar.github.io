@@ -5,39 +5,39 @@ import { useThree } from "@react-three/fiber";
 /** Types */
 
 type Props = {
-    /** URL of the audio file to play. */
-    url: string;
+	/** URL of the audio file to play. */
+	url: string;
 };
 
 /** Plays a given sound. */
 const AudioComponent = ({ url }: Props) => {
-    const { camera } = useThree();
-    useEffect(() => {
-        const listener = new AudioListener();
-        camera.add(listener);
+	const { camera } = useThree();
+	useEffect(() => {
+		const listener = new AudioListener();
+		camera.add(listener);
 
-        const sound = new Audio(listener);
+		const sound = new Audio(listener);
 
-        const playSound = () => {
-            if (!sound.isPlaying) sound.play();
-        };
+		const playSound = () => {
+			if (!sound.isPlaying) sound.play();
+		};
 
-        const audioLoader = new AudioLoader();
-        audioLoader.load(url, (buffer) => {
-            sound.setBuffer(buffer);
-            sound.setLoop(true);
-            sound.setVolume(0.5);
-            
-            document.addEventListener('click', playSound);
-        });
+		const audioLoader = new AudioLoader();
+		audioLoader.load(url, (buffer) => {
+			sound.setBuffer(buffer);
+			sound.setLoop(true);
+			sound.setVolume(0.5);
 
-        // Clean up events on unmount
-        return () => {
-            document.removeEventListener('click', playSound);
-        };
-    }, []);
+			document.addEventListener('click', playSound);
+		});
 
-    return null;
+		// Clean up events on unmount
+		return () => {
+			document.removeEventListener('click', playSound);
+		};
+	}, []);
+
+	return null;
 }
 
 /** Exports */

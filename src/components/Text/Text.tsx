@@ -56,10 +56,10 @@ const Text = ({
         link === "email"
           ? `mailto:${children as string}`
           : link === "telephone"
-          ? `tel:${children as string}`
-          : link === "textMessage"
-          ? `sms:${children as string}`
-          : (children as string)
+            ? `tel:${children as string}`
+            : link === "textMessage"
+              ? `sms:${children as string}`
+              : (children as string)
       }
       target={newTab ? "_blank" : undefined}
       style={{
