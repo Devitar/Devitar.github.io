@@ -1,100 +1,10 @@
-import { useRef, useEffect, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { PerspectiveCamera } from '@react-three/drei'
-import * as THREE from 'three'
-import { parseGIF, decompressFrames } from 'gifuct-js'
 import "./Background.css"
-import fireGif from '~/assets/images/fire.gif'
+import { Canvas } from '@react-three/fiber'
+import { PerspectiveCamera } from '@react-three/drei'
 
-function FlickeringLight({ position, color, baseIntensity = 1 }: { position: [number, number, number], color: string, baseIntensity?: number }) {
-  const lightRef = useRef<THREE.PointLight>(null!)
-
-  useFrame((state) => {
-    if (lightRef.current) {
-      // Create flickering effect using sine waves with different frequencies
-      const flicker1 = Math.sin(state.clock.elapsedTime * 8) * 0.1
-      const flicker2 = Math.sin(state.clock.elapsedTime * 13) * 0.05
-      const flicker3 = Math.sin(state.clock.elapsedTime * 20) * 0.03
-
-      lightRef.current.intensity = baseIntensity + flicker1 + flicker2 + flicker3
-    }
-  })
-
-  return <pointLight ref={lightRef} position={position} color={color} />
-}
-
-function useGifTexture(url: string, interval: number = 100) {
-  const [texture, setTexture] = useState<THREE.CanvasTexture | null>(null)
-  const [frames, setFrames] = useState<any[]>([])
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const currentFrameRef = useRef(0)
-  const lastFrameTimeRef = useRef(0)
-
-  useEffect(() => {
-    const canvas = document.createElement('canvas')
-    canvasRef.current = canvas
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    fetch(url)
-      .then(resp => resp.arrayBuffer())
-      .then(buff => {
-        const gif = parseGIF(buff)
-        const frames = decompressFrames(gif, true)
-        setFrames(frames)
-
-        if (frames.length > 0) {
-          canvas.width = frames[0].dims.width
-          canvas.height = frames[0].dims.height
-          const tex = new THREE.CanvasTexture(canvas)
-          tex.minFilter = THREE.LinearFilter
-          tex.magFilter = THREE.NearestFilter
-          setTexture(tex)
-        }
-      })
-      .catch(console.error)
-  }, [url])
-
-  useFrame((state) => {
-    if (!frames.length || !canvasRef.current || !texture) return
-
-    // Only update frame if enough time has passed
-    const currentTime = state.clock.elapsedTime * 1000 // Convert to milliseconds
-    if (currentTime - lastFrameTimeRef.current < interval) return
-
-    lastFrameTimeRef.current = currentTime
-
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    const frame = frames[currentFrameRef.current]
-    const imageData = new ImageData(
-      new Uint8ClampedArray(frame.patch),
-      frame.dims.width,
-      frame.dims.height
-    )
-
-    ctx.putImageData(imageData, 0, 0)
-    texture.needsUpdate = true
-
-    currentFrameRef.current = (currentFrameRef.current + 1) % frames.length
-  })
-
-  return texture
-}
-
-function FireSprite({ position }: { position: [number, number, number] }) {
-  const texture = useGifTexture(fireGif, 50)
-
-  if (!texture) return null
-
-  return (
-    <sprite position={position} scale={[0.15, 0.1, 0.15]}>
-      <spriteMaterial map={texture} transparent sizeAttenuation={false} />
-    </sprite>
-  )
-}
+/** Subcomponents */
+import FireSprite from "./subcomponents/FireSprite"
+import FlickeringLight from "./subcomponents/FlickeringLight"
 
 //       <group name="flashlight" position={[0.18, 0.06, 2.57]} rotation={[-1.3446253347470072, -0.1497907014217364, -0.30376392625385]} scale={[0.57, 0.57, 0.57]}>
 //   {/* Flashlight body */}
