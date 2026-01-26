@@ -18,7 +18,7 @@ import Flashlight from "./subcomponents/Flashlight";
 
 /** Renders a 3D camping scene. */
 export default function Scene() {
-  const { set: { setIsFireOn } } = useContext(AppContext);
+  const { get, set: { setIsFireOn, setIsFlashlightOn } } = useContext(AppContext);
 
   const isMobile = window.innerWidth < 768;
 
@@ -54,17 +54,33 @@ export default function Scene() {
       {/* GLOBAL */}
 
       <PerspectiveCamera makeDefault position={cameraPosition} rotation={cameraRotation} fov={isMobile ? 60 : 50} />
-      <Audio url={Fire} />
+      <Audio url={Fire} isPlaying={get.isFireOn} />
 
       {/* CAMP */}
 
-      <FlickeringLight position={[0, 0.03, 2.73]} color={"#dfa811"} baseIntensity={1} />
-      <FireSprite position={[0, 0.025, 2.73]} />
+      <FlickeringLight
+        position={[0, 0.03, 2.73]}
+        color={{
+          lit: "#dfa811",
+          unlit: "#b94712"
+        }}
+        baseIntensity={1}
+        isLit={get.isFireOn}
+      />
+      <FireSprite position={[0, 0.025, 2.73]} isVisible={get.isFireOn} />
 
-      <Flashlight />
+      <Flashlight
+        isLit={get.isFlashlightOn}
+        onClick={() => setIsFlashlightOn((prev) => !prev)}
+      />
 
       {/* Campfire logs bundle */}
-      <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]} onClick={() => setIsFireOn((prev) => !prev)}>
+      <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]}>
+        {/* Invisible cube for click detection */}
+        <mesh scale={[0.2, 0.2, 0.2]} position={[0, 0, 0]} visible={false} onClick={() => setIsFireOn((prev) => !prev)}>
+          <boxGeometry />
+          <meshStandardMaterial color={"#555555"} />
+        </mesh>
         {/* Log 1 - Right */}
         <mesh position={[0.06, 0.008, 0]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />

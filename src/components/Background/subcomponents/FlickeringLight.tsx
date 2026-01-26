@@ -5,27 +5,31 @@ import { PointLight } from "three";
 /** Types */
 
 type Props = {
-  position: [number, number, number]
-  color: string
-  baseIntensity?: number
+  position: [number, number, number];
+  color: {
+    lit: string;
+    unlit: string;
+  };
+  baseIntensity?: number;
+  isLit?: boolean;
 }
 
 /** A point light that flickers like a campfire. */
-const FlickeringLight = ({ position, color, baseIntensity = 1 }: Props) => {
-  const lightRef = useRef<PointLight>(null!)
+const FlickeringLight = ({ position, color, baseIntensity = 1, isLit = true }: Props) => {
+  const lightRef = useRef<PointLight>(null!);
 
   useFrame((state) => {
     if (lightRef.current) {
       // Create flickering effect using sine waves with different frequencies
-      const flicker1 = Math.sin(state.clock.elapsedTime * 8) * 0.1
-      const flicker2 = Math.sin(state.clock.elapsedTime * 13) * 0.05
-      const flicker3 = Math.sin(state.clock.elapsedTime * 20) * 0.03
+      const flicker1 = Math.sin(state.clock.elapsedTime * 8) * 0.1;
+      const flicker2 = Math.sin(state.clock.elapsedTime * 13) * 0.05;
+      const flicker3 = Math.sin(state.clock.elapsedTime * 20) * 0.03;
 
-      lightRef.current.intensity = baseIntensity + flicker1 + flicker2 + flicker3
+      lightRef.current.intensity = isLit ? baseIntensity + flicker1 + flicker2 + flicker3 : 0.025;
     }
   })
 
-  return <pointLight ref={lightRef} position={position} color={color} />
+  return <pointLight ref={lightRef} position={position} color={isLit ? color.lit : color.unlit} />
 }
 
 /** Exports */
