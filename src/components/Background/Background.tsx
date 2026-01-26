@@ -1,6 +1,8 @@
 import "./Background.css";
 import { Canvas } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
+import { useCallback, useContext } from "react";
+import { AppContext } from "~/App";
 
 /** Assets */
 
@@ -14,23 +16,24 @@ import TwinklingStar from "./subcomponents/TwinklingStar";
 import Audio from "./subcomponents/Audio";
 // import Flashlight from "./subcomponents/Flashlight";
 
-/** Renders a 3D camping scene with twinkling stars, campfire, and environment. */
+/** Renders a 3D camping scene. */
 export default function Scene() {
+  const { set } = useContext(AppContext);
+
   const isMobile = window.innerWidth < 768;
 
-  // Calculate camera y-position based on screen aspect ratio to prevent ground clipping
-  const getCameraY = () => {
+  /** Calculate camera y-position based on screen aspect ratio to prevent ground clipping. */
+  const getCameraY = useCallback(() => {
     if (!isMobile) return 0.03;
 
     const aspectRatio = window.innerWidth / window.innerHeight;
 
-    // For narrower screens (portrait), we need to position camera higher
-    // to prevent the bottom of the view from clipping through ground
+    // For narrower screens (portrait), we need to position camera higher to prevent the bottom of the view from clipping through ground
     const baseHeight = 0.03;
     const adjustment = (1 - aspectRatio) * 0.15; // Adjusts based on how 'portrait' the screen is
 
     return baseHeight + Math.max(0, adjustment);
-  };
+  }, [isMobile]);
 
   const cameraPosition: [number, number, number] = isMobile
     ? [0.075, getCameraY(), 3]
@@ -59,7 +62,7 @@ export default function Scene() {
       <FireSprite position={[0, 0.025, 2.73]} />
 
       {/* Campfire logs bundle */}
-      <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]}>
+      <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]} onClick={() => set.setIsFireOn((prev) => !prev)}>
         {/* Log 1 - Right */}
         <mesh position={[0.06, 0.008, 0]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />
