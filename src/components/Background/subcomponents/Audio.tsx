@@ -28,16 +28,12 @@ const AudioComponent = ({ url }: Props) => {
             sound.setLoop(true);
             sound.setVolume(0.5);
             
-            window.addEventListener('click', playSound);
-            window.addEventListener('keydown', playSound);
-            window.addEventListener('touchstart', playSound);
+            document.addEventListener('click', playSound);
         });
 
         // Clean up events on unmount
         return () => {
-            window.removeEventListener('click', playSound);
-            window.removeEventListener('keydown', playSound);
-            window.removeEventListener('touchstart', playSound);
+            document.removeEventListener('click', playSound);
         };
     }, []);
 
