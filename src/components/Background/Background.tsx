@@ -15,17 +15,15 @@ export default function Scene() {
     <Canvas className='main-canvas'>
       {/* GLOBAL */}
 
-      <PerspectiveCamera makeDefault position={[0.12, 0.03, 3.16]} rotation={[0.26179938779914946, 0.13962634015954647, 3.503543193473437e-18]} />
+      <PerspectiveCamera makeDefault position={[0.21, 0.03, 3.04]} rotation={[0.27925268031909284, 0.13962634015954653, 0]} />
 
       {/* CAMP */}
 
       <FlickeringLight position={[0, 0.03, 2.73]} color={"#dfa811"} baseIntensity={1} />
       <FireSprite position={[0, 0.025, 2.73]} />
-      {/* Uncomment to add flashlight: <Flashlight position={[0.18, 0.06, 2.57]} rotation={[-1.34, -0.15, -0.30]} scale={[0.57, 0.57, 0.57]} /> */}
 
       {/* Campfire logs bundle */}
       <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]}>
-        {/* Logs arranged in a circular pattern radiating from center */}
         {/* Log 1 - Right */}
         <mesh position={[0.06, 0.008, 0]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />
@@ -126,13 +124,13 @@ export default function Scene() {
         <TwinklingStar position={[-0.48, 0.46, 0]} name={"mizar"} />
         <TwinklingStar position={[-0.82, 0.5, 0]} name={"alkaid"} />
       </group>
-      <TwinklingStar position={[0.07, 1.68, -0.63]} />
+      <TwinklingStar position={[0.07, 1.68, -0.63]} /><TwinklingStar position={[-0.66, 2.88, -0.63]} /><TwinklingStar position={[-2.18, 2.12, -0.63]} /><TwinklingStar position={[-3.08, 2.76, -0.63]} /><TwinklingStar position={[-3.54, 1.03, -0.63]} />
       <TwinklingStar position={[-1.1, 1.01, -0.63]} />
       <TwinklingStar position={[0.52, 0.66, -0.63]} />
       <TwinklingStar position={[1.35, 1.35, -0.63]} />
       <TwinklingStar position={[0.57, 3.22, -0.63]} />
       <TwinklingStar position={[1.87, 3.05, -0.63]} />
-      <TwinklingStar position={[2.42, 1.78, -0.63]} />
+      <TwinklingStar position={[2.42, 1.78, -0.63]} /><TwinklingStar position={[3.07, 2.44, -0.63]} />
       <TwinklingStar position={[-2.83, 1.78, -0.63]} />
 
       {/* ENVIRONMENT */}
