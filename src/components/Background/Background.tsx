@@ -2,7 +2,7 @@ import "./Background.css";
 import { Canvas } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { useCallback, useContext } from "react";
-import { AppContext } from "~/App";
+import { AppContext } from "~/global/AppContext";
 
 /** Assets */
 
@@ -14,7 +14,7 @@ import FireSprite from "./subcomponents/FireSprite";
 import FlickeringLight from "./subcomponents/FlickeringLight";
 import TwinklingStar from "./subcomponents/TwinklingStar";
 import Audio from "./subcomponents/Audio";
-// import Flashlight from "./subcomponents/Flashlight";
+import Flashlight from "./subcomponents/Flashlight";
 
 /** Renders a 3D camping scene. */
 export default function Scene() {
@@ -60,6 +60,8 @@ export default function Scene() {
 
       <FlickeringLight position={[0, 0.03, 2.73]} color={"#dfa811"} baseIntensity={1} />
       <FireSprite position={[0, 0.025, 2.73]} />
+
+      <Flashlight />
 
       {/* Campfire logs bundle */}
       <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]} onClick={() => setIsFireOn((prev) => !prev)}>

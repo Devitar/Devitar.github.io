@@ -1,9 +1,9 @@
 /** Types */
 
 type Props = {
-  position: [number, number, number];
-  rotation: [number, number, number];
-  scale: [number, number, number];
+  position?: [number, number, number];
+  rotation?: [number, number, number];
+  scale?: [number, number, number];
 };
 
 /** A flashlight with body, head, and beam. */
