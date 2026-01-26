@@ -18,7 +18,7 @@ import Audio from "./subcomponents/Audio";
 
 /** Renders a 3D camping scene. */
 export default function Scene() {
-  const { set } = useContext(AppContext);
+  const { set: { setIsFireOn } } = useContext(AppContext);
 
   const isMobile = window.innerWidth < 768;
 
@@ -62,7 +62,7 @@ export default function Scene() {
       <FireSprite position={[0, 0.025, 2.73]} />
 
       {/* Campfire logs bundle */}
-      <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]} onClick={() => set.setIsFireOn((prev) => !prev)}>
+      <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]} onClick={() => setIsFireOn((prev) => !prev)}>
         {/* Log 1 - Right */}
         <mesh position={[0.06, 0.008, 0]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.018, 0.018, 0.16, 8]} />
