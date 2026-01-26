@@ -24,12 +24,12 @@ export default function Scene() {
 
   /** Calculate camera y-position based on screen aspect ratio to prevent ground clipping. */
   const getCameraY = useCallback(() => {
-    if (!isMobile) return 0.03;
+    const baseHeight = 0.03;
+
+    if (!isMobile) return baseHeight;
 
     const aspectRatio = window.innerWidth / window.innerHeight;
-
     // For narrower screens (portrait), we need to position camera higher to prevent the bottom of the view from clipping through ground
-    const baseHeight = 0.03;
     const adjustment = (1 - aspectRatio) * 0.15; // Adjusts based on how 'portrait' the screen is
 
     return baseHeight + Math.max(0, adjustment);
