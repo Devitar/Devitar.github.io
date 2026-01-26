@@ -2,11 +2,16 @@ import "./Background.css";
 import { Canvas } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 
+/** Assets */
+
+import Fire from "~/assets/sounds/fire.wav";
+
 /** Subcomponents */
 
 import FireSprite from "./subcomponents/FireSprite";
 import FlickeringLight from "./subcomponents/FlickeringLight";
 import TwinklingStar from "./subcomponents/TwinklingStar";
+import Audio from "./subcomponents/Audio";
 // import Flashlight from "./subcomponents/Flashlight";
 
 /** Renders a 3D camping scene with twinkling stars, campfire, and environment. */
@@ -46,6 +51,7 @@ export default function Scene() {
       {/* GLOBAL */}
 
       <PerspectiveCamera makeDefault position={cameraPosition} rotation={cameraRotation} fov={isMobile ? 60 : 50} />
+      <Audio url={Fire} />
 
       {/* CAMP */}
 
