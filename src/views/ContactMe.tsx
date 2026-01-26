@@ -1,4 +1,4 @@
-import { Divider, Text, View } from "../components";
+import { Divider, Text, View } from "~/components";
 
 /** Contact me page. */
 const ContactMe = (viewName: string) => (

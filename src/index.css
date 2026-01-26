@@ -18,8 +18,8 @@ code {
 }
 
 .app_background_container {
-  filter: blur(6px);
-  -webkit-filter: blur(6px);
+  /* filter: blur(6px); */
+  /* -webkit-filter: blur(6px); */
   width: 102vw;
   left: -1vw;
   position: fixed;

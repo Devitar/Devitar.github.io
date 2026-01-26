@@ -3,8 +3,8 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { PerspectiveCamera } from '@react-three/drei'
 import * as THREE from 'three'
 import { parseGIF, decompressFrames } from 'gifuct-js'
-import "./Test.css"
-import fireGif from '../assets/images/fire.gif'
+import "./Background.css"
+import fireGif from '~/assets/images/fire.gif'
 
 function FlickeringLight({ position, color, baseIntensity = 1 }: { position: [number, number, number], color: string, baseIntensity?: number }) {
   const lightRef = useRef<THREE.PointLight>(null!)

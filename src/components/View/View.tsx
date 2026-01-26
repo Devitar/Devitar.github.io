@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import ViewHeader, { HEADER_HEIGHT } from "../ViewHeader/ViewHeader";
+import ViewHeader, { HEADER_HEIGHT } from "~/components/ViewHeader/ViewHeader";
 import "./View.css";
 
 /** Types */
