@@ -1,3 +1,15 @@
+/* !important necessary here to override React Three Fiber's inline styling of the Canvas component. */
 .main-canvas {
-
+  display: block !important;
+  touch-action: none !important;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0;
+  margin: 0;
+  padding: 0;
 }

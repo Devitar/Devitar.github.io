@@ -11,11 +11,41 @@ import TwinklingStar from "./subcomponents/TwinklingStar";
 
 /** Renders a 3D camping scene with twinkling stars, campfire, and environment. */
 export default function Scene() {
+  const isMobile = window.innerWidth < 768;
+
+  // Calculate camera y-position based on screen aspect ratio to prevent ground clipping
+  const getCameraY = () => {
+    if (!isMobile) return 0.03;
+
+    const aspectRatio = window.innerWidth / window.innerHeight;
+
+    // For narrower screens (portrait), we need to position camera higher
+    // to prevent the bottom of the view from clipping through ground
+    const baseHeight = 0.03;
+    const adjustment = (1 - aspectRatio) * 0.15; // Adjusts based on how 'portrait' the screen is
+
+    return baseHeight + Math.max(0, adjustment);
+  };
+
+  const cameraPosition: [number, number, number] = isMobile
+    ? [0.075, getCameraY(), 3]
+    : [0.21, 0.03, 3.04];
+  const cameraRotation: [number, number, number] = isMobile 
+    ? [0.1, 0.125, 0] 
+    : [0.27925268031909284, 0.13962634015954653, 0];
+
   return (
-    <Canvas className='main-canvas'>
+    <Canvas
+      className='main-canvas'
+      dpr={[1, 2]}
+      gl={{
+        antialias: !isMobile,
+        powerPreference: isMobile ? 'low-power' : 'high-performance'
+      }}
+    >
       {/* GLOBAL */}
 
-      <PerspectiveCamera makeDefault position={[0.21, 0.03, 3.04]} rotation={[0.27925268031909284, 0.13962634015954653, 0]} />
+      <PerspectiveCamera makeDefault position={cameraPosition} rotation={cameraRotation} fov={isMobile ? 60 : 50} />
 
       {/* CAMP */}
 
@@ -71,7 +101,7 @@ export default function Scene() {
         <meshStandardMaterial color={"#3d2817"} />
       </mesh>
 
-      <group name="tent" position={[-0.23, 0, 2.39]} rotation={[0, 0.4188790204786392, 0]} scale={[0.75, 0.68, 0.61]}>
+      <group name="tent" position={[-0.23, 0.0075, 2.39]} rotation={[0, 0.4188790204786392, 0]} scale={[0.75, 0.68, 0.61]}>
         {/* Left slanted side of tent */}
         <mesh position={[-0.09, 0.1, 0.0100000000000002]} rotation={[0, 0, 2.5]}>
           <boxGeometry args={[0.01, 0.3, 0.5]} />
@@ -83,7 +113,7 @@ export default function Scene() {
           <meshStandardMaterial color={"#8b4513"} />
         </mesh>
         {/* Back triangle */}
-        <mesh position={[-0.01, 0.01, 0.0057728639021013]} rotation={[0, 0, 0]} scale={[1.06, 1.06, 1.63]}>
+        <mesh position={[-0.01, 0, 0.0057728639021013]} rotation={[0, 0, 0]} scale={[1.06, 1.06, 1.63]}>
           <boxGeometry args={[0.3, 0.01, 0.3]} />
           <meshStandardMaterial color={"#7a3d11"} />
         </mesh>
@@ -92,7 +122,7 @@ export default function Scene() {
           <cylinderGeometry args={[0.01, 0.01, 0.15, 8]} />
           <meshStandardMaterial color={"#555555"} />
         </mesh>
-        <mesh position={[0.15, 0, 0.25]} rotation={[Math.PI / 6, 0, -Math.PI / 8]} scale={[1, 0.49, 1]}>
+        <mesh position={[0.154342404307889, 0, 0.24]} rotation={[Math.PI / 6, 0, -Math.PI / 8]} scale={[1, 0.49, 1]}>
           <cylinderGeometry args={[0.01, 0.01, 0.15, 8]} />
           <meshStandardMaterial color={"#555555"} />
         </mesh>
@@ -139,7 +169,7 @@ export default function Scene() {
         <boxGeometry />
         <meshStandardMaterial color={"#132d96"} />
       </mesh>
-      <mesh scale={[12.41, 0.01, 5.11]} position={[0, 0, 1.85]} name={"ground"}>
+      <mesh scale={[20, 0.01, 19.47]} position={[0, 0, 8]} name={"ground"}>
         <boxGeometry />
         <meshStandardMaterial color={"#467a05"} />
       </mesh>
