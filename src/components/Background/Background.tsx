@@ -8,6 +8,7 @@ import { useSpring, animated, config } from '@react-spring/three';
 
 import FireLoop from "~/assets/sounds/fire.m4a";
 import CricketLoop from "~/assets/sounds/crickets.m4a";
+import DaytimeAmbientLoop from "~/assets/sounds/daytime_ambient.m4a"
 import SasquatchImage from "~/assets/images/sasquatch.webp";
 import SasquatchGrowl from "~/assets/sounds/sasquatch_growl.m4a"
 
@@ -96,6 +97,7 @@ export default function Scene() {
       />
       <Audio url={FireLoop} isPlaying={isFireOn} volume={1.5} />
       <Audio url={CricketLoop} isPlaying={isNightTime} volume={0.01} />
+      <Audio url={DaytimeAmbientLoop} isPlaying={!isNightTime} volume={0.5} />
 
       {/* CAMP */}
 
