@@ -22,6 +22,7 @@ import Audio from "./subcomponents/Audio";
 import Flashlight from "./subcomponents/Flashlight";
 import ImageSprite from "./subcomponents/ImageSprite";
 import DeviceOrientationCamera from "./subcomponents/DeviceOrientationCamera";
+import Binder from "./subcomponents/Binder";
 
 /** Renders a 3D camping scene. */
 export default function Scene() {
@@ -30,11 +31,13 @@ export default function Scene() {
       isFireOn,
       isFlashlightOn,
       isNightTime,
+      isBookOpen,
     },
     set: {
       setIsFireOn,
       setIsFlashlightOn,
-      setIsNightTime
+      setIsNightTime,
+      setIsBookOpen,
     }
   } = useContext(AppContext);
 
@@ -83,6 +86,9 @@ export default function Scene() {
         powerPreference: isMobile ? 'low-power' : 'high-performance'
       }}
     >
+      <Binder position={[0.26, 0.11, 2.73]} isOpen={isBookOpen} onClick={() => setIsBookOpen((prev) => !prev)} />
+
+
       {/* GLOBAL */}
 
       <DeviceOrientationCamera
@@ -96,8 +102,8 @@ export default function Scene() {
         enabled={isMobile}
       />
       <Audio url={FireLoop} isPlaying={isFireOn} volume={1.5} />
-      <Audio url={CricketLoop} isPlaying={isNightTime} volume={0.01} />
-      <Audio url={DaytimeAmbientLoop} isPlaying={!isNightTime} volume={1.5} />
+      <Audio url={CricketLoop} isPlaying={isNightTime} volume={0.01} fadeDuration={2000} />
+      <Audio url={DaytimeAmbientLoop} isPlaying={!isNightTime} volume={1.5} fadeDuration={2000} />
 
       {/* CAMP */}
 
