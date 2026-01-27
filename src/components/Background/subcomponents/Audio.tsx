@@ -7,12 +7,14 @@ import { useThree } from "@react-three/fiber";
 type Props = {
 	/** URL of the audio file to play. */
 	url: string;
+	/** Volume of the audio. */
+	volume?: number;
 	/** Whether the audio should be playing. */
 	isPlaying?: boolean;
 };
 
 /** Plays a given sound. */
-const AudioComponent = ({ url, isPlaying = true }: Props) => {
+const AudioComponent = ({ url, volume = 0.5, isPlaying = true }: Props) => {
 	const { camera } = useThree();
 	const soundRef = useRef<Audio | null>(null);
 	const isLoadedRef = useRef(false);
@@ -29,7 +31,7 @@ const AudioComponent = ({ url, isPlaying = true }: Props) => {
 		audioLoader.load(url, (buffer) => {
 			sound.setBuffer(buffer);
 			sound.setLoop(true);
-			sound.setVolume(0.5);
+			sound.setVolume(volume);
 			isLoadedRef.current = true;
 		});
 

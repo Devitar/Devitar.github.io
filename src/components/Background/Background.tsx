@@ -6,7 +6,8 @@ import { useSpring, animated, config } from '@react-spring/three';
 
 /** Assets */
 
-import Fire from "~/assets/sounds/fire.m4a";
+import FireLoop from "~/assets/sounds/fire.m4a";
+import CricketLoop from "~/assets/sounds/crickets.m4a";
 import SasquatchImage from "~/assets/images/sasquatch.webp";
 import SasquatchGrowl from "~/assets/sounds/sasquatch_growl.m4a"
 
@@ -93,7 +94,8 @@ export default function Scene() {
         smoothing={0.06}
         enabled={isMobile}
       />
-      <Audio url={Fire} isPlaying={isFireOn} />
+      <Audio url={FireLoop} isPlaying={isFireOn} volume={1.5} />
+      <Audio url={CricketLoop} isPlaying={isNightTime} volume={0.01} />
 
       {/* CAMP */}
 
@@ -226,7 +228,8 @@ export default function Scene() {
         position-z={-0.59}
         scale={[0.5, 0.5, 0.01]}
         name={"moon"}
-        onClick={() => setIsNightTime((prev) => !prev)}
+        // onClick={() => setIsNightTime((prev) => !prev)}
+        onClick={() => isNightTime && setIsNightTime((prev) => !prev)}
       >
         <boxGeometry />
         <meshBasicMaterial color={"#ffffff"} />
@@ -240,7 +243,8 @@ export default function Scene() {
         position-z={-0.6}
         scale={[0.5, 0.5, 0.01]}
         name={"sun"}
-        onClick={() => setIsNightTime((prev) => !prev)}
+        // onClick={() => setIsNightTime((prev) => !prev)}
+        onClick={() => !isNightTime && setIsNightTime((prev) => !prev)}
       >
         <boxGeometry />
         <meshBasicMaterial color={"#f2ff39"} />
