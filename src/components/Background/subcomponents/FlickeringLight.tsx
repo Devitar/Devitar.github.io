@@ -32,7 +32,7 @@ const FlickeringLight = ({ position, color, baseIntensity = 1, isLit = true }: P
     }
   })
 
-  return <pointLight ref={lightRef} position={position} color={isLit ? color.lit : color.unlit} />
+  return <pointLight ref={lightRef} position={position} color={isLit ? color.lit : color.unlit} decay={1.2} />
 }
 
 /** Exports */

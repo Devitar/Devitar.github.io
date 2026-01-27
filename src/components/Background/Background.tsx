@@ -223,7 +223,7 @@ export default function Scene() {
       <animated.mesh
         position-y={moonY}
         position-x={0.1}
-        position-z={-0.6}
+        position-z={-0.59}
         scale={[0.5, 0.5, 0.01]}
         name={"moon"}
         onClick={() => setIsNightTime((prev) => !prev)}
@@ -243,9 +243,10 @@ export default function Scene() {
         onClick={() => setIsNightTime((prev) => !prev)}
       >
         <boxGeometry />
-        <meshBasicMaterial color={"#ffaa00"} />
+        <meshBasicMaterial color={"#f2ff39"} />
         <animated.pointLight intensity={sunIntensity} color={"#ffa500"} />
       </animated.mesh>
+
       {isNightTime && (
         <>
           <group name="big_dipper" position={[-1.18, 1.95, -0.63]} rotation={[-0.057859925759693155, 0.07155343523626997, -0.2801141128557414]}>
