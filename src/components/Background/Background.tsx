@@ -89,15 +89,15 @@ export default function Scene() {
         position={cameraPosition}
         baseRotation={cameraRotation}
         fov={isMobile ? 60 : 50}
-        maxRotationY={0.1}
-        maxRotationX={0.1}
+        maxRotationY={0.15}
+        maxRotationX={0.15}
         maxTiltAngle={25}
         smoothing={0.06}
         enabled={isMobile}
       />
       <Audio url={FireLoop} isPlaying={isFireOn} volume={1.5} />
       <Audio url={CricketLoop} isPlaying={isNightTime} volume={0.01} />
-      <Audio url={DaytimeAmbientLoop} isPlaying={!isNightTime} volume={0.5} />
+      <Audio url={DaytimeAmbientLoop} isPlaying={!isNightTime} volume={1.5} />
 
       {/* CAMP */}
 
