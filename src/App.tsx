@@ -1,4 +1,4 @@
-import { Background, Navigation } from "~/components";
+import { Background } from "~/components";
 import { AppContextProvider } from "~/global/AppContext";
 
 /** The root application component. */
@@ -9,7 +9,6 @@ const App = () => {
         <div className="app_background_container">
           <Background />
         </div>
-        <Navigation />
       </AppContextProvider>
     </div>
   );

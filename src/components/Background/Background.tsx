@@ -1,6 +1,5 @@
 import "./Background.css";
 import { Canvas } from '@react-three/fiber';
-import { PerspectiveCamera } from '@react-three/drei';
 import { useCallback, useContext } from "react";
 import { AppContext } from "~/global/AppContext";
 import { useSpring, animated, config } from '@react-spring/three';
@@ -20,6 +19,7 @@ import TwinklingStar from "./subcomponents/TwinklingStar";
 import Audio from "./subcomponents/Audio";
 import Flashlight from "./subcomponents/Flashlight";
 import ImageSprite from "./subcomponents/ImageSprite";
+import DeviceOrientationCamera from "./subcomponents/DeviceOrientationCamera";
 
 /** Renders a 3D camping scene. */
 export default function Scene() {
@@ -54,6 +54,7 @@ export default function Scene() {
   const cameraPosition: [number, number, number] = isMobile
     ? [0.075, getCameraY(), 3]
     : [0.21, 0.03, 3.04];
+
   const cameraRotation: [number, number, number] = isMobile
     ? [0.1, 0.125, 0]
     : [0.27925268031909284, 0.13962634015954653, 0];
@@ -82,7 +83,16 @@ export default function Scene() {
     >
       {/* GLOBAL */}
 
-      <PerspectiveCamera makeDefault position={cameraPosition} rotation={cameraRotation} fov={isMobile ? 60 : 50} />
+      <DeviceOrientationCamera
+        position={cameraPosition}
+        baseRotation={cameraRotation}
+        fov={isMobile ? 60 : 50}
+        maxRotationY={0.1}
+        maxRotationX={0.1}
+        maxTiltAngle={25}
+        smoothing={0.06}
+        enabled={isMobile}
+      />
       <Audio url={Fire} isPlaying={isFireOn} />
 
       {/* CAMP */}
