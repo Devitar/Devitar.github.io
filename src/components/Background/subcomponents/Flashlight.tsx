@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 /** Assets */
 
-import FlashlightSound from "~/assets/sounds/flashlight.wav";
+import FlashlightSound from "~/assets/sounds/flashlight.m4a";
 
 /** Types */
 
@@ -43,6 +43,7 @@ const Flashlight = ({
       });
     }
   }, [isLit]);
+
   return (
     <group name="flashlight" position={position} rotation={rotation} scale={scale}>
       {/* Invisible cube for click detection */}

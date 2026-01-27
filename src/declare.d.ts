@@ -1,3 +1,3 @@
 declare module "*.pdf";
 declare module "*.webp";
-declare module "*.wav";
+declare module "*.m4a";

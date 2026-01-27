@@ -6,7 +6,7 @@ import { AppContext } from "~/global/AppContext";
 
 /** Assets */
 
-import Fire from "~/assets/sounds/fire.wav";
+import Fire from "~/assets/sounds/fire.m4a";
 
 /** Subcomponents */
 
