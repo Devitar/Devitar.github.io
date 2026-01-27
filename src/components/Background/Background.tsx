@@ -3,22 +3,38 @@ import { Canvas } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { useCallback, useContext } from "react";
 import { AppContext } from "~/global/AppContext";
+import { useSpring, animated, config } from '@react-spring/three';
 
 /** Assets */
 
 import Fire from "~/assets/sounds/fire.m4a";
+import SasquatchImage from "~/assets/images/sasquatch.webp";
+import SasquatchGrowl from "~/assets/sounds/sasquatch_growl.m4a"
 
 /** Subcomponents */
 
 import FireSprite from "./subcomponents/FireSprite";
+import SmokeSprite from "./subcomponents/SmokeSprite";
 import FlickeringLight from "./subcomponents/FlickeringLight";
 import TwinklingStar from "./subcomponents/TwinklingStar";
 import Audio from "./subcomponents/Audio";
 import Flashlight from "./subcomponents/Flashlight";
+import ImageSprite from "./subcomponents/ImageSprite";
 
 /** Renders a 3D camping scene. */
 export default function Scene() {
-  const { get, set: { setIsFireOn, setIsFlashlightOn } } = useContext(AppContext);
+  const {
+    get: {
+      isFireOn,
+      isFlashlightOn,
+      isNightTime,
+    },
+    set: {
+      setIsFireOn,
+      setIsFlashlightOn,
+      setIsNightTime
+    }
+  } = useContext(AppContext);
 
   const isMobile = window.innerWidth < 768;
 
@@ -42,6 +58,19 @@ export default function Scene() {
     ? [0.1, 0.125, 0]
     : [0.27925268031909284, 0.13962634015954653, 0];
 
+  // Show sasquatch only when it's dark (night, no fire, no flashlight)
+  const showSasquatch = isNightTime && !isFireOn && !isFlashlightOn;
+
+  // Animate day/night transitions
+  const { moonY, sunY, skyColor, ambientIntensity, sunIntensity } = useSpring({
+    moonY: isNightTime ? 2.24 : -0.5,
+    sunY: isNightTime ? -0.5 : 2.24,
+    skyColor: isNightTime ? '#132d96' : '#87CEEB',
+    ambientIntensity: isNightTime ? 0.15 : 1.5,
+    sunIntensity: isNightTime ? 0 : 8,
+    config: config.molasses,
+  });
+
   return (
     <Canvas
       className='main-canvas'
@@ -54,23 +83,26 @@ export default function Scene() {
       {/* GLOBAL */}
 
       <PerspectiveCamera makeDefault position={cameraPosition} rotation={cameraRotation} fov={isMobile ? 60 : 50} />
-      <Audio url={Fire} isPlaying={get.isFireOn} />
+      <Audio url={Fire} isPlaying={isFireOn} />
 
       {/* CAMP */}
 
-      <FlickeringLight
-        position={[0, 0.03, 2.73]}
-        color={{
-          lit: "#dfa811",
-          unlit: "#b94712"
-        }}
-        baseIntensity={1}
-        isLit={get.isFireOn}
-      />
-      <FireSprite position={[0, 0.025, 2.73]} isVisible={get.isFireOn} />
+      {isNightTime && (
+        <FlickeringLight
+          position={[0, 0.03, 2.73]}
+          color={{
+            lit: "#dfa811",
+            unlit: "#b94712"
+          }}
+          baseIntensity={1}
+          isLit={isFireOn}
+        />
+      )}
+      <FireSprite position={[0, 0.025, 2.73]} isVisible={isFireOn} />
+      <SmokeSprite position={[0, -0.1, 2.73]} isVisible={!isFireOn} />
 
       <Flashlight
-        isLit={get.isFlashlightOn}
+        isLit={isFlashlightOn}
         onClick={() => setIsFlashlightOn((prev) => !prev)}
       />
 
@@ -165,36 +197,72 @@ export default function Scene() {
 
       {/* SKYBOX */}
 
-      <ambientLight color={"#fff"} intensity={0.15} />
+      <animated.ambientLight color={"#fff"} intensity={ambientIntensity} />
 
-      <mesh position={[0.1, 2.24, -0.63]} scale={[0.5, 0.5, 0.01]} name={"moon"}>
+      {/* Directional sunlight during day */}
+      {!isNightTime && (
+        <directionalLight
+          position={[5, 5, 2]}
+          intensity={2}
+          color={"#fffacd"}
+          castShadow
+        />
+      )}
+
+      {/* Moon - visible at night */}
+      <animated.mesh
+        position-y={moonY}
+        position-x={0.1}
+        position-z={-0.6}
+        scale={[0.5, 0.5, 0.01]}
+        name={"moon"}
+        onClick={() => setIsNightTime((prev) => !prev)}
+      >
         <boxGeometry />
         <meshBasicMaterial color={"#ffffff"} />
-        <pointLight intensity={2} />
-      </mesh>
-      <group name="big_dipper" position={[-1.18, 1.95, -0.63]} rotation={[-0.057859925759693155, 0.07155343523626997, -0.2801141128557414]}>
-        <TwinklingStar position={[0, 0, 0]} name={"megrez"} />
-        <TwinklingStar position={[0.4, 0, 0]} name={"dubhe"} />
-        <TwinklingStar position={[0.45, -0.3, 0]} name={"merak"} />
-        <TwinklingStar position={[0.05, -0.3, 0]} name={"phecda"} />
-        <TwinklingStar position={[-0.21, 0.2, 0]} name={"alioth"} />
-        <TwinklingStar position={[-0.48, 0.46, 0]} name={"mizar"} />
-        <TwinklingStar position={[-0.82, 0.5, 0]} name={"alkaid"} />
-      </group>
-      <TwinklingStar position={[0.07, 1.68, -0.63]} /><TwinklingStar position={[-0.66, 2.88, -0.63]} /><TwinklingStar position={[-2.18, 2.12, -0.63]} /><TwinklingStar position={[-3.08, 2.76, -0.63]} /><TwinklingStar position={[-3.54, 1.03, -0.63]} />
-      <TwinklingStar position={[-1.1, 1.01, -0.63]} />
-      <TwinklingStar position={[0.52, 0.66, -0.63]} />
-      <TwinklingStar position={[1.35, 1.35, -0.63]} />
-      <TwinklingStar position={[0.57, 3.22, -0.63]} />
-      <TwinklingStar position={[1.87, 3.05, -0.63]} />
-      <TwinklingStar position={[2.42, 1.78, -0.63]} /><TwinklingStar position={[3.07, 2.44, -0.63]} />
-      <TwinklingStar position={[-2.83, 1.78, -0.63]} />
+        {isNightTime && <pointLight intensity={2} />}
+      </animated.mesh>
+
+      {/* Sun - visible during day */}
+      <animated.mesh
+        position-y={sunY}
+        position-x={0.1}
+        position-z={-0.6}
+        scale={[0.5, 0.5, 0.01]}
+        name={"sun"}
+        onClick={() => setIsNightTime((prev) => !prev)}
+      >
+        <boxGeometry />
+        <meshBasicMaterial color={"#ffaa00"} />
+        <animated.pointLight intensity={sunIntensity} color={"#ffa500"} />
+      </animated.mesh>
+      {isNightTime && (
+        <>
+          <group name="big_dipper" position={[-1.18, 1.95, -0.63]} rotation={[-0.057859925759693155, 0.07155343523626997, -0.2801141128557414]}>
+            <TwinklingStar position={[0, 0, 0]} name={"megrez"} />
+            <TwinklingStar position={[0.4, 0, 0]} name={"dubhe"} />
+            <TwinklingStar position={[0.45, -0.3, 0]} name={"merak"} />
+            <TwinklingStar position={[0.05, -0.3, 0]} name={"phecda"} />
+            <TwinklingStar position={[-0.21, 0.2, 0]} name={"alioth"} />
+            <TwinklingStar position={[-0.48, 0.46, 0]} name={"mizar"} />
+            <TwinklingStar position={[-0.82, 0.5, 0]} name={"alkaid"} />
+          </group>
+          <TwinklingStar position={[0.07, 1.68, -0.63]} /><TwinklingStar position={[-0.66, 2.88, -0.63]} /><TwinklingStar position={[-2.18, 2.12, -0.63]} /><TwinklingStar position={[-3.08, 2.76, -0.63]} /><TwinklingStar position={[-3.54, 1.03, -0.63]} />
+          <TwinklingStar position={[-1.1, 1.01, -0.63]} />
+          <TwinklingStar position={[0.52, 0.66, -0.63]} />
+          <TwinklingStar position={[1.35, 1.35, -0.63]} />
+          <TwinklingStar position={[0.57, 3.22, -0.63]} />
+          <TwinklingStar position={[1.87, 3.05, -0.63]} />
+          <TwinklingStar position={[2.42, 1.78, -0.63]} /><TwinklingStar position={[3.07, 2.44, -0.63]} />
+          <TwinklingStar position={[-2.83, 1.78, -0.63]} />
+        </>
+      )}
 
       {/* ENVIRONMENT */}
 
       <mesh scale={[12.82, 3.92, 0.01]} position={[0, 1.86, -0.67]} name={"sky"}>
         <boxGeometry />
-        <meshStandardMaterial color={"#132d96"} />
+        <animated.meshStandardMaterial color={skyColor} />
       </mesh>
       <mesh scale={[20, 0.01, 19.47]} position={[0, 0, 8]} name={"ground"}>
         <boxGeometry />
@@ -228,7 +296,8 @@ export default function Scene() {
           <shapeGeometry />
           <meshStandardMaterial color={"#a89d9e"} />
         </mesh>
-      </group><group name='mountain' position={[-0.29, 0, 0]} scale={[1.49, 1, 1]}>
+      </group>
+      <group name='mountain' position={[-0.29, 0, 0]} scale={[1.49, 1, 1]}>
         <mesh position={[-1.54, 0.5, -0.1]} name={"mountain_left"}>
           <shapeGeometry />
           <meshStandardMaterial color={"#a89d9e"} />
@@ -254,6 +323,24 @@ export default function Scene() {
           <meshStandardMaterial color={"#a89d9e"} />
         </mesh>
       </group>
+
+      {/* SASQUATCH - visible only when dark (night, no fire, no flashlight) */}
+      <ImageSprite
+        imagePath={SasquatchImage}
+        position={isMobile
+          ? [0.15, 0.05, 2.15]
+          : [0.3, 0.075, 2.15]
+        }
+        scale={[0.15, 0.15, 1]}
+        isVisible={showSasquatch}
+        name="sasquatch"
+        sound={{
+          soundPath: SasquatchGrowl,
+          volume: 0.1,
+        }}
+        affectedByLighting={true}
+        brightness={5}
+      />
 
       {/* TREES */}
 
