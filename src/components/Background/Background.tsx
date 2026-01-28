@@ -86,7 +86,29 @@ export default function Scene() {
         powerPreference: isMobile ? 'low-power' : 'high-performance'
       }}
     >
-      <Binder position={[0.26, 0.11, 2.73]} isOpen={isBookOpen} onClick={() => setIsBookOpen((prev) => !prev)} />
+      <Binder
+        restPosition={[0.13, 0.025, 2.6]}
+        restRotation={[-Math.PI / 8, 0, 0.05]}
+        restScale={0.3}
+        activePosition={[0.25, 0.09, 2.85]}
+        activeRotation={[0.2, 0.1, 0]}
+        activeScale={1}
+        isActive={isBookOpen}
+        isOpen={isBookOpen}
+        onClick={() => setIsBookOpen((prev) => !prev)}
+        coverContent={
+          <div className="binder-cover">
+            <span className="title">Survival Guide</span>
+            <span className="subtitle">By Devin Curtis</span>
+          </div>
+        }
+        pageContent={
+          <div className="binder-cover">
+            <span className="title">Test page 1</span>
+            <span className="subtitle">Footer</span>
+          </div>
+        }
+      />
 
 
       {/* GLOBAL */}
