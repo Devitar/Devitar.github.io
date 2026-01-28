@@ -102,6 +102,12 @@ export default function Scene() {
             <span className="subtitle">By Devin Curtis</span>
           </div>
         }
+        coverInsideContent={
+          <div className="binder-cover">
+            <span className="title">Survival Guide</span>
+            <span className="subtitle">By Devin Curtis</span>
+          </div>
+        }
         pageContent={
           <div className="binder-cover">
             <span className="title">Test page 1</span>

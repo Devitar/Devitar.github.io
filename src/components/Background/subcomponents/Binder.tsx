@@ -23,6 +23,8 @@ type Props = {
   isOpen?: boolean;
   /** Content to display on the front cover */
   coverContent?: ReactNode;
+  /** Content to display on the inside of the cover (visible when open) */
+  coverInsideContent?: ReactNode;
   /** Content to display on the inner page (visible when open) */
   pageContent?: ReactNode;
   onClick?: () => void;
@@ -39,6 +41,7 @@ const Binder = ({
   isActive = false,
   isOpen = false,
   coverContent,
+  coverInsideContent,
   pageContent,
   onClick,
 }: Props) => {
@@ -107,6 +110,17 @@ const Binder = ({
             pointerEvents="none"
           >
             {coverContent}
+          </Html>
+        )}
+        {coverInsideContent && isOpen && (
+          <Html
+            transform
+            position={[0.05, 0, -0.001]}
+            rotation={[0, Math.PI, 0]}
+            scale={0.005}
+            pointerEvents="none"
+          >
+            {coverInsideContent}
           </Html>
         )}
       </animated.group>
