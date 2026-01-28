@@ -127,6 +127,16 @@ export default function Scene() {
       <Audio url={CricketLoop} isPlaying={isNightTime} volume={0.01} fadeDuration={2000} />
       <Audio url={DaytimeAmbientLoop} isPlaying={!isNightTime} volume={1.5} fadeDuration={2000} />
 
+      {/* Reading light for the journal at night */}
+      {isNightTime && isBookOpen && (
+        <pointLight
+          position={[0.25, 0.2, 2.9]}
+          intensity={0.15}
+          distance={0.3}
+          color="#fffaf0"
+        />
+      )}
+
       {/* CAMP */}
 
       {isNightTime && (
