@@ -37,7 +37,7 @@ const Text = ({
   newTab = true,
 }: Props) =>
   !link ? (
-    <div
+    <p
       className="text-renderer"
       style={{
         backgroundColor: backgroundColor ?? "transparent",
@@ -48,7 +48,7 @@ const Text = ({
       }}
     >
       {children}
-    </div>
+    </p>
   ) : (
     <a
       className="link-renderer"

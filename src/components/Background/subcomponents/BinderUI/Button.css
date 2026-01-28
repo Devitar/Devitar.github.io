@@ -1,0 +1,30 @@
+.binder-button {
+  font-family: 'Arial', sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.binder-button:hover {
+  opacity: 0.9;
+}
+
+.binder-button:active {
+  transform: scale(0.98);
+}
+
+.binder-button--primary {
+  background-color: #2d4a4a;
+  color: #ffffff;
+}
+
+.binder-button--secondary {
+  background-color: #3d5c5c;
+  color: #ffffff;
+}

@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { useCallback, useContext } from "react";
 import { AppContext } from "~/global/AppContext";
 import { useSpring, animated, config } from '@react-spring/three';
+import { Text } from "~/components";
 
 /** Assets */
 
@@ -23,6 +24,7 @@ import Flashlight from "./subcomponents/Flashlight";
 import ImageSprite from "./subcomponents/ImageSprite";
 import DeviceOrientationCamera from "./subcomponents/DeviceOrientationCamera";
 import Binder from "./subcomponents/Binder";
+import { BinderView, Button, Header } from "./subcomponents/BinderUI";
 
 /** Renders a 3D camping scene. */
 export default function Scene() {
@@ -95,25 +97,34 @@ export default function Scene() {
         activeScale={1}
         isActive={isBookOpen}
         isOpen={isBookOpen}
-        onClick={() => setIsBookOpen((prev) => !prev)}
+        onClick={() => setIsBookOpen(true)}
         coverContent={
-          <div className="binder-cover">
-            <span className="title">Survival Guide</span>
-            <span className="subtitle">By Devin Curtis</span>
-          </div>
+          <BinderView>
+            <Text bold fontSize={150}>Survival Guide</Text>
+            <br />
+            <Text bold fontSize={100}>by <br />Devin Curtis</Text>
+          </BinderView>
         }
         coverInsideContent={
-          <div className="binder-cover">
-            <span className="title">Survival Guide</span>
-            <span className="subtitle">By Devin Curtis</span>
-          </div>
+          <BinderView>
+            <Header>Survival Guide</Header>
+            <br />
+            <Text bold fontSize={50}>
+              Thank you for visiting my <span style={{ textDecoration: 'line-through' }}>portfolio</span> campsite!<br /><br />
+              This journal contains tips and tricks for surviving the wilderness of web development.<br /><br />
+              If at any time you'd like to stop reading and explore the environment, simply click the close button below. Happy camping!<br /><br />
+            </Text>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+              <Button onClick={() => setIsBookOpen(false)} >Close</Button>
+            </div>
+          </BinderView>
         }
-        pageContent={
-          <div className="binder-cover">
-            <span className="title">Test page 1</span>
-            <span className="subtitle">Footer</span>
-          </div>
-        }
+        // pageContent={
+        //   <BinderView>
+        //     <Text bold fontSize={150}>Survival Guide</Text>
+        //     <Text bold fontSize={100}>Devin Curtis</Text>
+        //   </BinderView>
+        // }
       />
 
 

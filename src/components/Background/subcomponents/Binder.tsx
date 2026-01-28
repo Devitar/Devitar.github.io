@@ -60,32 +60,33 @@ const Binder = ({
   });
 
   return (
-    <animated.group position={position} rotation={rotation as unknown as [number, number, number]} scale={scale}>
+    <animated.group position={position} rotation={rotation as unknown as [number, number, number]} scale={scale} onClick={onClick}>
       {/* Invisible cube for click detection */}
-      <mesh position={[0, 0, 0.0015]} visible={false} onClick={onClick}>
+      {/* <mesh position={[0, 0, 0.0015]} visible={false} onClick={onClick}>
         <boxGeometry args={[0.1, 0.15, 0.01]} />
         <meshBasicMaterial />
-      </mesh>
+      </mesh> */}
 
-      {/* Back cover (red) */}
+      {/* Back cover */}
       <mesh position={[0, 0, 0]}>
         <boxGeometry args={[0.1, 0.15, 0.001]} />
-        <meshStandardMaterial color="#ff0000" />
+        <meshStandardMaterial />
       </mesh>
 
       {/* Inner pages */}
       <mesh position={[0, 0, 0.001]}>
         <boxGeometry args={[0.1, 0.15, 0.001]} />
-        <meshStandardMaterial color="#15ff00" />
+        <meshStandardMaterial />
       </mesh>
       <group position={[0, 0, 0.002]}>
         <mesh>
           <boxGeometry args={[0.1, 0.15, 0.001]} />
-          <meshStandardMaterial color="#0400ff" />
+          <meshStandardMaterial />
         </mesh>
         {pageContent && isOpen && (
           <Html
             transform
+            occlude
             position={[0, 0, 0.001]}
             scale={0.005}
             pointerEvents="none"
@@ -95,16 +96,17 @@ const Binder = ({
         )}
       </group>
 
-      {/* Front cover (white) - rotates around the left edge */}
+      {/* Front cover */}
       <animated.group position={[-0.05, 0, 0.003]} rotation-y={coverRotation}>
         {/* Mesh is offset so its left edge is at the group's origin (pivot point) */}
         <mesh position={[0.05, 0, 0]}>
           <boxGeometry args={[0.1, 0.15, 0.001]} />
           <meshStandardMaterial color="#ffffff" />
         </mesh>
-        {coverContent && !isOpen && (
+        {coverContent && (
           <Html
             transform
+            occlude
             position={[0.05, 0, 0.001]}
             scale={0.005}
             pointerEvents="none"
@@ -112,13 +114,13 @@ const Binder = ({
             {coverContent}
           </Html>
         )}
-        {coverInsideContent && isOpen && (
+        {coverInsideContent && (
           <Html
             transform
+            occlude
             position={[0.05, 0, -0.001]}
             rotation={[0, Math.PI, 0]}
             scale={0.005}
-            pointerEvents="none"
           >
             {coverInsideContent}
           </Html>

@@ -1,5 +1,6 @@
 .text-renderer {
-  display: flex;
+  display: block;
+  margin: 0;
 }
 
 .link-renderer {
