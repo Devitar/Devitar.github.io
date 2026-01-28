@@ -98,13 +98,11 @@ export default function Scene() {
         isActive={isBookOpen}
         isOpen={isBookOpen}
         onClick={() => setIsBookOpen(true)}
-        coverContent={
-          <BinderView>
-            <Text bold fontSize={150}>Survival Guide</Text>
-            <br />
-            <Text bold fontSize={100}>by <br />Devin Curtis</Text>
-          </BinderView>
-        }
+        coverText={{
+          title: "Survival Guide",
+          subtitle: "by Devin Curtis",
+          backgroundColor: "#8b1e2f",
+        }}
         coverInsideContent={
           <BinderView>
             <Header>Survival Guide</Header>
@@ -148,7 +146,7 @@ export default function Scene() {
       {isNightTime && isBookOpen && (
         <pointLight
           position={[0.25, 0.2, 2.9]}
-          intensity={0.15}
+          intensity={0.25}
           distance={0.3}
           color="#fffaf0"
         />
