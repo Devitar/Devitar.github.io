@@ -6,7 +6,6 @@ import type { ReactNode } from 'react';
 /** Fonts */
 
 import BungeeFont from '~/assets/fonts/Bungee-Regular.ttf';
-import CabinFont from '~/assets/fonts/Cabin-VariableFont.ttf';
 
 /** Types */
 

@@ -25,7 +25,7 @@ export const AppContext = createContext<AppContextType>({
   get: {
     isFireOn: true,
     isNightTime: true,
-    isBookOpen: true,
+    isBookOpen: false,
     isFlashlightOn: true,
   },
   set: {
@@ -40,7 +40,7 @@ export const AppContext = createContext<AppContextType>({
 export const AppContextProvider = ({ children }: Props) => {
   const [isFireOn, setIsFireOn] = useState<boolean>(true);
   const [isNightTime, setIsNightTime] = useState<boolean>(true);
-  const [isBookOpen, setIsBookOpen] = useState<boolean>(true);
+  const [isBookOpen, setIsBookOpen] = useState<boolean>(false);
   const [isFlashlightOn, setIsFlashlightOn] = useState<boolean>(true);
 
   return (

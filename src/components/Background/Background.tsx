@@ -87,6 +87,9 @@ export default function Scene() {
         antialias: !isMobile,
         powerPreference: isMobile ? 'low-power' : 'high-performance'
       }}
+      onCreated={() => {
+        setTimeout(() => setIsBookOpen(true), 1000);
+      }}
     >
       <Binder
         restPosition={[0.13, 0.025, 2.6]}
@@ -107,7 +110,7 @@ export default function Scene() {
           <BinderView>
             <Header>Survival Guide</Header>
             <br />
-            <Text bold fontSize={40} className="handwritten-text">
+            <Text bold fontSize={4} className="handwritten-text">
               Thank you for visiting my <span className="custom-strike">portfolio</span> campsite!<br /><br />
               This guide contains tips and tricks for surviving the wilderness of web development.<br /><br />
               If at any time you'd like to stop reading and explore the environment, simply click the close button below. Happy camping!<br /><br />
