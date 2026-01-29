@@ -1,4 +1,4 @@
-import "./Background.css";
+import "./Campground.css";
 import { Canvas } from '@react-three/fiber';
 import { useCallback, useContext, useState } from "react";
 import { AppContext } from "~/global/AppContext";

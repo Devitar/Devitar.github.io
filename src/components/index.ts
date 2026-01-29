@@ -1,4 +1,3 @@
-export { default as Background } from "./Background/Background";
 export { default as Divider } from "./Divider/Divider";
 export { default as FlipCard } from "./FlipCard/FlipCard";
 export { default as Grid } from "./Grid/Grid";
