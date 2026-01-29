@@ -18,7 +18,7 @@ import Audio from "./subcomponents/Audio";
 import ImageSprite from "./subcomponents/ImageSprite";
 import DeviceOrientationCamera from "./subcomponents/DeviceOrientationCamera";
 import Binder from "./subcomponents/Binder";
-import { BinderView, Button, Header, Tabs } from "./subcomponents/BinderUI";
+import { BinderView, Button, Header, Tabs } from "./subcomponents/UI";
 import Trees from "./subcomponents/scenery/Trees";
 import Mountains from "./subcomponents/scenery/Mountains";
 import Skybox from "./subcomponents/scenery/Skybox";
