@@ -83,7 +83,7 @@ export default function Scene() {
       dpr={[1, 2]}
       gl={{
         antialias: !isMobile,
-        powerPreference: isMobile ? 'default' : 'high-performance'
+        powerPreference: isMobile ? 'low-power' : 'high-performance'
       }}
       onCreated={() => {
         setTimeout(() => setIsBookOpen(true), 1000);
