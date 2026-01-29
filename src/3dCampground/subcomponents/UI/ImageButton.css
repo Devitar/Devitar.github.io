@@ -1,0 +1,16 @@
+.image-button {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  /* Set contents to white */
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(161deg) brightness(104%) contrast(102%);
+  z-index: 10;
+}
+
+.image-button-image {
+  width: 100%;
+  height: 100%;
+}

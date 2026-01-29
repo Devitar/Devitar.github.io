@@ -25,7 +25,7 @@ const Flashlight = ({
   disableInteraction = false,
 }: Props) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const isFirstRender = useRef(true);
+  const prevIsLit = useRef<boolean | null>(null);
 
   useEffect(() => {
     audioRef.current = new Audio(FlashlightSound);
@@ -33,17 +33,14 @@ const Flashlight = ({
   }, []);
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
-    if (audioRef.current) {
+    // Only play sound when isLit actually changes from a previous value
+    if (prevIsLit.current !== null && prevIsLit.current !== isLit && audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch(() => {
         // Ignore errors from autoplay restrictions
       });
     }
+    prevIsLit.current = isLit;
   }, [isLit]);
 
   return (

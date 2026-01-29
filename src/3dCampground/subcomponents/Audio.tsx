@@ -32,6 +32,15 @@ const AudioComponent = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 
 
 	useEffect(() => {
 		volumeRef.current = volume;
+		// Cancel any ongoing fade animation so it doesn't override the new volume
+		if (fadeAnimationRef.current) {
+			cancelAnimationFrame(fadeAnimationRef.current);
+			fadeAnimationRef.current = null;
+		}
+		// Apply volume change to currently playing audio
+		if (soundRef.current && isLoadedRef.current && hasStartedRef.current) {
+			soundRef.current.setVolume(volume);
+		}
 	}, [volume]);
 
 	/** Set volume instantly using Web Audio API (bypasses Three.js's gradual setTargetAtTime) */
