@@ -15,6 +15,10 @@
   src: url("./assets/fonts/PlaywriteNZBasic.ttf")
 }
 
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
 html,
 body {
   margin: 0;

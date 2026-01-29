@@ -1,21 +1,21 @@
 .binder-tabs {
   display: flex;
-  gap: 4px;
+  gap: 0.4rem;
 }
 
 .binder-tabs__tab {
   font-family: 'Arial', sans-serif;
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: bold;
-  width: 28px;
-  height: 28px;
+  width: 2.8rem;
+  height: 2.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #d4c4a8;
   color: #5c5347;
   border: none;
-  border-radius: 3px;
+  border-radius: 0.3rem;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 }

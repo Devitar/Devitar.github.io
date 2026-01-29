@@ -15,7 +15,7 @@ type Props = {
   className?: string;
   /** Colors the text. Default: black */
   color?: string;
-  /** Sets the font size in pixels. Default: 14 */
+  /** Sets the font size in REM. Default: 1.4 */
   fontSize?: number;
   /** Flags the text as a link (of a certain type if chosen, will use a generic if not),
    * and will be rendered as an `<a>` tag instead. Default: false */
@@ -34,7 +34,7 @@ const Text = ({
   children,
   className = "",
   color = "black",
-  fontSize = 14,
+  fontSize = 1.4,
   link = false,
   mask,
   newTab = true,
@@ -45,7 +45,7 @@ const Text = ({
       style={{
         backgroundColor: backgroundColor ?? "transparent",
         color: color,
-        fontSize: `${fontSize}px`,
+        fontSize: `${fontSize}rem`,
         fontWeight: bold ? "bold" : 400,
         textAlign: align,
       }}
@@ -68,7 +68,7 @@ const Text = ({
       style={{
         backgroundColor: backgroundColor ?? "transparent",
         color: color,
-        fontSize: `${fontSize}px`,
+        fontSize: `${fontSize / 10}rem`,
         fontWeight: bold ? "bold" : 400,
         textAlign: align,
       }}

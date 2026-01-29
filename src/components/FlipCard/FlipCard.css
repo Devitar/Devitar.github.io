@@ -1,9 +1,9 @@
 .flip-card-wrapper {
     background-color: transparent;
-    height: 300px;
-    margin: 18px;
-    perspective: 1000px;
-    width: 300px;
+    height: 30rem;
+    margin: 1.8rem;
+    perspective: 100rem;
+    width: 30rem;
 }
 
 .flip-card-wrapper h1,
@@ -28,8 +28,8 @@
 .flip-card-back {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    border-radius: 8px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    border-radius: 0.8rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.19), 0 0.6rem 0.6rem rgba(0, 0, 0, 0.23);
     height: 100%;
     overflow: hidden;
     position: absolute;
@@ -44,7 +44,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0px 12px;
+    padding: 0 1.2rem;
 }
 
 .flip-card-back {
@@ -60,13 +60,13 @@
 
 .flip-card-button {
     background-color: #F2A65A;
-    border-radius: 4px;
-    border: 0px;
+    border-radius: 0.4rem;
+    border: 0;
     bottom: 10%;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.19), 0 0.6rem 0.6rem rgba(0, 0, 0, 0.23);
     color: #fff;
     font-size: 1.2rem;
-    height: 50px;
+    height: 5rem;
     left: 10%;
     position: absolute;
     width: 80%;

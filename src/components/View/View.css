@@ -2,7 +2,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  margin-bottom: 8px;
+  margin-bottom: 0.8rem;
   width: 100%;
   z-index: 2;
   /* Invisible, to show the background image. */
