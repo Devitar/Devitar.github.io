@@ -26,6 +26,8 @@ type Props = {
   brightness?: number;
   /** Whether to disable click interaction */
   disableInteraction?: boolean;
+  /** Whether sound is muted */
+  isMuted?: boolean;
 };
 
 /** A sprite component that displays an image texture. */
@@ -39,6 +41,7 @@ const ImageSprite = ({
   affectedByLighting = false,
   brightness = 1,
   disableInteraction = false,
+  isMuted = false,
 }: Props) => {
   const texture = useLoader(TextureLoader, imagePath);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -51,7 +54,7 @@ const ImageSprite = ({
   }, [sound]);
 
   const handleClick = () => {
-    if (audioRef.current) {
+    if (audioRef.current && !isMuted) {
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch(() => {
         // Ignore errors from autoplay restrictions

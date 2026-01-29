@@ -10,6 +10,7 @@ type Props = {
   onToggleFire: () => void;
   onToggleFlashlight: () => void;
   disableInteraction?: boolean;
+  isMuted?: boolean;
 };
 
 const Campground = ({
@@ -19,6 +20,7 @@ const Campground = ({
   onToggleFire,
   onToggleFlashlight,
   disableInteraction = false,
+  isMuted = false,
 }: Props) => (
   <>
     {/* Fire effects */}
@@ -33,7 +35,7 @@ const Campground = ({
         isLit={isFireOn}
       />
     )}
-    <FireSprite position={[0, 0.025, 2.73]} isVisible={isFireOn} />
+    <FireSprite position={[0, 0.025, 2.73]} isVisible={isFireOn} isMuted={isMuted} />
     <SmokeSprite position={[0, -0.1, 2.73]} isVisible={!isFireOn} />
 
     {/* Flashlight */}
@@ -41,6 +43,7 @@ const Campground = ({
       isLit={isFlashlightOn}
       onClick={onToggleFlashlight}
       disableInteraction={disableInteraction}
+      isMuted={isMuted}
     />
 
     {/* Campfire logs bundle */}

@@ -13,6 +13,7 @@ type Props = {
   rotation?: [number, number, number];
   scale?: [number, number, number];
   disableInteraction?: boolean;
+  isMuted?: boolean;
 };
 
 /** A flashlight with body, head, and beam. */
@@ -23,6 +24,7 @@ const Flashlight = ({
   rotation = [-1.3446253347470072, -0.1497907014217364, -0.30376392625385],
   scale = [0.57, 0.57, 0.57],
   disableInteraction = false,
+  isMuted = false,
 }: Props) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const prevIsLit = useRef<boolean | null>(null);
@@ -34,14 +36,14 @@ const Flashlight = ({
 
   useEffect(() => {
     // Only play sound when isLit actually changes from a previous value
-    if (prevIsLit.current !== null && prevIsLit.current !== isLit && audioRef.current) {
+    if (prevIsLit.current !== null && prevIsLit.current !== isLit && audioRef.current && !isMuted) {
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch(() => {
         // Ignore errors from autoplay restrictions
       });
     }
     prevIsLit.current = isLit;
-  }, [isLit]);
+  }, [isLit, isMuted]);
 
   return (
     <group name="flashlight" position={position} rotation={rotation} scale={scale}>

@@ -187,6 +187,7 @@ export default function Scene() {
           onToggleFire={() => setIsFireOn((prev) => !prev)}
           onToggleFlashlight={() => setIsFlashlightOn((prev) => !prev)}
           disableInteraction={isBookOpen}
+          isMuted={isMuted}
           />
 
         {/* SASQUATCH - visible only when dark (night, no fire, no flashlight) */}
@@ -206,6 +207,7 @@ export default function Scene() {
           affectedByLighting={true}
           brightness={5}
           disableInteraction={isBookOpen}
+          isMuted={isMuted}
           />
 
         {/* SKYBOX & ENVIRONMENT */}
