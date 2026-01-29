@@ -3,6 +3,11 @@ import { Html, Text, RenderTexture, PerspectiveCamera } from '@react-three/drei'
 import { FrontSide, BackSide } from 'three';
 import type { ReactNode } from 'react';
 
+/** Fonts */
+
+import BungeeFont from '~/assets/fonts/Bungee-Regular.ttf';
+import CabinFont from '~/assets/fonts/Cabin-VariableFont.ttf';
+
 /** Types */
 
 type CoverTextConfig = {
@@ -112,25 +117,31 @@ const Binder = ({
                 <>
                   <Text
                     position={[0, 0.08, 0]}
-                    fontSize={0.06}
+                    fontSize={0.05}
                     color={coverText.titleColor ?? '#ffffff'}
                     anchorX="center"
                     anchorY="middle"
                     maxWidth={0.18}
                     textAlign="center"
                     fontWeight="bold"
+                    font={BungeeFont}
+                    letterSpacing={-0.5}
+                    outlineColor="#000000"
+                    outlineWidth={0.0075}
                   >
                     {coverText.title}
                   </Text>
                   {coverText.subtitle && (
                     <Text
-                      position={[0, -0.05, 0]}
-                      fontSize={0.03}
+                      position={[0, -0.1, 0]}
+                      fontSize={0.04}
                       color={coverText.subtitleColor ?? '#ffffff'}
                       anchorX="center"
                       anchorY="middle"
                       maxWidth={0.18}
                       textAlign="center"
+                      letterSpacing={-0.25}
+                      font={BungeeFont}
                     >
                       {coverText.subtitle}
                     </Text>

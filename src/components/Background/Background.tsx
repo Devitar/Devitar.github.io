@@ -93,8 +93,8 @@ export default function Scene() {
         restRotation={[-Math.PI / 8, 0, 0.05]}
         restScale={0.3}
         activePosition={[0.25, 0.09, 2.85]}
-        activeRotation={[0.2, 0.1, 0]}
-        activeScale={1}
+        activeRotation={[0.2, 0.115, 0]}
+        activeScale={1.075}
         isActive={isBookOpen}
         isOpen={isBookOpen}
         onClick={() => setIsBookOpen(true)}
@@ -107,10 +107,11 @@ export default function Scene() {
           <BinderView>
             <Header>Survival Guide</Header>
             <br />
-            <Text bold fontSize={50}>
-              Thank you for visiting my <span style={{ textDecoration: 'line-through' }}>portfolio</span> campsite!<br /><br />
-              This journal contains tips and tricks for surviving the wilderness of web development.<br /><br />
+            <Text bold fontSize={40} className="handwritten-text">
+              Thank you for visiting my <span className="custom-strike">portfolio</span> campsite!<br /><br />
+              This guide contains tips and tricks for surviving the wilderness of web development.<br /><br />
               If at any time you'd like to stop reading and explore the environment, simply click the close button below. Happy camping!<br /><br />
+              <i>P.S. Don't make eye contact with the sasquatch.</i>
             </Text>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
               <Button onClick={() => setIsBookOpen(false)} >Close</Button>

@@ -11,6 +11,8 @@ type Props = {
   /** Bolds the text. Default: false */
   bold?: boolean;
   children?: ReactNode;
+  /** Applies a CSS class to the text element. */
+  className?: string;
   /** Colors the text. Default: black */
   color?: string;
   /** Sets the font size in pixels. Default: 14 */
@@ -30,6 +32,7 @@ const Text = ({
   backgroundColor,
   bold = false,
   children,
+  className = "",
   color = "black",
   fontSize = 14,
   link = false,
@@ -38,7 +41,7 @@ const Text = ({
 }: Props) =>
   !link ? (
     <p
-      className="text-renderer"
+      className={`text-renderer ${className}`}
       style={{
         backgroundColor: backgroundColor ?? "transparent",
         color: color,
@@ -51,7 +54,7 @@ const Text = ({
     </p>
   ) : (
     <a
-      className="link-renderer"
+      className={`link-renderer ${className}`}
       href={
         link === "email"
           ? `mailto:${children as string}`
