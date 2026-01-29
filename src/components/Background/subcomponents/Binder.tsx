@@ -94,9 +94,8 @@ const Binder = ({
           <Html
             transform
             occlude
-            position={[-0.00025, 0.0015, 0.001]}
+            position={[-0.00025, 0, 0.001]}
             scale={0.005}
-            pointerEvents="none"
           >
             {pageContent}
           </Html>

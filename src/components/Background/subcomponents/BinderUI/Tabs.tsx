@@ -3,6 +3,8 @@ import './Tabs.css';
 type Tab = {
   id: string | number;
   label: string;
+  /** Optional background color for this tab */
+  color?: string;
 };
 
 type Props = {
@@ -14,15 +16,19 @@ type Props = {
 
 const Tabs = ({ tabs, activeTab, onTabChange, className = '' }: Props) => (
   <div className={`binder-tabs ${className}`}>
-    {tabs.map((tab) => (
-      <button
-        key={tab.id}
-        className={`binder-tabs-tab ${activeTab === tab.id ? 'binder-tabs-tab--active' : ''}`}
-        onClick={() => onTabChange?.(tab.id)}
-      >
-        {tab.label}
-      </button>
-    ))}
+    {tabs.map((tab) => {
+      const isActive = activeTab === tab.id;
+      return (
+        <button
+          key={tab.id}
+          className={`binder-tabs-tab ${isActive ? 'binder-tabs-tab--active' : ''}`}
+          onClick={() => onTabChange?.(tab.id)}
+          style={!isActive && tab.color ? { backgroundColor: tab.color } : undefined}
+        >
+          {tab.label}
+        </button>
+      );
+    })}
   </div>
 );
 
