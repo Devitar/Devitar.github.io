@@ -42,3 +42,19 @@
   background-color: #7a1a29;
   box-shadow: 0.4rem 0 0 0 #7a1a29;
 }
+
+/* Larger touch targets for mobile (content gets scaled down significantly) */
+@media (max-width: 768px) {
+  .binder-tabs {
+    pointer-events: auto;
+    touch-action: manipulation;
+  }
+
+  .binder-tabs-tab {
+    font-size: 4rem;
+    padding: 4rem 2rem;
+    pointer-events: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+}

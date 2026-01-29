@@ -2,7 +2,7 @@ import { useSpring, animated } from '@react-spring/three';
 import { Html, Text, RenderTexture, PerspectiveCamera } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { FrontSide, BackSide, PerspectiveCamera as ThreePerspectiveCamera } from 'three';
-import { type ReactNode, useMemo } from 'react';
+import { type ReactNode, useMemo, useState, useEffect } from 'react';
 
 /** Fonts */
 
@@ -134,12 +134,46 @@ const SurvivalGuide = ({
     config: { mass: 1, tension: 80, friction: 20 },
   });
 
+  // Track when cover animation completes (for mobile content visibility)
+  const [isCoverAnimationComplete, setIsCoverAnimationComplete] = useState(false);
+
+  // Reset animation complete state when book closes
+  useEffect(() => {
+    if (!isOpen) {
+      setIsCoverAnimationComplete(false);
+    }
+  }, [isOpen]);
+
   // Animate the front cover rotation around the left edge (rings)
   const { coverRotation, coverPosition } = useSpring({
     coverRotation: isOpen ? -Math.PI : 0,
     coverPosition: isOpen ? [-0.051, 0, 0.003] : [-0.05, 0, 0.003],
     config: { mass: 1, tension: 120, friction: 20 },
+    onRest: () => {
+      if (isOpen) {
+        setIsCoverAnimationComplete(true);
+      }
+    },
   });
+
+  // Calculate mobile content scale based on screen size and BinderView dimensions
+  const mobileContentScale = useMemo(() => {
+    if (!isMobile) return 1;
+
+    // BinderView dimensions in pixels (rem * 16)
+    const binderViewWidthPx = 79.5 * 16; // 1272px
+    const binderViewHeightPx = 120 * 16; // 1920px
+
+    // Target: content should fill most of the screen on mobile
+    const targetWidth = window.innerWidth * 0.75;
+    const targetHeight = window.innerHeight * 0.9;
+
+    // Calculate scale to fit within target dimensions while maintaining aspect ratio
+    const scaleByWidth = targetWidth / binderViewWidthPx;
+    const scaleByHeight = targetHeight / binderViewHeightPx;
+
+    return Math.min(scaleByWidth, scaleByHeight);
+  }, [isMobile]);
 
   return (
     <animated.group position={position} rotation={rotation as unknown as [number, number, number]} scale={scale} onClick={(e) => { e.stopPropagation(); onClick?.(); }} renderOrder={1}>
@@ -159,14 +193,23 @@ const SurvivalGuide = ({
           <boxGeometry args={[0.1, 0.15, 0.001]} />
           <meshStandardMaterial color="#dfdddd" />
         </mesh>
-        {pageContent && isOpen && (
+        {pageContent && isOpen && (!isMobile || isCoverAnimationComplete) && (
           <Html
-            transform
+            transform={!isMobile}
             position={[-0.00025, 0, 0.001]}
-            scale={0.005}
-            occlude
+            scale={isMobile ? 1 : 0.005}
+            occlude={!isMobile}
+            style={isMobile ? { pointerEvents: 'auto' } : undefined}
           >
-            {pageContent}
+            {isMobile ? (
+              <div style={{
+                transform: `scale(${mobileContentScale}) translate(-50%, -50%)`,
+                transformOrigin: 'top left',
+                position: 'relative',
+              }}>
+                {pageContent}
+              </div>
+            ) : pageContent}
           </Html>
         )}
       </group>
@@ -223,15 +266,25 @@ const SurvivalGuide = ({
           <planeGeometry args={[0.1, 0.15]} />
           <meshStandardMaterial color="#dfdddd" side={BackSide} />
         </mesh>
-        {coverInsideContent && (
+        {coverInsideContent && isOpen && (!isMobile || isCoverAnimationComplete) && (
           <Html
-            transform
+            transform={!isMobile}
             position={[0.05, 0, -0.001]}
-            rotation={[0, Math.PI, 0]}
-            scale={0.005}
-            occlude
+            rotation={isMobile ? undefined : [0, Math.PI, 0]}
+            scale={isMobile ? 1 : 0.005}
+            occlude={!isMobile}
+            style={isMobile ? { pointerEvents: 'auto' } : undefined}
           >
-            {coverInsideContent}
+            {isMobile ? (
+              <div style={{
+                transform: `scale(${mobileContentScale}) translate(-50%, -50%)`,
+                transformOrigin: 'top left',
+                overflow: 'visible',
+                position: 'relative',
+              }}>
+                {coverInsideContent}
+              </div>
+            ) : coverInsideContent}
           </Html>
         )}
       </animated.group>
