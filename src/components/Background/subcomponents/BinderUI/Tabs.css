@@ -1,14 +1,16 @@
 .binder-tabs {
   display: flex;
   gap: 0.4rem;
+  position: absolute;
+  top: -2rem;
+  left: 5rem;
 }
 
-.binder-tabs__tab {
+.binder-tabs-tab {
   font-family: 'Arial', sans-serif;
-  font-size: 1.4rem;
+  font-size: 3rem;
   font-weight: bold;
-  width: 2.8rem;
-  height: 2.8rem;
+  padding: 0.6rem 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,17 +20,18 @@
   border-radius: 0.3rem;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
 }
 
-.binder-tabs__tab:hover {
+.binder-tabs-tab:hover {
   background-color: #c4b498;
 }
 
-.binder-tabs__tab--active {
+.binder-tabs-tab--active {
   background-color: #8b1e2f;
   color: #ffffff;
 }
 
-.binder-tabs__tab--active:hover {
+.binder-tabs-tab--active:hover {
   background-color: #7a1a29;
 }

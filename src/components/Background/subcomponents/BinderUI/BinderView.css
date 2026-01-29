@@ -2,13 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 70rem;
-  height: 110rem;
+  width: 79.5rem;
+  height: 120rem;
   color: #000000;
-  overflow: hidden;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
+  padding: 0 6rem 4rem 6rem;
+  box-sizing: border-box;
 }
 
 .binder-view s,

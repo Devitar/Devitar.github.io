@@ -24,7 +24,7 @@ import Flashlight from "./subcomponents/Flashlight";
 import ImageSprite from "./subcomponents/ImageSprite";
 import DeviceOrientationCamera from "./subcomponents/DeviceOrientationCamera";
 import Binder from "./subcomponents/Binder";
-import { BinderView, Button, Header } from "./subcomponents/BinderUI";
+import { BinderView, Button, Header, Tabs } from "./subcomponents/BinderUI";
 
 /** Renders a 3D camping scene. */
 export default function Scene() {
@@ -121,12 +121,22 @@ export default function Scene() {
             </div>
           </BinderView>
         }
-        // pageContent={
-        //   <BinderView>
-        //     <Text bold fontSize={150}>Survival Guide</Text>
-        //     <Text bold fontSize={100}>Devin Curtis</Text>
-        //   </BinderView>
-        // }
+        pageContent={
+          <>
+          <Tabs
+            activeTab="projects"
+            tabs={[
+              { id: "projects", label: "Projects" },
+              { id: "resume", label: "Resume" },
+              { id: "contact", label: "Contact" }
+            ]}
+          />
+          <BinderView>
+            <Header>My Projects</Header>
+            <Text bold fontSize={10}>Devin Curtis</Text>
+          </BinderView>
+          </>
+        }
       />
 
 
