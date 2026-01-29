@@ -1,7 +1,8 @@
 import { useSpring, animated } from '@react-spring/three';
 import { Html, Text, RenderTexture, PerspectiveCamera } from '@react-three/drei';
-import { FrontSide, BackSide } from 'three';
-import type { ReactNode } from 'react';
+import { useThree } from '@react-three/fiber';
+import { FrontSide, BackSide, PerspectiveCamera as ThreePerspectiveCamera } from 'three';
+import { type ReactNode, useMemo } from 'react';
 
 /** Fonts */
 
@@ -24,11 +25,11 @@ type Props = {
   restRotation?: [number, number, number];
   /** Scale when resting (inactive) */
   restScale?: number;
-  /** Position when active (viewing) */
-  activePosition: [number, number, number];
+  /** Position when active (viewing). Ignored if fitToViewport is enabled. */
+  activePosition?: [number, number, number];
   /** Rotation when active (viewing) */
   activeRotation?: [number, number, number];
-  /** Scale when active (viewing) */
+  /** Scale when active (viewing). Ignored if fitToViewport is enabled. */
   activeScale?: number;
   /** Whether the binder is in active/viewing mode */
   isActive?: boolean;
@@ -41,6 +42,14 @@ type Props = {
   /** Content to display on the inner page (visible when open) */
   pageContent?: ReactNode;
   onClick?: () => void;
+  /** Automatically calculate position and scale to fit the binder in viewport when active */
+  fitToViewport?: boolean;
+  /** Maximum scale when using fitToViewport. Default: 1.5 */
+  maxScale?: number;
+  /** Minimum scale when using fitToViewport to ensure readability. Default: 0.8 */
+  minScale?: number;
+  /** Padding factor (0-1) when fitting to viewport. Default: 0.8 */
+  viewportPadding?: number;
 };
 
 /** A notebook binder with turnable pages. */
@@ -48,16 +57,72 @@ const Binder = ({
   restPosition,
   restRotation = [0, 0, 0],
   restScale = 1,
-  activePosition,
+  activePosition: activePositionProp,
   activeRotation = [0, 0, 0],
-  activeScale = 1,
+  activeScale: activeScaleProp,
   isActive = false,
   isOpen = false,
   coverText,
   coverInsideContent,
   pageContent,
   onClick,
+  fitToViewport = false,
+  maxScale = 1.5,
+  minScale = 0.8,
+  viewportPadding = 0.8,
 }: Props) => {
+  const { viewport, camera } = useThree();
+
+  // Binder dimensions in world units
+  const BINDER_WIDTH = 0.1;
+  const BINDER_HEIGHT = 0.15;
+
+  // Calculate viewport-fitted position and scale
+  const { activePosition, activeScale } = useMemo(() => {
+    if (!fitToViewport) {
+      return {
+        activePosition: activePositionProp ?? restPosition,
+        activeScale: activeScaleProp ?? 1,
+      };
+    }
+
+    const perspectiveCamera = camera as ThreePerspectiveCamera;
+    const fovRadians = (perspectiveCamera.fov * Math.PI) / 180;
+
+    // Calculate z position - place binder at a distance that works well
+    const binderZ = camera.position.z - 0.15;
+    const distanceFromCamera = camera.position.z - binderZ;
+
+    // Get the visible dimensions at the binder's z position
+    const visibleHeight = 2 * Math.tan(fovRadians / 2) * distanceFromCamera;
+    const visibleWidth = visibleHeight * viewport.aspect;
+
+    // Calculate scale to fit within viewport with padding
+    // Account for opened cover by using 2x width (cover + page side by side)
+    const openedBinderWidth = BINDER_WIDTH * 2;
+    const maxHeightScale = (visibleHeight * viewportPadding) / BINDER_HEIGHT;
+    const maxWidthScale = (visibleWidth * viewportPadding) / openedBinderWidth;
+    const calculatedScale = Math.max(
+      minScale,
+      Math.min(maxHeightScale, maxWidthScale, maxScale)
+    );
+
+    // Position: center horizontally, slight raise to avoid ground clipping
+    // Keep it close to camera's y position with a small offset
+    const verticalOffset = 0.03;
+
+    const position: [number, number, number] = [
+      camera.position.x + 0.02, // Slight offset for opened cover
+      camera.position.y + verticalOffset,
+      binderZ,
+    ];
+
+    return {
+      activePosition: position,
+      activeScale: calculatedScale,
+    };
+  }, [fitToViewport, activePositionProp, activeScaleProp, restPosition, camera, viewport.aspect, maxScale, minScale, viewportPadding]);
+
   // Animate position, rotation, and scale between rest and active states
   const { position, rotation, scale } = useSpring({
     position: isActive ? activePosition : restPosition,
@@ -67,8 +132,9 @@ const Binder = ({
   });
 
   // Animate the front cover rotation around the left edge (rings)
-  const { coverRotation } = useSpring({
+  const { coverRotation, coverPosition } = useSpring({
     coverRotation: isOpen ? -Math.PI : 0,
+    coverPosition: isOpen ? [-0.051, 0, 0.003] : [-0.05, 0, 0.003],
     config: { mass: 1, tension: 120, friction: 20 },
   });
 
@@ -93,7 +159,6 @@ const Binder = ({
         {pageContent && isOpen && (
           <Html
             transform
-            occlude
             position={[-0.00025, 0, 0.001]}
             scale={0.005}
           >
@@ -103,7 +168,7 @@ const Binder = ({
       </group>
 
       {/* Front cover */}
-      <animated.group position={[-0.05, 0, 0.003]} rotation-y={coverRotation}>
+      <animated.group position={coverPosition} rotation-y={coverRotation}>
         {/* Front face of cover - with texture */}
         <mesh position={[0.05, 0, 0.0005]}>
           <planeGeometry args={[0.1, 0.15]} />
@@ -157,10 +222,10 @@ const Binder = ({
         {coverInsideContent && (
           <Html
             transform
-            occlude
             position={[0.05, 0, -0.001]}
             rotation={[0, Math.PI, 0]}
             scale={0.005}
+            occlude
           >
             {coverInsideContent}
           </Html>
