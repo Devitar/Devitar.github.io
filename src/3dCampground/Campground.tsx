@@ -1,28 +1,28 @@
 import "./Campground.css";
-import { Canvas } from '@react-three/fiber';
-import { useCallback, useContext, useState } from "react";
 import { AppContext } from "~/global/AppContext";
+import { Canvas } from '@react-three/fiber';
 import { Text } from "~/components";
+import { useCallback, useContext, useState } from "react";
 
 /** Assets */
 
-import FireLoop from "~/assets/sounds/fire.m4a";
 import CricketLoop from "~/assets/sounds/crickets.m4a";
 import DaytimeAmbientLoop from "~/assets/sounds/daytime_ambient.m4a"
-import SasquatchImage from "~/assets/images/sasquatch.webp";
+import FireLoop from "~/assets/sounds/fire.m4a";
 import SasquatchGrowl from "~/assets/sounds/sasquatch_growl.m4a"
+import SasquatchImage from "~/assets/images/sasquatch.webp";
 
 /** Subcomponents */
 
 import Audio from "./subcomponents/Audio";
-import ImageSprite from "./subcomponents/ImageSprite";
-import DeviceOrientationCamera from "./subcomponents/DeviceOrientationCamera";
 import Binder from "./subcomponents/Binder";
-import { BinderView, Button, Header, Tabs } from "./subcomponents/UI";
-import Trees from "./subcomponents/scenery/Trees";
+import Campground from "./subcomponents/scenery/Campground";
+import DeviceOrientationCamera from "./subcomponents/DeviceOrientationCamera";
+import ImageSprite from "./subcomponents/ImageSprite";
 import Mountains from "./subcomponents/scenery/Mountains";
 import Skybox from "./subcomponents/scenery/Skybox";
-import Campground from "./subcomponents/scenery/Campground";
+import Trees from "./subcomponents/scenery/Trees";
+import { BinderView, Button, Header, Tabs } from "./subcomponents/UI";
 
 /** Renders a 3D camping scene. */
 export default function Scene() {
