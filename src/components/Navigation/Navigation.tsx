@@ -24,7 +24,7 @@ const Navigation = () => {
 
   return (
     <div className="page-wrapper">
-      {/* {renderPages} */}
+      {renderPages}
     </div>
   );
 };
