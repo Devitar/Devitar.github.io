@@ -1,14 +1,14 @@
 @font-face {
   font-family: Bungee;
-  src: url("./assets/fonts/Bungee-Regular.ttf")
+  src: url("./assets/fonts/Bungee-Regular.woff") format("woff")
 }
 @font-face {
   font-family: Cabin;
-  src: url("./assets/fonts/Cabin-VariableFont.ttf")
+  src: url("./assets/fonts/Cabin-VariableFont.woff2") format("woff2")
 }
 @font-face {
   font-family: PlaywriteNZ;
-  src: url("./assets/fonts/PlaywriteNZBasic.ttf")
+  src: url("./assets/fonts/PlaywriteNZBasic.woff2") format("woff2")
 }
 
 html {

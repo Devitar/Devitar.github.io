@@ -17,5 +17,14 @@ export default defineConfig({
   },
   build: {
     outDir: 'build',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
+          'vendor-spring': ['@react-spring/three', '@react-spring/core'],
+        },
+      },
+    },
   },
 })

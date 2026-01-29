@@ -6,7 +6,7 @@ import { type ReactNode, useMemo, useState, useEffect } from 'react';
 
 /** Fonts */
 
-import BungeeFont from '~/assets/fonts/Bungee-Regular.ttf';
+import BungeeFont from '~/assets/fonts/Bungee-Regular.woff';
 
 /** Types */
 
