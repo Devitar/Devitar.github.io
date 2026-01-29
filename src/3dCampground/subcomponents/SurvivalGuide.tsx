@@ -55,7 +55,7 @@ type Props = {
 };
 
 /** A notebook binder with turnable pages. */
-const Binder = ({
+const SurvivalGuide = ({
   restPosition,
   restRotation = [0, 0, 0],
   restScale = 1,
@@ -253,4 +253,4 @@ const Binder = ({
   );
 };
 
-export default Binder;
+export default SurvivalGuide;

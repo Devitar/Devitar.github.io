@@ -15,7 +15,7 @@ import SasquatchImage from "~/assets/images/sasquatch.webp";
 /** Subcomponents */
 
 import Audio from "./subcomponents/Audio";
-import Binder from "./subcomponents/Binder";
+import SurvivalGuide from "./subcomponents/SurvivalGuide";
 import Campground from "./subcomponents/scenery/Campground";
 import DeviceOrientationCamera from "./subcomponents/DeviceOrientationCamera";
 import ImageSprite from "./subcomponents/ImageSprite";
@@ -116,7 +116,7 @@ export default function Scene() {
       )}
 
       {/* BOOK */}
-      <Binder
+      <SurvivalGuide
         restPosition={[0.13, 0.025, 2.6]}
         restRotation={[-Math.PI / 8, 0, 0.05]}
         restScale={0.3}
