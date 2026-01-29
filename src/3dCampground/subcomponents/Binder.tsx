@@ -168,7 +168,7 @@ const Binder = ({
       </group>
 
       {/* Front cover */}
-      <animated.group position={coverPosition} rotation-y={coverRotation}>
+      <animated.group position={coverPosition as unknown as [number, number, number]} rotation-y={coverRotation}>
         {/* Front face of cover - with texture */}
         <mesh position={[0.05, 0, 0.0005]}>
           <planeGeometry args={[0.1, 0.15]} />
