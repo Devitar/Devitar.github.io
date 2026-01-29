@@ -175,6 +175,7 @@ export default function Scene() {
         isFlashlightOn={isFlashlightOn}
         onToggleFire={() => setIsFireOn((prev) => !prev)}
         onToggleFlashlight={() => setIsFlashlightOn((prev) => !prev)}
+        disableInteraction={isBookOpen}
       />
 
       {/* SASQUATCH - visible only when dark (night, no fire, no flashlight) */}
@@ -193,12 +194,14 @@ export default function Scene() {
         }}
         affectedByLighting={true}
         brightness={5}
+        disableInteraction={isBookOpen}
       />
 
       {/* SKYBOX & ENVIRONMENT */}
       <Skybox
         isNightTime={isNightTime}
         onToggleNightTime={() => setIsNightTime((prev) => !prev)}
+        disableInteraction={isBookOpen}
       />
       <Mountains />
       <Trees />

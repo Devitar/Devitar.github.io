@@ -142,7 +142,7 @@ const Binder = ({
   });
 
   return (
-    <animated.group position={position} rotation={rotation as unknown as [number, number, number]} scale={scale} onClick={onClick} renderOrder={1}>
+    <animated.group position={position} rotation={rotation as unknown as [number, number, number]} scale={scale} onClick={(e) => { e.stopPropagation(); onClick?.(); }} renderOrder={1}>
       {/* Back cover */}
       <mesh position={[0, 0, 0]}>
         <boxGeometry args={[0.1, 0.15, 0.001]} />

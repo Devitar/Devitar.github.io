@@ -24,6 +24,8 @@ type Props = {
   affectedByLighting?: boolean;
   /** Brightness multiplier (0-1). 1.0 = normal, 0.5 = 50% darker, 0 = black. Only works when affectedByLighting is true. */
   brightness?: number;
+  /** Whether to disable click interaction */
+  disableInteraction?: boolean;
 };
 
 /** A sprite component that displays an image texture. */
@@ -36,6 +38,7 @@ const ImageSprite = ({
   sound,
   affectedByLighting = false,
   brightness = 1,
+  disableInteraction = false,
 }: Props) => {
   const texture = useLoader(TextureLoader, imagePath);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -65,7 +68,7 @@ const ImageSprite = ({
 
   if (affectedByLighting) {
     return (
-      <mesh position={position} scale={scale} name={name} onClick={sound ? handleClick : undefined}>
+      <mesh position={position} scale={scale} name={name} onClick={sound && !disableInteraction ? handleClick : undefined}>
         <planeGeometry args={[1, 1]} />
         <meshStandardMaterial
           map={textureToUse}
@@ -78,7 +81,7 @@ const ImageSprite = ({
   }
 
   return (
-    <sprite position={position} scale={scale} name={name} onClick={sound ? handleClick : undefined}>
+    <sprite position={position} scale={scale} name={name} onClick={sound && !disableInteraction ? handleClick : undefined}>
       <spriteMaterial
         map={textureToUse}
         transparent

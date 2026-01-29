@@ -12,6 +12,7 @@ type Props = {
   position?: [number, number, number];
   rotation?: [number, number, number];
   scale?: [number, number, number];
+  disableInteraction?: boolean;
 };
 
 /** A flashlight with body, head, and beam. */
@@ -21,6 +22,7 @@ const Flashlight = ({
   position = [0.05, 0.06, 2.515],
   rotation = [-1.3446253347470072, -0.1497907014217364, -0.30376392625385],
   scale = [0.57, 0.57, 0.57],
+  disableInteraction = false,
 }: Props) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isFirstRender = useRef(true);
@@ -47,7 +49,7 @@ const Flashlight = ({
   return (
     <group name="flashlight" position={position} rotation={rotation} scale={scale}>
       {/* Invisible cube for click detection */}
-      <mesh scale={[0.05, 0.07, 0.05]} position={[0.01, -0.005, 0]} visible={false} onClick={onClick}>
+      <mesh scale={[0.05, 0.07, 0.05]} position={[0.01, -0.005, 0]} visible={false} onClick={disableInteraction ? undefined : onClick}>
         <boxGeometry />
       </mesh>
       {/* Flashlight body */}

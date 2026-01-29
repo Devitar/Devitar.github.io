@@ -9,6 +9,7 @@ type Props = {
   isFlashlightOn: boolean;
   onToggleFire: () => void;
   onToggleFlashlight: () => void;
+  disableInteraction?: boolean;
 };
 
 const Campground = ({
@@ -17,6 +18,7 @@ const Campground = ({
   isFlashlightOn,
   onToggleFire,
   onToggleFlashlight,
+  disableInteraction = false,
 }: Props) => (
   <>
     {/* Fire effects */}
@@ -38,12 +40,13 @@ const Campground = ({
     <Flashlight
       isLit={isFlashlightOn}
       onClick={onToggleFlashlight}
+      disableInteraction={disableInteraction}
     />
 
     {/* Campfire logs bundle */}
     <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]}>
       {/* Invisible cube for click detection */}
-      <mesh scale={[0.2, 0.2, 0.2]} position={[0, 0, 0]} visible={false} onClick={onToggleFire}>
+      <mesh scale={[0.2, 0.2, 0.2]} position={[0, 0, 0]} visible={false} onClick={disableInteraction ? undefined : onToggleFire}>
         <boxGeometry />
         <meshStandardMaterial color={"#555555"} />
       </mesh>
