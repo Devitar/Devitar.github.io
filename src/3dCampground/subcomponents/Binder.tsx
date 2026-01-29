@@ -35,6 +35,8 @@ type Props = {
   isActive?: boolean;
   /** Whether the binder cover is open */
   isOpen?: boolean;
+  /** Whether the user is on a mobile device */
+  isMobile?: boolean;
   /** Text configuration for the front cover (rendered as texture) */
   coverText?: CoverTextConfig;
   /** Content to display on the inside of the cover (visible when open) */
@@ -62,6 +64,7 @@ const Binder = ({
   activeScale: activeScaleProp,
   isActive = false,
   isOpen = false,
+  isMobile = false,
   coverText,
   coverInsideContent,
   pageContent,
@@ -109,10 +112,10 @@ const Binder = ({
 
     // Position: center horizontally, slight raise to avoid ground clipping
     // Keep it close to camera's y position with a small offset
-    const verticalOffset = 0.03;
+    const verticalOffset = isMobile ? 0.02 : 0.045;
 
     const position: [number, number, number] = [
-      camera.position.x + 0.02, // Slight offset for opened cover
+      camera.position.x + (isMobile ? 0.0025 : 0.02), // Slight offset for opened cover
       camera.position.y + verticalOffset,
       binderZ,
     ];
@@ -121,7 +124,7 @@ const Binder = ({
       activePosition: position,
       activeScale: calculatedScale,
     };
-  }, [fitToViewport, activePositionProp, activeScaleProp, restPosition, camera, viewport.aspect, maxScale, minScale, viewportPadding]);
+  }, [fitToViewport, activePositionProp, activeScaleProp, restPosition, camera, viewport.aspect, maxScale, minScale, viewportPadding, isMobile]);
 
   // Animate position, rotation, and scale between rest and active states
   const { position, rotation, scale } = useSpring({
@@ -139,28 +142,29 @@ const Binder = ({
   });
 
   return (
-    <animated.group position={position} rotation={rotation as unknown as [number, number, number]} scale={scale} onClick={onClick}>
+    <animated.group position={position} rotation={rotation as unknown as [number, number, number]} scale={scale} onClick={onClick} renderOrder={1}>
       {/* Back cover */}
       <mesh position={[0, 0, 0]}>
         <boxGeometry args={[0.1, 0.15, 0.001]} />
-        <meshStandardMaterial />
+        <meshStandardMaterial color="#dfdddd" />
       </mesh>
 
       {/* Inner pages */}
       <mesh position={[0, 0, 0.001]}>
         <boxGeometry args={[0.1, 0.15, 0.001]} />
-        <meshStandardMaterial />
+        <meshStandardMaterial color="#dfdddd" />
       </mesh>
       <group position={[0, 0, 0.002]}>
         <mesh>
           <boxGeometry args={[0.1, 0.15, 0.001]} />
-          <meshStandardMaterial />
+          <meshStandardMaterial color="#dfdddd" />
         </mesh>
         {pageContent && isOpen && (
           <Html
             transform
             position={[-0.00025, 0, 0.001]}
             scale={0.005}
+            occlude
           >
             {pageContent}
           </Html>

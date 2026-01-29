@@ -83,7 +83,7 @@ export default function Scene() {
       dpr={[1, 2]}
       gl={{
         antialias: !isMobile,
-        powerPreference: isMobile ? 'low-power' : 'high-performance'
+        powerPreference: isMobile ? 'default' : 'high-performance'
       }}
       onCreated={() => {
         setTimeout(() => setIsBookOpen(true), 1000);
@@ -108,7 +108,7 @@ export default function Scene() {
       {/* Reading light for the journal at night */}
       {isNightTime && isBookOpen && (
         <pointLight
-          position={[0.25, 0.2, 3]}
+          position={[isMobile ? 0.125 : 0.25, 0.2, 3]}
           intensity={0.25}
           distance={0.3}
           color="#fffaf0"
@@ -120,13 +120,14 @@ export default function Scene() {
         restPosition={[0.13, 0.025, 2.6]}
         restRotation={[-Math.PI / 8, 0, 0.05]}
         restScale={0.3}
-        activeRotation={[0.2, 0.115, 0]}
+        activeRotation={[isMobile ? 0.1 : 0.2, 0.125, 0]}
         fitToViewport
-        maxScale={1.2}
-        minScale={0.9}
-        viewportPadding={0.95}
+        maxScale={2}
+        minScale={0.1}
+        viewportPadding={isMobile ? 0.9 : 0.95}
         isActive={isBookOpen}
         isOpen={isBookOpen}
+        isMobile={isMobile}
         onClick={() => setIsBookOpen(true)}
         coverText={{
           title: "Survival Guide",

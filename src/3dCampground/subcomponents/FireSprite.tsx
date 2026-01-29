@@ -42,7 +42,7 @@ const FireSprite = ({ position, isVisible = true }: Props) => {
 
   return (
     <sprite position={position} scale={[0.2, 0.25, 0.1]}>
-      <spriteMaterial map={texture} transparent sizeAttenuation={false} />
+      <spriteMaterial map={texture} transparent sizeAttenuation={false} depthTest />
     </sprite>
   )
 }

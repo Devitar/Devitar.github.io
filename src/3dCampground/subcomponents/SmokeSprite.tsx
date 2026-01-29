@@ -64,6 +64,7 @@ const SmokeParticle = ({
         map={texture}
         transparent
         sizeAttenuation={false}
+        depthTest
       />
     </sprite>
   );
