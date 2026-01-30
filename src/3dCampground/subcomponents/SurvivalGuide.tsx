@@ -7,6 +7,11 @@ import { type ReactNode, useMemo, useState, useEffect } from 'react';
 /** Fonts */
 
 import BungeeFont from '~/assets/fonts/Bungee-Regular.woff';
+import { useSoundOnChange } from '~/utils';
+
+/** Sounds */
+
+import BookCloseSound from '~/assets/sounds/book_close.m4a';
 
 /** Types */
 
@@ -75,6 +80,7 @@ const SurvivalGuide = ({
   viewportPadding = 0.8,
 }: Props) => {
   const { viewport, camera } = useThree();
+  useSoundOnChange(BookCloseSound, isOpen, { volume: 0.25 });
 
   // Binder dimensions in world units
   const BINDER_WIDTH = 0.1;
