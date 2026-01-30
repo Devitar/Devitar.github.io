@@ -235,7 +235,6 @@ const SurvivalGuide = ({
                     textAlign="center"
                     fontWeight="bold"
                     font={BungeeFont}
-                    letterSpacing={-0.5}
                     outlineColor="#000000"
                     outlineWidth={0.0075}
                   >
@@ -250,7 +249,6 @@ const SurvivalGuide = ({
                       anchorY="middle"
                       maxWidth={0.18}
                       textAlign="center"
-                      letterSpacing={-0.25}
                       font={BungeeFont}
                     >
                       {coverText.subtitle}
