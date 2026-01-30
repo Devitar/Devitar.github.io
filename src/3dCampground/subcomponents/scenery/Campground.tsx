@@ -1,27 +1,18 @@
+import { useContext } from 'react';
+import { AppContext } from '~/global/AppContext';
 import FlickeringLight from '../FlickeringLight';
 import FireSprite from '../FireSprite';
 import SmokeSprite from '../SmokeSprite';
 import Flashlight from '../Flashlight';
 
-type Props = {
-  isNightTime: boolean;
-  isFireOn: boolean;
-  isFlashlightOn: boolean;
-  onToggleFire: () => void;
-  onToggleFlashlight: () => void;
-  disableInteraction?: boolean;
-  isMuted?: boolean;
-};
+const Campground = () => {
+  const {
+    get: { isNightTime, isBookOpen },
+    set: { setIsFireOn }
+  } = useContext(AppContext);
+  const disableInteraction = isBookOpen;
 
-const Campground = ({
-  isNightTime,
-  isFireOn,
-  isFlashlightOn,
-  onToggleFire,
-  onToggleFlashlight,
-  disableInteraction = false,
-  isMuted = false,
-}: Props) => (
+  return (
   <>
     {/* Fire effects */}
     {isNightTime && (
@@ -32,24 +23,18 @@ const Campground = ({
           unlit: "#b94712"
         }}
         baseIntensity={1}
-        isLit={isFireOn}
       />
     )}
-    <FireSprite position={[0, 0.025, 2.73]} isVisible={isFireOn} isMuted={isMuted} />
-    <SmokeSprite position={[0, -0.1, 2.73]} isVisible={!isFireOn} />
+    <FireSprite position={[0, 0.025, 2.73]} />
+    <SmokeSprite position={[0, -0.1, 2.73]} />
 
     {/* Flashlight */}
-    <Flashlight
-      isLit={isFlashlightOn}
-      onClick={onToggleFlashlight}
-      disableInteraction={disableInteraction}
-      isMuted={isMuted}
-    />
+    <Flashlight />
 
     {/* Campfire logs bundle */}
     <group name="campfire" position={[0, 0.01, 2.73]} scale={[0.34, 0.34, 0.34]} rotation={[0, -0.26179938779914963, 0]}>
       {/* Invisible cube for click detection */}
-      <mesh scale={[0.2, 0.2, 0.2]} position={[0, 0, 0]} visible={false} onClick={disableInteraction ? undefined : onToggleFire}>
+      <mesh scale={[0.2, 0.2, 0.2]} position={[0, 0, 0]} visible={false} onClick={disableInteraction ? undefined : () => setIsFireOn(prev => !prev)}>
         <boxGeometry />
         <meshStandardMaterial color={"#555555"} />
       </mesh>
@@ -137,6 +122,7 @@ const Campground = ({
       </mesh>
     </group>
   </>
-);
+  );
+};
 
 export default Campground;

@@ -1,13 +1,14 @@
+import { useContext } from 'react';
 import { useSpring, animated, config } from '@react-spring/three';
+import { AppContext } from '~/global/AppContext';
 import TwinklingStar from '../TwinklingStar';
 
-type Props = {
-  isNightTime: boolean;
-  onToggleNightTime: () => void;
-  disableInteraction?: boolean;
-};
-
-const Skybox = ({ isNightTime, onToggleNightTime, disableInteraction = false }: Props) => {
+const Skybox = () => {
+  const {
+    get: { isNightTime, isBookOpen },
+    set: { setIsNightTime }
+  } = useContext(AppContext);
+  const disableInteraction = isBookOpen;
   const { moonY, sunY, skyColor, ambientIntensity, sunIntensity } = useSpring({
     moonY: isNightTime ? 2.24 : -0.5,
     sunY: isNightTime ? -0.5 : 2.24,
@@ -38,7 +39,7 @@ const Skybox = ({ isNightTime, onToggleNightTime, disableInteraction = false }: 
         position-z={-0.59}
         scale={[0.5, 0.5, 0.01]}
         name={"moon"}
-        onClick={disableInteraction ? undefined : () => isNightTime && onToggleNightTime()}
+        onClick={disableInteraction ? undefined : () => isNightTime && setIsNightTime(false)}
       >
         <boxGeometry />
         <meshBasicMaterial color={"#ffffff"} />
@@ -52,7 +53,7 @@ const Skybox = ({ isNightTime, onToggleNightTime, disableInteraction = false }: 
         position-z={-0.6}
         scale={[0.5, 0.5, 0.01]}
         name={"sun"}
-        onClick={disableInteraction ? undefined : () => !isNightTime && onToggleNightTime()}
+        onClick={disableInteraction ? undefined : () => !isNightTime && setIsNightTime(true)}
       >
         <boxGeometry />
         <meshBasicMaterial color={"#f2ff39"} />

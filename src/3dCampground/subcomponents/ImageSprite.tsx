@@ -1,6 +1,8 @@
+import { useContext } from 'react';
 import { useLoader } from '@react-three/fiber';
 import { TextureLoader, Color } from 'three';
 import { useSound } from '~/utils';
+import { AppContext } from '~/global/AppContext';
 
 /** Types */
 
@@ -24,10 +26,6 @@ type Props = {
   affectedByLighting?: boolean;
   /** Brightness multiplier (0-1). 1.0 = normal, 0.5 = 50% darker, 0 = black. Only works when affectedByLighting is true. */
   brightness?: number;
-  /** Whether to disable click interaction */
-  disableInteraction?: boolean;
-  /** Whether sound is muted */
-  isMuted?: boolean;
 };
 
 /** A sprite component that displays an image texture. */
@@ -40,9 +38,9 @@ const ImageSprite = ({
   sound,
   affectedByLighting = false,
   brightness = 1,
-  disableInteraction = false,
-  isMuted = false,
 }: Props) => {
+  const { get: { isMuted, isBookOpen } } = useContext(AppContext);
+  const disableInteraction = isBookOpen;
   const texture = useLoader(TextureLoader, imagePath);
   const { play: playSound } = useSound(sound?.soundPath, {
     volume: sound?.volume,

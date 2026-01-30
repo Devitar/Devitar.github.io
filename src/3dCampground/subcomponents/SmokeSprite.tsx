@@ -1,7 +1,8 @@
+import { useContext, useRef, useState, useEffect } from 'react';
 import { useLoader, useFrame } from '@react-three/fiber';
 import { TextureLoader, Texture } from 'three';
-import { useRef, useState, useEffect } from 'react';
 import type { Sprite } from 'three';
+import { AppContext } from '~/global/AppContext';
 
 /** Assets */
 
@@ -11,7 +12,6 @@ import SmokeImage from '~/assets/images/Smoke.svg';
 
 type Props = {
   position: [number, number, number];
-  isVisible?: boolean;
 }
 
 /** A single smoke particle that rises and fades out. */
@@ -71,10 +71,12 @@ const SmokeParticle = ({
 };
 
 /** A sprite that displays animated smoke particles rising from the campfire. */
-const SmokeSprite = ({ position, isVisible = true }: Props) => {
+const SmokeSprite = ({ position }: Props) => {
+  const { get: { isFireOn } } = useContext(AppContext);
   const texture = useLoader(TextureLoader, SmokeImage);
 
-  if (!isVisible) return null;
+  // Smoke is visible when fire is off
+  if (isFireOn) return null;
 
   // Create 3 smoke particles with staggered delays, sharing the same texture
   return (

@@ -52,9 +52,6 @@ export default function Scene() {
       isMuted,
     },
     set: {
-      setIsFireOn,
-      setIsFlashlightOn,
-      setIsNightTime,
       setIsBookOpen,
       setIsMuted,
     }
@@ -130,7 +127,7 @@ export default function Scene() {
           maxTiltAngle={25}
           smoothing={0.06}
           enabled={isMobile}
-          />
+        />
         <GlobalAudio url={FireLoop} isPlaying={isFireOn} volume={isMuted ? 0 : 1.5} />
         <GlobalAudio url={CricketLoop} isPlaying={isNightTime} volume={isMuted ? 0 : 0.01} fadeDuration={2000} />
         <GlobalAudio url={DaytimeAmbientLoop} isPlaying={!isNightTime} volume={isMuted ? 0 : 1.5} fadeDuration={2000} />
@@ -196,18 +193,10 @@ export default function Scene() {
               </BinderView>
             </>
           }
-          />
+        />
 
         {/* CAMP */}
-        <Campground
-          isNightTime={isNightTime}
-          isFireOn={isFireOn}
-          isFlashlightOn={isFlashlightOn}
-          onToggleFire={() => setIsFireOn((prev) => !prev)}
-          onToggleFlashlight={() => setIsFlashlightOn((prev) => !prev)}
-          disableInteraction={isBookOpen}
-          isMuted={isMuted}
-          />
+        <Campground />
 
         {/* SASQUATCH - visible only when dark (night, no fire, no flashlight) */}
         <ImageSprite
@@ -225,16 +214,10 @@ export default function Scene() {
           }}
           affectedByLighting={true}
           brightness={5}
-          disableInteraction={isBookOpen}
-          isMuted={isMuted}
-          />
+        />
 
         {/* SKYBOX & ENVIRONMENT */}
-        <Skybox
-          isNightTime={isNightTime}
-          onToggleNightTime={() => setIsNightTime((prev) => !prev)}
-          disableInteraction={isBookOpen}
-          />
+        <Skybox />
         <Mountains />
         <Trees />
       </Canvas>
