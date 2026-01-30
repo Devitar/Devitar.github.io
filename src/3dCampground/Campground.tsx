@@ -49,19 +49,20 @@ export default function Scene() {
       isFlashlightOn,
       isNightTime,
       isBookOpen,
+      isMuted,
     },
     set: {
       setIsFireOn,
       setIsFlashlightOn,
       setIsNightTime,
       setIsBookOpen,
+      setIsMuted,
     }
   } = useContext(AppContext);
 
   /** State */
 
   const [activeTab, setActiveTab] = useState<ActiveTab>({ id: "projects", label: "Projects" });
-  const [isMuted, setIsMuted] = useState<boolean>(false);
 
   /** Audio */
 

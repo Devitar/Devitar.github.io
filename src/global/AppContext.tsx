@@ -7,12 +7,14 @@ type AppContextType = {
     isNightTime: boolean;
     isBookOpen: boolean;
     isFlashlightOn: boolean;
+    isMuted: boolean;
   };
   set: {
     setIsFireOn: Dispatch<SetStateAction<boolean>>;
     setIsNightTime: Dispatch<SetStateAction<boolean>>;
     setIsBookOpen: Dispatch<SetStateAction<boolean>>;
     setIsFlashlightOn: Dispatch<SetStateAction<boolean>>;
+    setIsMuted: Dispatch<SetStateAction<boolean>>;
   };
 };
 
@@ -27,12 +29,14 @@ export const AppContext = createContext<AppContextType>({
     isNightTime: true,
     isBookOpen: false,
     isFlashlightOn: true,
+    isMuted: false,
   },
   set: {
     setIsFireOn: () => { },
     setIsNightTime: () => { },
     setIsBookOpen: () => { },
     setIsFlashlightOn: () => { },
+    setIsMuted: () => { },
   },
 });
 
@@ -42,11 +46,12 @@ export const AppContextProvider = ({ children }: Props) => {
   const [isNightTime, setIsNightTime] = useState<boolean>(true);
   const [isBookOpen, setIsBookOpen] = useState<boolean>(false);
   const [isFlashlightOn, setIsFlashlightOn] = useState<boolean>(true);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
 
   return (
     <AppContext.Provider value={{
-      get: { isFireOn, isNightTime, isBookOpen, isFlashlightOn },
-      set: { setIsFireOn, setIsNightTime, setIsBookOpen, setIsFlashlightOn }
+      get: { isFireOn, isNightTime, isBookOpen, isFlashlightOn, isMuted },
+      set: { setIsFireOn, setIsNightTime, setIsBookOpen, setIsFlashlightOn, setIsMuted }
     }}>
       {children}
     </AppContext.Provider>
