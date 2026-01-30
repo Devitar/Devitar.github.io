@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useSoundOnChange } from "~/utils";
 
 /** Assets */
 
@@ -26,24 +26,7 @@ const Flashlight = ({
   disableInteraction = false,
   isMuted = false,
 }: Props) => {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const prevIsLit = useRef<boolean | null>(null);
-
-  useEffect(() => {
-    audioRef.current = new Audio(FlashlightSound);
-    audioRef.current.volume = 0.5;
-  }, []);
-
-  useEffect(() => {
-    // Only play sound when isLit actually changes from a previous value
-    if (prevIsLit.current !== null && prevIsLit.current !== isLit && audioRef.current && !isMuted) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(() => {
-        // Ignore errors from autoplay restrictions
-      });
-    }
-    prevIsLit.current = isLit;
-  }, [isLit, isMuted]);
+  useSoundOnChange(FlashlightSound, isLit, { volume: 0.5, isMuted });
 
   return (
     <group name="flashlight" position={position} rotation={rotation} scale={scale}>

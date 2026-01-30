@@ -1,16 +1,15 @@
 import './Tabs.css';
 
 type Tab = {
-  id: string | number;
+  id: string;
   label: string;
-  /** Optional background color for this tab */
   color?: string;
 };
 
 type Props = {
   tabs: Tab[];
-  activeTab: string | number;
-  onTabChange?: (tabId: string | number) => void;
+  activeTab: string;
+  onTabChange?: (tab: Tab) => void;
   className?: string;
 };
 
@@ -22,7 +21,7 @@ const Tabs = ({ tabs, activeTab, onTabChange, className = '' }: Props) => (
         <button
           key={tab.id}
           className={`binder-tabs-tab ${isActive ? 'binder-tabs-tab--active' : ''}`}
-          onClick={() => onTabChange?.(tab.id)}
+          onClick={() => onTabChange?.(tab)}
           style={!isActive && tab.color ? { backgroundColor: tab.color } : undefined}
         >
           {tab.label}

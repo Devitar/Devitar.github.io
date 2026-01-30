@@ -3,6 +3,7 @@ import { AppContext } from "~/global/AppContext";
 import { Canvas } from '@react-three/fiber';
 import { Text } from "~/components";
 import { useCallback, useContext, useState } from "react";
+import { useSoundOnChange } from "~/utils";
 
 /** Assets */
 
@@ -13,10 +14,11 @@ import SasquatchGrowl from "~/assets/sounds/sasquatch_growl.m4a"
 import SasquatchImage from "~/assets/images/sasquatch.webp";
 import SoundOn from "~/assets/images/sound_on.webp";
 import SoundOff from "~/assets/images/sound_off.webp";
+import PageTurnSound from "~/assets/sounds/page_turn.m4a";
 
 /** Subcomponents */
 
-import Audio from "./subcomponents/Audio";
+import GlobalAudio from "./subcomponents/GlobalAudio";
 import SurvivalGuide from "./subcomponents/SurvivalGuide";
 import Campground from "./subcomponents/scenery/Campground";
 import DeviceOrientationCamera from "./subcomponents/DeviceOrientationCamera";
@@ -25,6 +27,17 @@ import Mountains from "./subcomponents/scenery/Mountains";
 import Skybox from "./subcomponents/scenery/Skybox";
 import Trees from "./subcomponents/scenery/Trees";
 import { BinderView, Button, Header, Tabs, ImageButton } from "./subcomponents/UI";
+
+/** Pages */
+
+import { Projects } from "./pages";
+
+/** Types */
+
+type ActiveTab = {
+  id: string;
+  label: string;
+}
 
 /** Renders a 3D camping scene. */
 export default function Scene() {
@@ -47,9 +60,14 @@ export default function Scene() {
 
   /** State */
 
-  const [activeTab, setActiveTab] = useState<string>("projects");
+  const [activeTab, setActiveTab] = useState<ActiveTab>({ id: "projects", label: "Projects" });
   const [isMuted, setIsMuted] = useState<boolean>(false);
-  
+
+  /** Audio */
+
+  // Play page turn sound on tab change
+  useSoundOnChange(PageTurnSound, activeTab.id, { volume: 0.5, isMuted });
+
   /** Flags */
 
   // Show sasquatch only when it's dark (night, no fire, no flashlight)
@@ -112,9 +130,9 @@ export default function Scene() {
           smoothing={0.06}
           enabled={isMobile}
           />
-        <Audio url={FireLoop} isPlaying={isFireOn} volume={isMuted ? 0 : 1.5} />
-        <Audio url={CricketLoop} isPlaying={isNightTime} volume={isMuted ? 0 : 0.01} fadeDuration={2000} />
-        <Audio url={DaytimeAmbientLoop} isPlaying={!isNightTime} volume={isMuted ? 0 : 1.5} fadeDuration={2000} />
+        <GlobalAudio url={FireLoop} isPlaying={isFireOn} volume={isMuted ? 0 : 1.5} />
+        <GlobalAudio url={CricketLoop} isPlaying={isNightTime} volume={isMuted ? 0 : 0.01} fadeDuration={2000} />
+        <GlobalAudio url={DaytimeAmbientLoop} isPlaying={!isNightTime} volume={isMuted ? 0 : 1.5} fadeDuration={2000} />
 
         {/* Reading light for the journal at night */}
         {isNightTime && isBookOpen && (
@@ -163,8 +181,8 @@ export default function Scene() {
           pageContent={
             <>
               <Tabs
-                activeTab={activeTab}
-                onTabChange={(tabId) => setActiveTab(tabId.toString())}
+                activeTab={activeTab.id}
+                onTabChange={(tab) => setActiveTab(tab)}
                 tabs={[
                   { id: "projects", label: "Projects" },
                   { id: "resume", label: "Resume" },
@@ -172,8 +190,8 @@ export default function Scene() {
                 ]}
                 />
               <BinderView>
-                <Header>My Projects</Header>
-                <Text bold fontSize={10}>Devin Curtis</Text>
+                <Header>{activeTab.label}</Header>
+                
               </BinderView>
             </>
           }

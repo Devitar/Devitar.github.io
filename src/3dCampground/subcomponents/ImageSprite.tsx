@@ -1,6 +1,6 @@
 import { useLoader } from '@react-three/fiber';
 import { TextureLoader, Color } from 'three';
-import { useEffect, useRef } from 'react';
+import { useSound } from '~/utils';
 
 /** Types */
 
@@ -44,23 +44,10 @@ const ImageSprite = ({
   isMuted = false,
 }: Props) => {
   const texture = useLoader(TextureLoader, imagePath);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    if (sound) {
-      audioRef.current = new Audio(sound.soundPath);
-      audioRef.current.volume = sound.volume ?? 0.5;
-    }
-  }, [sound]);
-
-  const handleClick = () => {
-    if (audioRef.current && !isMuted) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(() => {
-        // Ignore errors from autoplay restrictions
-      });
-    }
-  };
+  const { play: playSound } = useSound(sound?.soundPath, {
+    volume: sound?.volume,
+    isMuted,
+  });
 
   if (!isVisible) return null;
 
@@ -71,7 +58,7 @@ const ImageSprite = ({
 
   if (affectedByLighting) {
     return (
-      <mesh position={position} scale={scale} name={name} onClick={sound && !disableInteraction ? handleClick : undefined}>
+      <mesh position={position} scale={scale} name={name} onClick={sound && !disableInteraction ? playSound : undefined}>
         <planeGeometry args={[1, 1]} />
         <meshStandardMaterial
           map={textureToUse}
@@ -84,7 +71,7 @@ const ImageSprite = ({
   }
 
   return (
-    <sprite position={position} scale={scale} name={name} onClick={sound && !disableInteraction ? handleClick : undefined}>
+    <sprite position={position} scale={scale} name={name} onClick={sound && !disableInteraction ? playSound : undefined}>
       <spriteMaterial
         map={textureToUse}
         transparent

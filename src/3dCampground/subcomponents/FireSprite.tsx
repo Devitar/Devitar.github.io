@@ -1,6 +1,5 @@
-import { useGifTexture } from "~/utils";
+import { useGifTexture, useSoundOnChange } from "~/utils";
 import fireGif from "~/assets/images/fire.gif";
-import { useEffect, useRef } from "react";
 
 /** Assets */
 
@@ -16,28 +15,12 @@ type Props = {
 
 /** A sprite that displays an animated fire GIF. */
 const FireSprite = ({ position, isVisible = true, isMuted = false }: Props) => {
-  const texture = useGifTexture(fireGif, 50)
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-    const isFirstRender = useRef(true);
-  
-    useEffect(() => {
-      audioRef.current = new Audio(FireOutSound);
-      audioRef.current.volume = 0.5;
-    }, []);
-  
-    useEffect(() => {
-      if (isFirstRender.current) {
-        isFirstRender.current = false;
-        return;
-      }
-  
-      if (audioRef.current && !isVisible && !isMuted) {
-        audioRef.current.currentTime = 0;
-        audioRef.current.play().catch(() => {
-          // Ignore errors from autoplay restrictions
-        });
-      }
-    }, [isVisible, isMuted]);
+  const texture = useGifTexture(fireGif, 50);
+  useSoundOnChange(FireOutSound, isVisible, {
+    volume: 0.5,
+    isMuted,
+    playWhen: (prev, current) => prev === true && current === false,
+  });
 
   if (!texture || !isVisible) return null;
 

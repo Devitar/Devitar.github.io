@@ -16,7 +16,7 @@ type Props = {
 };
 
 /** Plays a given sound. */
-const AudioComponent = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 }: Props) => {
+const GlobalAudio = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 }: Props) => {
 	const { camera } = useThree();
 	const soundRef = useRef<Audio | null>(null);
 	const isLoadedRef = useRef(false);
@@ -164,4 +164,4 @@ const AudioComponent = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 
 
 /** Exports */
 
-export default AudioComponent
+export default GlobalAudio
