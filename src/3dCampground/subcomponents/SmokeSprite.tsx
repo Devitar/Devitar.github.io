@@ -24,7 +24,7 @@ const SmokeParticle = ({
   delay?: number;
   texture: Texture;
 }) => {
-  const spriteRef = useRef<Sprite>(null);
+  const spriteRef = useRef<Sprite | null>(null);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
 

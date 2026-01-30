@@ -17,7 +17,7 @@ type Props = {
 /** A point light that flickers like a campfire. */
 const FlickeringLight = ({ position, color, baseIntensity = 1 }: Props) => {
   const { get: { isFireOn } } = useContext(AppContext);
-  const lightRef = useRef<PointLight>(null!);
+  const lightRef = useRef<PointLight>(null);
 
   useFrame((state) => {
     if (lightRef.current) {

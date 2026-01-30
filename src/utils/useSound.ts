@@ -54,18 +54,21 @@ export function useSoundOnChange<T>(
 ) {
   const { play } = useSound(soundPath, options);
   const prevRef = useRef<T | null>(null);
+  // Store playWhen in a ref to avoid triggering the effect when the function reference changes
+  const playWhenRef = useRef(options?.playWhen);
+  playWhenRef.current = options?.playWhen;
 
   useEffect(() => {
     const hasChanged = prevRef.current !== null && prevRef.current !== value;
-    const shouldPlay = options?.playWhen
-      ? prevRef.current !== null && options.playWhen(prevRef.current, value)
+    const shouldPlay = playWhenRef.current
+      ? prevRef.current !== null && playWhenRef.current(prevRef.current, value)
       : hasChanged;
 
     if (shouldPlay) {
       play();
     }
     prevRef.current = value;
-  }, [value, play, options]);
+  }, [value, play]);
 }
 
 export default useSound;

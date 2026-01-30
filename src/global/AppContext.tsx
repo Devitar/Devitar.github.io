@@ -42,11 +42,11 @@ export const AppContext = createContext<AppContextType>({
 
 /** Provider component that manages app-wide state. */
 export const AppContextProvider = ({ children }: Props) => {
-  const [isFireOn, setIsFireOn] = useState<boolean>(true);
-  const [isNightTime, setIsNightTime] = useState<boolean>(true);
-  const [isBookOpen, setIsBookOpen] = useState<boolean>(false);
-  const [isFlashlightOn, setIsFlashlightOn] = useState<boolean>(true);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [isFireOn, setIsFireOn] = useState(true);
+  const [isNightTime, setIsNightTime] = useState(true);
+  const [isBookOpen, setIsBookOpen] = useState(false);
+  const [isFlashlightOn, setIsFlashlightOn] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
 
   return (
     <AppContext.Provider value={{
