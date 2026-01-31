@@ -12,6 +12,7 @@ import { useSoundOnChange } from '~/utils';
 /** Sounds */
 
 import BookCloseSound from '~/assets/sounds/book_close.m4a';
+import { useAppContext } from '~/global/AppContext';
 
 /** Types */
 
@@ -80,7 +81,8 @@ const SurvivalGuide = ({
   viewportPadding = 0.8,
 }: Props) => {
   const { viewport, camera } = useThree();
-  useSoundOnChange(BookCloseSound, isOpen, { volume: 0.25 });
+    const { isMuted } = useAppContext();
+  useSoundOnChange(BookCloseSound, isOpen, { volume: 0.15, isMuted });
 
   // Binder dimensions in world units
   const BINDER_WIDTH = 0.1;

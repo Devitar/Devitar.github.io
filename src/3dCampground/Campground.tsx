@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { Text, ErrorBoundary } from "~/components";
 import { useCallback, useState } from "react";
 import { useSoundOnChange } from "~/utils";
+import type { Vector3 } from "~/types";
 
 /** Assets */
 
@@ -84,11 +85,11 @@ export default function Scene() {
     return baseHeight + Math.max(0, adjustment);
   }, [isMobile]);
 
-  const cameraPosition: [number, number, number] = isMobile
+  const cameraPosition: Vector3 = isMobile
     ? [0.075, getCameraY(), 3]
     : [0.21, 0.03, 3.04];
 
-  const cameraRotation: [number, number, number] = isMobile
+  const cameraRotation: Vector3 = isMobile
     ? [0.1, 0.125, 0]
     : [0.27925268031909284, 0.13962634015954653, 0];
 
