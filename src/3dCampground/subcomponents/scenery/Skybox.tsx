@@ -1,14 +1,15 @@
 import { useContext } from 'react';
 import { useSpring, animated, config } from '@react-spring/three';
 import { AppContext } from '~/global/AppContext';
+import { useInteraction } from '~/utils';
 import TwinklingStar from '../TwinklingStar';
 
 const Skybox = () => {
   const {
-    get: { isNightTime, isBookOpen },
+    get: { isNightTime },
     set: { setIsNightTime }
   } = useContext(AppContext);
-  const disableInteraction = isBookOpen;
+  const disableInteraction = useInteraction();
   const { moonY, sunY, skyColor, ambientIntensity, sunIntensity } = useSpring({
     moonY: isNightTime ? 2.24 : -0.5,
     sunY: isNightTime ? -0.5 : 2.24,

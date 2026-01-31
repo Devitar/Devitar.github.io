@@ -1,4 +1,5 @@
 export { default as Divider } from "./Divider/Divider";
+export { default as ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
 export { default as FlipCard } from "./FlipCard/FlipCard";
 export { default as Grid } from "./Grid/Grid";
 export { default as Navigation } from "./Navigation/Navigation";

@@ -1,24 +1,25 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, memo } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Mesh, MeshBasicMaterial } from "three";
+import type { Vector3 } from "~/types";
 
 /** Types */
 
 type Props = {
-  position: [number, number, number];
-  scale?: [number, number, number];
+  position: Vector3;
+  scale?: Vector3;
   name?: string;
   phaseRange?: number;
 }
 
 /** A star that twinkles with subtle brightness variations. */
-const TwinklingStar = ({
+const TwinklingStar = memo(({
   position,
-  scale = [0.05, 0.05, 0.01] as [number, number, number],
+  scale = [0.05, 0.05, 0.01] as Vector3,
   name = "star",
   phaseRange = 9
 }: Props) => {
-  const meshRef = useRef<Mesh>(null!);
+  const meshRef = useRef<Mesh>(null);
   const phaseOffset = useMemo(() => Math.random() * phaseRange, [phaseRange]);
 
   useFrame((state) => {
@@ -43,7 +44,7 @@ const TwinklingStar = ({
       <meshBasicMaterial color={"#ffffff"} />
     </mesh>
   )
-}
+});
 
 /** Exports */
 

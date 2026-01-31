@@ -2,15 +2,13 @@ import { useContext, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { PointLight } from "three";
 import { AppContext } from "~/global/AppContext";
+import type { Vector3, ColorPair } from "~/types";
 
 /** Types */
 
 type Props = {
-  position: [number, number, number];
-  color: {
-    lit: string;
-    unlit: string;
-  };
+  position: Vector3;
+  color: ColorPair;
   baseIntensity?: number;
 }
 

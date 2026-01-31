@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useLoader } from '@react-three/fiber';
 import { TextureLoader, Color } from 'three';
-import { useSound } from '~/utils';
+import { useSound, useInteraction } from '~/utils';
 import { AppContext } from '~/global/AppContext';
 
 /** Types */
@@ -39,8 +39,8 @@ const ImageSprite = ({
   affectedByLighting = false,
   brightness = 1,
 }: Props) => {
-  const { get: { isMuted, isBookOpen } } = useContext(AppContext);
-  const disableInteraction = isBookOpen;
+  const { get: { isMuted } } = useContext(AppContext);
+  const disableInteraction = useInteraction();
   const texture = useLoader(TextureLoader, imagePath);
   const { play: playSound } = useSound(sound?.soundPath, {
     volume: sound?.volume,

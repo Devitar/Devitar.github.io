@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useSoundOnChange } from "~/utils";
+import { useSoundOnChange, useInteraction } from "~/utils";
 import { AppContext } from "~/global/AppContext";
 
 /** Assets */
@@ -21,10 +21,10 @@ const Flashlight = ({
   scale = [0.57, 0.57, 0.57],
 }: Props) => {
   const {
-    get: { isMuted, isFlashlightOn, isBookOpen },
+    get: { isMuted, isFlashlightOn },
     set: { setIsFlashlightOn }
   } = useContext(AppContext);
-  const disableInteraction = isBookOpen;
+  const disableInteraction = useInteraction();
   useSoundOnChange(FlashlightSound, isFlashlightOn, { volume: 0.5, isMuted });
 
   return (

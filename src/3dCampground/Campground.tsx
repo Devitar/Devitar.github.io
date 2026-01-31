@@ -1,8 +1,8 @@
 import "./Campground.css";
-import { AppContext } from "~/global/AppContext";
+import { useAppContext } from "~/global/AppContext";
 import { Canvas } from '@react-three/fiber';
-import { Text } from "~/components";
-import { useCallback, useContext, useState } from "react";
+import { Text, ErrorBoundary } from "~/components";
+import { useCallback, useState } from "react";
 import { useSoundOnChange } from "~/utils";
 
 /** Assets */
@@ -44,18 +44,14 @@ export default function Scene() {
   /** Global state */
 
   const {
-    get: {
-      isFireOn,
-      isFlashlightOn,
-      isNightTime,
-      isBookOpen,
-      isMuted,
-    },
-    set: {
-      setIsBookOpen,
-      setIsMuted,
-    }
-  } = useContext(AppContext);
+    isFireOn,
+    isFlashlightOn,
+    isNightTime,
+    isBookOpen,
+    isMuted,
+    setIsBookOpen,
+    setIsMuted,
+  } = useAppContext();
 
   /** State */
 
@@ -97,25 +93,26 @@ export default function Scene() {
     : [0.27925268031909284, 0.13962634015954653, 0];
 
   return (
-    <div>
-      <ImageButton 
-        image={isMuted ? SoundOff : SoundOn}
-        alt="mute and unmute"
-        height="5rem"
-        width="6rem"
-        onClick={() => setIsMuted((prev) => !prev)}
-      />
-      <Canvas
-        className='main-canvas'
-        dpr={[1, 2]}
-        gl={{
-          antialias: !isMobile,
-          powerPreference: isMobile ? 'low-power' : 'high-performance'
-        }}
-        onCreated={() => {
-          setTimeout(() => setIsBookOpen(true), 1000);
-        }}
-      >
+    <>
+      <ErrorBoundary>
+        <ImageButton 
+          image={isMuted ? SoundOff : SoundOn}
+          alt="mute and unmute"
+          height="5rem"
+          width="6rem"
+          onClick={() => setIsMuted((prev: boolean) => !prev)}
+        />
+        <Canvas
+          className='main-canvas'
+          dpr={[1, 2]}
+          gl={{
+            antialias: !isMobile,
+            powerPreference: isMobile ? 'low-power' : 'high-performance'
+          }}
+          onCreated={() => {
+            setTimeout(() => setIsBookOpen(true), 1000);
+          }}
+        >
         {/* GLOBAL */}
 
         <DeviceOrientationCamera
@@ -216,11 +213,12 @@ export default function Scene() {
           brightness={5}
         />
 
-        {/* SKYBOX & ENVIRONMENT */}
-        <Skybox />
-        <Mountains />
-        <Trees />
-      </Canvas>
-    </div>
+          {/* SKYBOX & ENVIRONMENT */}
+          <Skybox />
+          <Mountains />
+          <Trees />
+        </Canvas>
+      </ErrorBoundary>
+    </>
   );
 }

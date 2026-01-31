@@ -1,8 +1,10 @@
-import { useContext, useRef, useState, useEffect } from 'react';
+import { useContext, useRef, useState, useEffect, memo } from 'react';
 import { useLoader, useFrame } from '@react-three/fiber';
 import { TextureLoader, Texture } from 'three';
 import type { Sprite } from 'three';
 import { AppContext } from '~/global/AppContext';
+import type { Vector3 } from '~/types';
+import { ANIMATION } from '~/constants';
 
 /** Assets */
 
@@ -11,16 +13,16 @@ import SmokeImage from '~/assets/images/Smoke.svg';
 /** Types */
 
 type Props = {
-  position: [number, number, number];
+  position: Vector3;
 }
 
 /** A single smoke particle that rises and fades out. */
-const SmokeParticle = ({
+const SmokeParticle = memo(({
   position,
   delay = 0,
   texture
 }: {
-  position: [number, number, number];
+  position: Vector3;
   delay?: number;
   texture: Texture;
 }) => {
@@ -42,8 +44,7 @@ const SmokeParticle = ({
     }
 
     const elapsed = state.clock.elapsedTime - startTime;
-    const duration = 6;
-    const progress = (elapsed % duration) / duration;
+    const progress = (elapsed % ANIMATION.smokeDuration) / ANIMATION.smokeDuration;
 
     // Animate position (rise upward)
     spriteRef.current.position.y = position[1] + progress * 0.5;
@@ -68,7 +69,7 @@ const SmokeParticle = ({
       />
     </sprite>
   );
-};
+});
 
 /** A sprite that displays animated smoke particles rising from the campfire. */
 const SmokeSprite = ({ position }: Props) => {
@@ -79,11 +80,12 @@ const SmokeSprite = ({ position }: Props) => {
   if (isFireOn) return null;
 
   // Create 3 smoke particles with staggered delays, sharing the same texture
+  const [delay1, delay2, delay3] = ANIMATION.smokeDelays;
   return (
     <>
-      <SmokeParticle position={position} delay={0} texture={texture} />
-      <SmokeParticle position={[position[0] - 0.02, position[1], position[2]]} delay={2000} texture={texture} />
-      <SmokeParticle position={[position[0] + 0.02, position[1], position[2]]} delay={4000} texture={texture} />
+      <SmokeParticle position={position} delay={delay1} texture={texture} />
+      <SmokeParticle position={[position[0] - 0.02, position[1], position[2]]} delay={delay2} texture={texture} />
+      <SmokeParticle position={[position[0] + 0.02, position[1], position[2]]} delay={delay3} texture={texture} />
     </>
   );
 }

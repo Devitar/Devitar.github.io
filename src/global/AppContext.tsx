@@ -1,4 +1,4 @@
-import { createContext, useState, type Dispatch, type SetStateAction, type ReactNode } from "react";
+import { createContext, useContext, useState, type Dispatch, type SetStateAction, type ReactNode } from "react";
 
 /** Types */
 type AppContextType = {
@@ -56,4 +56,15 @@ export const AppContextProvider = ({ children }: Props) => {
       {children}
     </AppContext.Provider>
   );
+};
+
+/**
+ * Simplified hook for accessing a flattened app context.
+ */
+export const useAppContext = () => {
+  const { get, set } = useContext(AppContext);
+  return {
+    ...get,
+    ...set,
+  };
 };
