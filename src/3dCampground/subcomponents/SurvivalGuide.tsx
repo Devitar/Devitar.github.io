@@ -207,13 +207,14 @@ const SurvivalGuide = ({
             position={[-0.00025, 0, 0.001]}
             scale={isMobile ? 1 : 0.005}
             occlude={!isMobile}
-            style={isMobile ? { pointerEvents: 'auto' } : undefined}
+            style={isMobile ? { pointerEvents: 'none' } : undefined}
           >
             {isMobile ? (
               <div style={{
                 transform: `scale(${mobileContentScale}) translate(-50%, -50%)`,
                 transformOrigin: 'top left',
                 position: 'relative',
+                pointerEvents: 'auto',
               }}>
                 {pageContent}
               </div>
@@ -279,7 +280,7 @@ const SurvivalGuide = ({
             rotation={isMobile ? undefined : [0, Math.PI, 0]}
             scale={isMobile ? 1 : 0.005}
             occlude={!isMobile}
-            style={isMobile ? { pointerEvents: 'auto' } : undefined}
+            style={isMobile ? { pointerEvents: 'none' } : undefined}
           >
             {isMobile ? (
               <div style={{
@@ -287,6 +288,7 @@ const SurvivalGuide = ({
                 transformOrigin: 'top left',
                 overflow: 'visible',
                 position: 'relative',
+                pointerEvents: 'auto',
               }}>
                 {coverInsideContent}
               </div>
