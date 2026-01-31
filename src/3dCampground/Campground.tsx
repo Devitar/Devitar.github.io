@@ -123,7 +123,7 @@ export default function Scene() {
         maxRotationX={0.15}
         maxTiltAngle={25}
         smoothing={0.06}
-        enabled={isMobile}
+        enabled={isMobile && !isBookOpen}
       />
       <GlobalAudio url={FireLoop} isPlaying={isFireOn} volume={isMuted ? 0 : 1.5} />
       <GlobalAudio url={CricketLoop} isPlaying={isNightTime} volume={isMuted ? 0 : 0.01} fadeDuration={2000} />

@@ -138,7 +138,12 @@ const DeviceOrientationCamera = ({
 
   // Update camera rotation directly via useFrame - no React re-renders!
   useFrame(() => {
-    if (!cameraRef.current || !enabled) return;
+    if (!cameraRef.current) return;
+
+    // When disabled, smoothly reset to base rotation
+    if (!enabled) {
+      targetRotation.current = { x: 0, y: 0 };
+    }
 
     const dx = targetRotation.current.x - currentRotation.current.x;
     const dy = targetRotation.current.y - currentRotation.current.y;
