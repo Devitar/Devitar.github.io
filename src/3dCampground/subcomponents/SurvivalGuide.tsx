@@ -212,12 +212,12 @@ const SurvivalGuide = ({
       {/* Inner pages */}
       <mesh position={[0, 0, 0.001]}>
         <boxGeometry args={[0.1, 0.15, 0.001]} />
-        <meshStandardMaterial color="#dfdddd" />
+        <meshStandardMaterial color="#ece4d5" />
       </mesh>
       <group position={[0, 0, 0.002]}>
         <mesh>
           <boxGeometry args={[0.1, 0.15, 0.001]} />
-          <meshStandardMaterial color="#dfdddd" />
+          <meshStandardMaterial color="#ece4d5" />
         </mesh>
         {pageContent && isOpen && (!isMobile || isCoverAnimationComplete) && (
           <Html
@@ -259,7 +259,7 @@ const SurvivalGuide = ({
                   <Text
                     position={[0, 0.08, 0]}
                     fontSize={0.05}
-                    color={coverText.titleColor ?? '#ffffff'}
+                    color={coverText.titleColor ?? '#fff'}
                     anchorX="center"
                     anchorY="middle"
                     maxWidth={0.18}
@@ -275,7 +275,7 @@ const SurvivalGuide = ({
                     <Text
                       position={[0, -0.1, 0]}
                       fontSize={0.04}
-                      color={coverText.subtitleColor ?? '#ffffff'}
+                      color={coverText.subtitleColor ?? '#fff'}
                       anchorX="center"
                       anchorY="middle"
                       maxWidth={0.18}
@@ -293,7 +293,7 @@ const SurvivalGuide = ({
         {/* Back face of cover - plain for inside content */}
         <mesh position={[0.05, 0, -0.0005]}>
           <planeGeometry args={[0.1, 0.15]} />
-          <meshStandardMaterial color="#dfdddd" side={BackSide} />
+          <meshStandardMaterial color="#ece4d5" side={BackSide} />
         </mesh>
         {coverInsideContent && isOpen && (!isMobile || isCoverAnimationComplete) && (
           <Html

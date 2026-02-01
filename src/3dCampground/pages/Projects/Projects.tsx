@@ -38,7 +38,7 @@ const Projects = () => {
   );
 
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper projects-page">
       <h2 className="header">TABLE OF CONTENTS</h2>
       {projects}
     </div>

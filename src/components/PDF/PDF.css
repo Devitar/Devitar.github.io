@@ -14,10 +14,7 @@
 .pdf-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.6rem;
-  box-shadow:
-    0 1rem 2rem rgba(0, 0, 0, 0.19),
-    0 0.6rem 0.6rem rgba(0, 0, 0, 0.23);
+  margin-bottom: 0.5rem;
 }
 
 .pdf-container.pdf-with-border {
@@ -25,6 +22,6 @@
 }
 
 .pdf-page-text {
+  background-color: var(--color-text-white);
   padding: 0.4rem;
-  background-color: #e4e4e4;
 }

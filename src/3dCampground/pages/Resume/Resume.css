@@ -1,0 +1,40 @@
+.resume-page {
+  display: flex;
+  flex-direction: column;
+  padding-right: var(--spacing-md);
+  padding-bottom: 4rem;
+  padding-left: var(--spacing-md);
+}
+
+.resume-scroll-container {
+  flex: 1;
+  min-height: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-text-muted) transparent;
+}
+
+.resume-scroll-container .pdf-wrapper {
+  padding-bottom: 4rem;
+}
+
+/* Webkit (Chrome, Safari, Edge) */
+.resume-scroll-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.resume-scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.resume-scroll-container::-webkit-scrollbar-thumb {
+  background-color: var(--color-text-muted);
+  border-radius: 4px;
+}
+
+.resume-scroll-container::-webkit-scrollbar-button {
+  display: none;
+}

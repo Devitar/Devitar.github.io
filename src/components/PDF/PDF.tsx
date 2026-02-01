@@ -1,15 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import { usePDFWidth } from '~/utils';
 import './PDF.css';
 
 /** Config */
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-
-const PDFWidth = window.innerWidth < 600 ? 1 : 0.75;
 
 /** Types */
 
@@ -18,10 +15,8 @@ type Props = {
   numberOfPages?: number;
   /** The PDF file to be displayed. Import it as a module: import PDF from "{filepath}/{file}.pdf" */
   pdf: any;
-  /** Maximum width of the PDF in pixels. Default: 850 */
+  /** Maximum width of the PDF in pixels. If not provided, PDF takes full container width. */
   maxWidth?: number;
-  /** The percent of the width of the screen the PDF will be sized to. 0..1 Default: 0.75 */
-  widthAlpha?: number;
   /** Shows page number above the PDF page. Default: false */
   showPageNumber?: boolean;
   /** Shows a border around each page of the PDF. Default: true */
@@ -34,34 +29,57 @@ type Props = {
 const PDF = ({
   numberOfPages = 1,
   pdf,
-  maxWidth = 850,
-  widthAlpha = PDFWidth,
+  maxWidth,
   showPageNumber = false,
   showPageBorder = true,
   row = false,
 }: Props) => {
-  const { width } = usePDFWidth(widthAlpha, maxWidth);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState<number>(0);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        setWidth(maxWidth ? Math.min(containerWidth, maxWidth) : containerWidth);
+      }
+    };
+
+    updateWidth();
+
+    const resizeObserver = new ResizeObserver(updateWidth);
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    return () => resizeObserver.disconnect();
+  }, [maxWidth]);
 
   /** Creates an array of react-pdf Document elements. */
   const renderDocuments = useCallback(
     () => (
-      <div className={`pdf-wrapper ${row ? 'pdf-row' : 'pdf-column'}`}>
-        {Array(numberOfPages)
-          .fill(1)
-          .map((_, i) => (
-            <div className={`pdf-container ${showPageBorder ? 'pdf-with-border' : ''}`} key={i}>
-              {showPageNumber && <div className="pdf-page-text">{`Page ${i + 1}`}</div>}
-              <Document file={pdf} onLoadError={console.error}>
-                <Page pageNumber={i + 1} width={width} />
-              </Document>
-            </div>
-          ))}
-      </div>
+      <>
+        {width > 0 &&
+          Array(numberOfPages)
+            .fill(1)
+            .map((_, i) => (
+              <div className={`pdf-container ${showPageBorder ? 'pdf-with-border' : ''}`} key={i}>
+                {showPageNumber && <div className="pdf-page-text">{`Page ${i + 1}`}</div>}
+                <Document file={pdf} onLoadError={console.error}>
+                  <Page pageNumber={i + 1} width={width} />
+                </Document>
+              </div>
+            ))}
+      </>
     ),
-    [numberOfPages, pdf, row, showPageBorder, showPageNumber, width]
+    [numberOfPages, pdf, showPageBorder, showPageNumber, width]
   );
 
-  return <>{renderDocuments()}</>;
+  return (
+    <div ref={containerRef} className={`pdf-wrapper ${row ? 'pdf-row' : 'pdf-column'}`}>
+      {renderDocuments()}
+    </div>
+  );
 };
 
 /** Exports */
