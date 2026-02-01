@@ -1,14 +1,11 @@
-import basicSsl from '@vitejs/plugin-basic-ssl'
-import path from 'path'
-import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import basicSsl from '@vitejs/plugin-basic-ssl';
+import path from 'path';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    basicSsl(),
-  ],
+  plugins: [react(), basicSsl()],
   resolve: {
     alias: {
       '~': path.resolve(__dirname, './src'),
@@ -23,11 +20,10 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vendor-react': ['react', 'react-dom'],
           'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
           'vendor-spring': ['@react-spring/three', '@react-spring/core'],
         },
       },
     },
   },
-})
+});

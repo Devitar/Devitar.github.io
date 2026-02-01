@@ -3,6 +3,7 @@ import { useLoader } from '@react-three/fiber';
 import { TextureLoader, Color } from 'three';
 import { useSound, useInteraction } from '~/utils';
 import { AppContext } from '~/global/AppContext';
+import type { Vector3 } from '~/types';
 
 /** Types */
 
