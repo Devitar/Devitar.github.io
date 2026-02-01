@@ -1,0 +1,13 @@
+.map {
+  width: 100%;
+  height: auto;
+}
+
+.links {
+  margin-top: 2rem;
+
+  & a:hover {
+    /* important required here to override default component styles  */
+    color: #555 !important;
+  }
+}

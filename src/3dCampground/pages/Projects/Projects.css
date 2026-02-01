@@ -51,6 +51,10 @@
   font-family: 'Cabin', serif;
   font-size: 2rem;
   margin: 0.5rem 0 0 0;
+
+  &.primary {
+    text-decoration: underline;
+  }
 }
 
 .dots {

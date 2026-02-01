@@ -16,17 +16,20 @@ const Projects = () => {
           rel="noopener noreferrer"
         >
           <div className="chapter-row">
-            {/* <h3 className="chapter">Project {index + 1}</h3> */}
             <h3 className="chapter">{project.title}</h3>
             <span className="dots" />
             <span className="page-number">{String(index + 1).padStart(2, '0')}</span>
           </div>
           <ul>
             <li>
-              <p className="subtitle">{project.subtitle}</p>
+              <p className="subtitle">
+                <span className="underline">{project.platform}</span>
+                {' - '}
+                {project.technologies}
+              </p>
             </li>
             <li>
-              <p className="subtitle">{project.subtitle2}</p>
+              <p className="subtitle">{project.subtitle}</p>
             </li>
           </ul>
         </a>
