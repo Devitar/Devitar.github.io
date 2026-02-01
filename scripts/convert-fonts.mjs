@@ -6,11 +6,7 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const fontsDir = join(__dirname, '../src/assets/fonts');
 
-const fonts = [
-  'Bungee-Regular.ttf',
-  'Cabin-VariableFont.ttf',
-  'PlaywriteNZBasic.ttf'
-];
+const fonts = ['Bungee-Regular.ttf', 'Cabin-VariableFont.ttf', 'Caveat-VariableFont.ttf'];
 
 // Initialize woff2 module
 await woff2.init();

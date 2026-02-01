@@ -1,4 +1,5 @@
 import './Resume.css';
+import '../Pages.css';
 
 const Resume = () => {
   return (

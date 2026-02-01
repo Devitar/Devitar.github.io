@@ -1,5 +1,5 @@
 import { FlipCard, Grid, View } from '~/components';
-import { PROJECT_DATA } from '~/assets/ProjectData';
+import PROJECT_DATA from '~/assets/ProjectData';
 
 /** The main page of the app. Shows my projects. */
 const Portfolio = (viewName: string) => {
@@ -12,7 +12,7 @@ const Portfolio = (viewName: string) => {
             subtitle={value.subtitle}
             subtitle2={value.subtitle2}
             url={value.url}
-            image={value.image}
+            image={''}
             key={index}
           />
         ))}

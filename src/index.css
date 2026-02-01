@@ -7,8 +7,8 @@
   src: url('./assets/fonts/Cabin-VariableFont.woff2') format('woff2');
 }
 @font-face {
-  font-family: PlaywriteNZ;
-  src: url('./assets/fonts/PlaywriteNZBasic.woff2') format('woff2');
+  font-family: Caveat;
+  src: url('./assets/fonts/Caveat-VariableFont.woff2') format('woff2');
 }
 
 html {
@@ -76,7 +76,7 @@ body {
 }
 
 .handwritten-text {
-  font-family: 'PlaywriteNZ', cursive;
+  font-family: 'Caveat', cursive;
 }
 
 .custom-strike {

@@ -33,6 +33,7 @@ import { BinderView, Button, Header, Tabs, ImageButton } from './subcomponents/U
 /** Pages */
 
 import { Projects, Resume, Contact } from './pages';
+import PaperEffect from './subcomponents/UI/PaperEffect';
 const PAGE_MAP: Record<number, JSX.Element | undefined> = {
   1: <Projects />,
   2: <Resume />,
@@ -166,20 +167,29 @@ export default function Scene() {
           coverInsideContent={
             <BinderView>
               <Header>Survival Guide</Header>
-              <br />
-              <Text bold fontSize={4} className="handwritten-text">
-                Thank you for visiting my <span className="custom-strike">portfolio</span> campsite!
-                <br />
-                <br />
-                This guide contains tips and tricks for surviving the wilderness of web development.
-                <br />
-                <br />
-                If at any time you'd like to stop reading and explore the environment, simply click
-                the close button below. Happy camping!
-                <br />
-                <br />
-                <i>P.S. Don't make eye contact with the sasquatch.</i>
-              </Text>
+              <div className="text-section">
+                <PaperEffect>
+                  <Text fontSize={4} className="handwritten-text">
+                    Thank you for visiting my <span className="custom-strike">portfolio</span>{' '}
+                    campsite!
+                    <br />
+                    <br />
+                    This guide contains tips and tricks for surviving the wilderness of web
+                    development.
+                    <br />
+                    <br />
+                    If at any time you'd like to stop reading and explore the environment, simply
+                    click the close button below. Happy camping!
+                    <br />
+                    <br />
+                  </Text>
+                  <Text bold fontSize={3} className="handwritten-text">
+                    <i style={{ textDecoration: 'underline' }}>
+                      P.S. Don't make eye contact with the sasquatch.
+                    </i>
+                  </Text>
+                </PaperEffect>
+              </div>
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                 <Button onClick={() => setIsBookOpen(false)}>Close</Button>
               </div>
