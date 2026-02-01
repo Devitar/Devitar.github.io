@@ -32,9 +32,11 @@ import { BinderView, Button, Header, Tabs, ImageButton } from './subcomponents/U
 
 /** Pages */
 
-import { Projects } from './pages';
+import { Projects, Resume, Contact } from './pages';
 const PAGE_MAP: Record<number, JSX.Element | undefined> = {
   1: <Projects />,
+  2: <Resume />,
+  3: <Contact />,
 };
 
 /** Renders a 3D camping scene. */
