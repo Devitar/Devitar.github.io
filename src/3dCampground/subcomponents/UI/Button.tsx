@@ -8,7 +8,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const Button = ({ children, variant = 'primary', className = '', ...props }: Props) => {
   return (
-    <button className={`binder-button binder-button--${variant} ${className}`} {...props}>
+    <button className={`binder-button binder-button-${variant} ${className}`} {...props}>
       {children}
     </button>
   );

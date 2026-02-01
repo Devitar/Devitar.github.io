@@ -1,7 +1,7 @@
 .binder-view {
   align-items: center;
   box-sizing: border-box;
-  color: #000000;
+  color: var(--color-text-black);
   display: flex;
   flex-direction: column;
   height: 119.7rem;

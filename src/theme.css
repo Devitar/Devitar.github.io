@@ -1,0 +1,74 @@
+:root {
+  /* ========================================
+     COLORS
+     ======================================== */
+  --color-primary: #8b1e2f;
+  --color-primary-dark: #7a1a29;
+
+  --color-button-primary: #2d4a4a;
+  --color-button-secondary: #4a2d2d;
+
+  --color-text-primary: #1a1a1a;
+  --color-text-black: #000000;
+  --color-text-white: #ffffff;
+  --color-text-muted: #555555;
+  --color-text-light: #888888;
+
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.3);
+  --shadow-dark: rgba(0, 0, 0, 0.55);
+  --shadow-darker: rgba(0, 0, 0, 0.75);
+  --shadow-button: rgba(0, 0, 0, 0.6);
+
+  --color-bg-sky: #00000d;
+
+  --color-tab-bg: #d4c4a8;
+  --color-tab-bg-hover: #c4b498;
+  --color-tab-text: #5c5347;
+
+  --color-paper-bg: #f8f6f1;
+  --color-paper-lines: #c9e1f5;
+
+  --color-tape-light: rgba(255, 248, 220, 0.7);
+  --color-tape-mid: rgba(245, 235, 200, 0.6);
+  --color-tape-border: rgba(200, 180, 140, 0.3);
+
+  /* ========================================
+     FONTS
+     ======================================== */
+  --font-display: 'Bungee', monospace;
+  --font-body: 'Cabin', sans-serif;
+  --font-handwritten: 'Caveat', cursive;
+
+  /* ========================================
+     SPACING
+     ======================================== */
+  --spacing-xs: 0.4rem;
+  --spacing-sm: 0.8rem;
+  --spacing-md: 1.6rem;
+  --spacing-lg: 2.4rem;
+  --spacing-xl: 4rem;
+
+  /* ========================================
+     BORDER RADIUS
+     ======================================== */
+  --radius-sm: 0.3rem;
+  --radius-md: 0.4rem;
+  --radius-lg: 0.8rem;
+  --radius-round: 50%;
+
+  /* ========================================
+     TRANSITIONS
+     ======================================== */
+  --transition-fast: 0.1s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow: 0.3s ease;
+
+  /* ========================================
+     Z-INDEX LAYERS
+     ======================================== */
+  --z-background: 0;
+  --z-content: 1;
+  --z-overlay: 10;
+  --z-modal: 100;
+}

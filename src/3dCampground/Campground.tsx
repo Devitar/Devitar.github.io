@@ -191,7 +191,9 @@ export default function Scene() {
                 </PaperEffect>
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                <Button onClick={() => setIsBookOpen(false)}>Close</Button>
+                <Button variant="secondary" onClick={() => setIsBookOpen(false)}>
+                  Close
+                </Button>
               </div>
             </BinderView>
           }

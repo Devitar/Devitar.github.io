@@ -8,6 +8,6 @@
 
   & a:hover {
     /* important required here to override default component styles  */
-    color: #555 !important;
+    color: var(--color-text-muted) !important;
   }
 }

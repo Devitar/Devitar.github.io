@@ -13,37 +13,37 @@
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
-  padding: 1.5rem 0.8rem;
+  padding: var(--spacing-md) var(--spacing-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  background-color: #d4c4a8;
-  color: #5c5347;
+  background-color: var(--color-tab-bg);
+  color: var(--color-tab-text);
   border: none;
-  border-radius: 0 0.3rem 0.3rem 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   cursor: pointer;
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease;
+    background-color var(--transition-normal),
+    color var(--transition-normal),
+    box-shadow var(--transition-normal);
   white-space: nowrap;
 }
 
 .binder-tabs-tab:hover {
-  background-color: #c4b498;
-  box-shadow: 0.4rem 0 0 0 #c4b498;
+  background-color: var(--color-tab-bg-hover);
+  box-shadow: 0.4rem 0 0 0 var(--color-tab-bg-hover);
 }
 
 .binder-tabs-tab--active {
-  background-color: #8b1e2f;
-  color: #ffffff;
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
 }
 
 .binder-tabs-tab--active:hover {
-  background-color: #7a1a29;
-  box-shadow: 0.4rem 0 0 0 #7a1a29;
+  background-color: var(--color-primary-dark);
+  box-shadow: 0.4rem 0 0 0 var(--color-primary-dark);
 }
 
 /* Larger touch targets for mobile (content gets scaled down significantly) */
@@ -55,9 +55,9 @@
 
   .binder-tabs-tab {
     font-size: 4rem;
-    padding: 4rem 2rem;
+    padding: var(--spacing-xl) var(--spacing-md);
     pointer-events: auto;
     touch-action: manipulation;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    -webkit-tap-highlight-color: var(--shadow-light);
   }
 }
