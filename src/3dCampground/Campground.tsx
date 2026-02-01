@@ -38,6 +38,11 @@ const PAGE_MAP: Record<number, JSX.Element | undefined> = {
   2: <Resume />,
   3: <Contact />,
 };
+const TAB_MAP: Tab[] = [
+  { id: 1, label: 'Projects' },
+  { id: 2, label: 'Resume' },
+  { id: 3, label: 'Contact' },
+];
 
 /** Renders a 3D camping scene. */
 export default function Scene() {
@@ -185,11 +190,7 @@ export default function Scene() {
               <Tabs
                 activeTab={activeTab.id}
                 onTabChange={(tab) => setActiveTab(tab)}
-                tabs={[
-                  { id: 1, label: 'Projects' },
-                  { id: 2, label: 'Resume' },
-                  { id: 3, label: 'Contact' },
-                ]}
+                tabs={TAB_MAP}
               />
               <BinderView>
                 <Header>{activeTab.label}</Header>
