@@ -4,16 +4,25 @@
   color: var(--color-text-black);
   display: flex;
   flex-direction: column;
-  height: 119.7rem;
+  height: 115.7rem;
   max-height: 100%;
   overflow-wrap: break-word;
   overflow: hidden;
   padding: 0 6rem 4rem 6rem;
-  width: 79.5rem;
+  width: 75.5rem;
   word-break: break-word;
   word-wrap: break-word;
 }
 
 .text-section {
   flex-grow: 1;
+  padding-top: 5rem;
+  transform: rotate(-2deg);
+}
+
+@media (max-width: 768px) {
+  .binder-view {
+    height: 112rem;
+    width: 80rem;
+  }
 }

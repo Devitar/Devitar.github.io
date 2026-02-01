@@ -29,11 +29,12 @@ import Mountains from './subcomponents/scenery/Mountains';
 import Skybox from './subcomponents/scenery/Skybox';
 import Trees from './subcomponents/scenery/Trees';
 import { BinderView, Button, Header, Tabs, ImageButton } from './subcomponents/UI';
+import PaperEffect from './subcomponents/UI/PaperEffect';
+import MobileModal from './subcomponents/UI/MobileModal';
 
 /** Pages */
 
 import { Projects, Resume, Contact } from './pages';
-import PaperEffect from './subcomponents/UI/PaperEffect';
 const PAGE_MAP: Record<number, JSX.Element | undefined> = {
   1: <Projects />,
   2: <Resume />,
@@ -55,6 +56,8 @@ export default function Scene() {
   /** State */
 
   const [activeTab, setActiveTab] = useState<Tab>({ id: 1, label: 'Projects' });
+  const [isCanvasReady, setIsCanvasReady] = useState(false);
+  const [isModalClosed, setIsModalClosed] = useState(false);
 
   /** Audio */
 
@@ -98,6 +101,20 @@ export default function Scene() {
         width='6rem'
         onClick={() => setIsMuted((prev: boolean) => !prev)}
       />
+      <MobileModal
+        title='Welcome!'
+        content={`
+          Thanks for visiting my portfolio! It looks like you're viewing this on a mobile device - 
+          It should still work, but you'll get the best experience on a larger screen.
+        `}
+        buttonText='Got it'
+        onClose={() => {
+          setIsModalClosed(true);
+          if (isCanvasReady) {
+            setTimeout(() => setIsBookOpen(true), 500);
+          }
+        }}
+      />
       <Canvas
         className='main-canvas'
         dpr={[1, 2]}
@@ -106,7 +123,12 @@ export default function Scene() {
           powerPreference: isMobile ? 'low-power' : 'high-performance',
         }}
         onCreated={() => {
-          setTimeout(() => setIsBookOpen(true), 1000);
+          setIsCanvasReady(true);
+          if (!isMobile) {
+            setTimeout(() => setIsBookOpen(true), 1000);
+          } else if (isModalClosed) {
+            setTimeout(() => setIsBookOpen(true), 500);
+          }
         }}
       >
         {/* GLOBAL */}
@@ -166,7 +188,6 @@ export default function Scene() {
           }}
           coverInsideContent={
             <BinderView>
-              <Header>Survival Guide</Header>
               <div className='text-section'>
                 <PaperEffect>
                   <Text fontSize={4} className='handwritten-text'>
