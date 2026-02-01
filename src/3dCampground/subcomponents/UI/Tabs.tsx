@@ -1,14 +1,14 @@
 import './Tabs.css';
 
-type Tab = {
-  id: string;
+export type Tab = {
+  id: number;
   label: string;
   color?: string;
 };
 
 type Props = {
   tabs: Tab[];
-  activeTab: string;
+  activeTab: number;
   onTabChange?: (tab: Tab) => void;
   className?: string;
 };

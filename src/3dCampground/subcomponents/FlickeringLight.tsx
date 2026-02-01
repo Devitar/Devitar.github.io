@@ -1,8 +1,8 @@
-import { useContext, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
-import { PointLight } from "three";
-import { AppContext } from "~/global/AppContext";
-import type { Vector3, ColorPair } from "~/types";
+import { useContext, useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { PointLight } from 'three';
+import { AppContext } from '~/global/AppContext';
+import type { Vector3, ColorPair } from '~/types';
 
 /** Types */
 
@@ -10,11 +10,13 @@ type Props = {
   position: Vector3;
   color: ColorPair;
   baseIntensity?: number;
-}
+};
 
 /** A point light that flickers like a campfire. */
 const FlickeringLight = ({ position, color, baseIntensity = 1 }: Props) => {
-  const { get: { isFireOn } } = useContext(AppContext);
+  const {
+    get: { isFireOn },
+  } = useContext(AppContext);
   const lightRef = useRef<PointLight>(null);
 
   useFrame((state) => {
@@ -25,14 +27,19 @@ const FlickeringLight = ({ position, color, baseIntensity = 1 }: Props) => {
       const flicker3 = Math.sin(state.clock.elapsedTime * 20) * 0.03;
       const intensity = baseIntensity + flicker1 + flicker2 + flicker3;
 
-      lightRef.current.intensity = isFireOn 
-        ? intensity
-        : intensity * 0.1;
+      lightRef.current.intensity = isFireOn ? intensity : intensity * 0.1;
     }
-  })
+  });
 
-  return <pointLight ref={lightRef} position={position} color={isFireOn ? color.lit : color.unlit} decay={1.2} />
-}
+  return (
+    <pointLight
+      ref={lightRef}
+      position={position}
+      color={isFireOn ? color.lit : color.unlit}
+      decay={1.2}
+    />
+  );
+};
 
 /** Exports */
 

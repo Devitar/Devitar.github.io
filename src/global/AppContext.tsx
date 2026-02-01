@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, type Dispatch, type SetStateAction, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+  type ReactNode,
+} from 'react';
 
 /** Types */
 type AppContextType = {
@@ -32,11 +39,11 @@ export const AppContext = createContext<AppContextType>({
     isMuted: false,
   },
   set: {
-    setIsFireOn: () => { },
-    setIsNightTime: () => { },
-    setIsBookOpen: () => { },
-    setIsFlashlightOn: () => { },
-    setIsMuted: () => { },
+    setIsFireOn: () => {},
+    setIsNightTime: () => {},
+    setIsBookOpen: () => {},
+    setIsFlashlightOn: () => {},
+    setIsMuted: () => {},
   },
 });
 
@@ -49,10 +56,12 @@ export const AppContextProvider = ({ children }: Props) => {
   const [isMuted, setIsMuted] = useState(false);
 
   return (
-    <AppContext.Provider value={{
-      get: { isFireOn, isNightTime, isBookOpen, isFlashlightOn, isMuted },
-      set: { setIsFireOn, setIsNightTime, setIsBookOpen, setIsFlashlightOn, setIsMuted }
-    }}>
+    <AppContext.Provider
+      value={{
+        get: { isFireOn, isNightTime, isBookOpen, isFlashlightOn, isMuted },
+        set: { setIsFireOn, setIsNightTime, setIsBookOpen, setIsFlashlightOn, setIsMuted },
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

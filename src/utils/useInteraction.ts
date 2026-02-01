@@ -6,9 +6,11 @@ import { AppContext } from '~/global/AppContext';
  * Returns whether interactions should be disabled.
  */
 export function useInteraction() {
-  const { get: { isBookOpen } } = useContext(AppContext);
+  const {
+    get: { isBookOpen },
+  } = useContext(AppContext);
 
-  return !!(isBookOpen);
+  return !!isBookOpen;
 }
 
 export default useInteraction;

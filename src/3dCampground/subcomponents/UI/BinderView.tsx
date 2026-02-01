@@ -7,11 +7,7 @@ type Props = {
 };
 
 const BinderView = ({ children, className = '' }: Props) => {
-  return (
-    <div className={`binder-view ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`binder-view ${className}`}>{children}</div>;
 };
 
 export default BinderView;

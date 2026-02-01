@@ -1,9 +1,9 @@
-import { useCallback } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
-import "react-pdf/dist/Page/AnnotationLayer.css";
-import "react-pdf/dist/Page/TextLayer.css";
-import { usePDFWidth } from "~/utils";
-import "./PDF.css";
+import { useCallback } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
+import { usePDFWidth } from '~/utils';
+import './PDF.css';
 
 /** Config */
 
@@ -44,19 +44,20 @@ const PDF = ({
 
   /** Creates an array of react-pdf Document elements. */
   const renderDocuments = useCallback(
-    () =>
-      <div className={`pdf-wrapper ${row ? "pdf-row" : "pdf-column"}`}>
+    () => (
+      <div className={`pdf-wrapper ${row ? 'pdf-row' : 'pdf-column'}`}>
         {Array(numberOfPages)
           .fill(1)
           .map((_, i) => (
-            <div className={`pdf-container ${showPageBorder ? "pdf-with-border" : ""}`} key={i}>
+            <div className={`pdf-container ${showPageBorder ? 'pdf-with-border' : ''}`} key={i}>
               {showPageNumber && <div className="pdf-page-text">{`Page ${i + 1}`}</div>}
               <Document file={pdf} onLoadError={console.error}>
                 <Page pageNumber={i + 1} width={width} />
               </Document>
             </div>
           ))}
-      </div>,
+      </div>
+    ),
     [numberOfPages, pdf, row, showPageBorder, showPageNumber, width]
   );
 

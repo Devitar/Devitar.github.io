@@ -35,21 +35,21 @@ class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh',
-          backgroundColor: '#1a1a2e',
-          color: '#eee',
-          fontFamily: 'system-ui, sans-serif',
-          padding: '2rem',
-          textAlign: 'center',
-        }}>
-          <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>
-            Something went wrong
-          </h1>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh',
+            backgroundColor: '#1a1a2e',
+            color: '#eee',
+            fontFamily: 'system-ui, sans-serif',
+            padding: '2rem',
+            textAlign: 'center',
+          }}
+        >
+          <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Something went wrong</h1>
           <p style={{ color: '#aaa', marginBottom: '1.5rem' }}>
             The 3D scene failed to load. Please try refreshing the page.
           </p>
@@ -68,16 +68,18 @@ class ErrorBoundary extends Component<Props, State> {
             Refresh Page
           </button>
           {import.meta.env.DEV && this.state.error && (
-            <pre style={{
-              marginTop: '2rem',
-              padding: '1rem',
-              backgroundColor: '#2a2a3e',
-              borderRadius: '4px',
-              fontSize: '0.875rem',
-              textAlign: 'left',
-              maxWidth: '100%',
-              overflow: 'auto',
-            }}>
+            <pre
+              style={{
+                marginTop: '2rem',
+                padding: '1rem',
+                backgroundColor: '#2a2a3e',
+                borderRadius: '4px',
+                fontSize: '0.875rem',
+                textAlign: 'left',
+                maxWidth: '100%',
+                overflow: 'auto',
+              }}
+            >
               {this.state.error.message}
             </pre>
           )}

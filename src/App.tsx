@@ -1,6 +1,6 @@
-import Campground from "~/3dCampground/Campground";
-import { AppContextProvider } from "~/global/AppContext";
-import { ErrorBoundary } from "./components";
+import Campground from '~/3dCampground/Campground';
+import { AppContextProvider } from '~/global/AppContext';
+import { ErrorBoundary } from './components';
 
 /** The root application component. */
 const App = () => {

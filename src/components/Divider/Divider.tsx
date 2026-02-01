@@ -1,4 +1,4 @@
-import "./Divider.css";
+import './Divider.css';
 
 /** Types */
 
@@ -12,13 +12,13 @@ type Props = {
 };
 
 /** A horizontal or vertical divider. */
-const Divider = ({ color = "black", spacing = 12, vertical = false }: Props) =>
+const Divider = ({ color = 'black', spacing = 12, vertical = false }: Props) =>
   vertical ? (
     <div
       className="vertical-divider"
       style={{
         backgroundColor: color,
-        margin: `0px ${spacing}px 0px ${spacing}px`
+        margin: `0px ${spacing}px 0px ${spacing}px`,
       }}
     />
   ) : (
@@ -26,7 +26,7 @@ const Divider = ({ color = "black", spacing = 12, vertical = false }: Props) =>
       className="horizontal-divider"
       style={{
         backgroundColor: color,
-        margin: `${spacing}px 0px ${spacing}px 0px`
+        margin: `${spacing}px 0px ${spacing}px 0px`,
       }}
     />
   );

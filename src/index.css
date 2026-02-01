@@ -1,14 +1,14 @@
 @font-face {
   font-family: Bungee;
-  src: url("./assets/fonts/Bungee-Regular.woff") format("woff")
+  src: url('./assets/fonts/Bungee-Regular.woff') format('woff');
 }
 @font-face {
   font-family: Cabin;
-  src: url("./assets/fonts/Cabin-VariableFont.woff2") format("woff2")
+  src: url('./assets/fonts/Cabin-VariableFont.woff2') format('woff2');
 }
 @font-face {
   font-family: PlaywriteNZ;
-  src: url("./assets/fonts/PlaywriteNZBasic.woff2") format("woff2")
+  src: url('./assets/fonts/PlaywriteNZBasic.woff2') format('woff2');
 }
 
 html {
@@ -19,7 +19,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: "Cabin", sans-serif;
+  font-family: 'Cabin', sans-serif;
   background-color: #132d96; /* Match sky color as fallback */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

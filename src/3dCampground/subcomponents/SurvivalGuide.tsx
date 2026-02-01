@@ -13,6 +13,7 @@ import { useSoundOnChange } from '~/utils';
 
 import BookCloseSound from '~/assets/sounds/book_close.m4a';
 import { useAppContext } from '~/global/AppContext';
+import type { Vector3 } from '~/types';
 
 /** Types */
 
@@ -26,15 +27,15 @@ type CoverTextConfig = {
 
 type Props = {
   /** Position when resting (inactive) */
-  restPosition: [number, number, number];
+  restPosition: Vector3;
   /** Rotation when resting (inactive) */
-  restRotation?: [number, number, number];
+  restRotation?: Vector3;
   /** Scale when resting (inactive) */
   restScale?: number;
   /** Position when active (viewing). Ignored if fitToViewport is enabled. */
-  activePosition?: [number, number, number];
+  activePosition?: Vector3;
   /** Rotation when active (viewing) */
-  activeRotation?: [number, number, number];
+  activeRotation?: Vector3;
   /** Scale when active (viewing). Ignored if fitToViewport is enabled. */
   activeScale?: number;
   /** Whether the binder is in active/viewing mode */
@@ -81,7 +82,7 @@ const SurvivalGuide = ({
   viewportPadding = 0.8,
 }: Props) => {
   const { viewport, camera } = useThree();
-    const { isMuted } = useAppContext();
+  const { isMuted } = useAppContext();
   useSoundOnChange(BookCloseSound, isOpen, { volume: 0.15, isMuted });
 
   // Binder dimensions in world units
@@ -113,16 +114,13 @@ const SurvivalGuide = ({
     const openedBinderWidth = BINDER_WIDTH * 2;
     const maxHeightScale = (visibleHeight * viewportPadding) / BINDER_HEIGHT;
     const maxWidthScale = (visibleWidth * viewportPadding) / openedBinderWidth;
-    const calculatedScale = Math.max(
-      minScale,
-      Math.min(maxHeightScale, maxWidthScale, maxScale)
-    );
+    const calculatedScale = Math.max(minScale, Math.min(maxHeightScale, maxWidthScale, maxScale));
 
     // Position: center horizontally, slight raise to avoid ground clipping
     // Keep it close to camera's y position with a small offset
     const verticalOffset = isMobile ? 0.02 : 0.045;
 
-    const position: [number, number, number] = [
+    const position: Vector3 = [
       camera.position.x + (isMobile ? 0.0025 : 0.02), // Slight offset for opened cover
       camera.position.y + verticalOffset,
       binderZ,
@@ -132,7 +130,18 @@ const SurvivalGuide = ({
       activePosition: position,
       activeScale: calculatedScale,
     };
-  }, [fitToViewport, activePositionProp, activeScaleProp, restPosition, camera, viewport.aspect, maxScale, minScale, viewportPadding, isMobile]);
+  }, [
+    fitToViewport,
+    activePositionProp,
+    activeScaleProp,
+    restPosition,
+    camera,
+    viewport.aspect,
+    maxScale,
+    minScale,
+    viewportPadding,
+    isMobile,
+  ]);
 
   // Animate position, rotation, and scale between rest and active states
   const { position, rotation, scale } = useSpring({
@@ -184,7 +193,16 @@ const SurvivalGuide = ({
   }, [isMobile]);
 
   return (
-    <animated.group position={position} rotation={rotation as unknown as [number, number, number]} scale={scale} onClick={(e) => { e.stopPropagation(); onClick?.(); }} renderOrder={1}>
+    <animated.group
+      position={position}
+      rotation={rotation as unknown as Vector3}
+      scale={scale}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick?.();
+      }}
+      renderOrder={1}
+    >
       {/* Back cover */}
       <mesh position={[0, 0, 0]}>
         <boxGeometry args={[0.1, 0.15, 0.001]} />
@@ -210,21 +228,25 @@ const SurvivalGuide = ({
             style={isMobile ? { pointerEvents: 'none' } : undefined}
           >
             {isMobile ? (
-              <div style={{
-                transform: `scale(${mobileContentScale}) translate(-50%, -50%)`,
-                transformOrigin: 'top left',
-                position: 'relative',
-                pointerEvents: 'auto',
-              }}>
+              <div
+                style={{
+                  transform: `scale(${mobileContentScale}) translate(-50%, -50%)`,
+                  transformOrigin: 'top left',
+                  position: 'relative',
+                  pointerEvents: 'auto',
+                }}
+              >
                 {pageContent}
               </div>
-            ) : pageContent}
+            ) : (
+              pageContent
+            )}
           </Html>
         )}
       </group>
 
       {/* Front cover */}
-      <animated.group position={coverPosition as unknown as [number, number, number]} rotation-y={coverRotation}>
+      <animated.group position={coverPosition as unknown as Vector3} rotation-y={coverRotation}>
         {/* Front face of cover - with texture */}
         <mesh position={[0.05, 0, 0.0005]}>
           <planeGeometry args={[0.1, 0.15]} />
@@ -283,16 +305,20 @@ const SurvivalGuide = ({
             style={isMobile ? { pointerEvents: 'none' } : undefined}
           >
             {isMobile ? (
-              <div style={{
-                transform: `scale(${mobileContentScale}) translate(-50%, -50%)`,
-                transformOrigin: 'top left',
-                overflow: 'visible',
-                position: 'relative',
-                pointerEvents: 'auto',
-              }}>
+              <div
+                style={{
+                  transform: `scale(${mobileContentScale}) translate(-50%, -50%)`,
+                  transformOrigin: 'top left',
+                  overflow: 'visible',
+                  position: 'relative',
+                  pointerEvents: 'auto',
+                }}
+              >
                 {coverInsideContent}
               </div>
-            ) : coverInsideContent}
+            ) : (
+              coverInsideContent
+            )}
           </Html>
         )}
       </animated.group>

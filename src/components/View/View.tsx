@@ -1,6 +1,6 @@
-import { type ReactNode } from "react";
-import ViewHeader, { HEADER_HEIGHT } from "~/components/ViewHeader/ViewHeader";
-import "./View.css";
+import { type ReactNode } from 'react';
+import ViewHeader, { HEADER_HEIGHT } from '~/components/ViewHeader/ViewHeader';
+import './View.css';
 
 /** Types */
 
@@ -19,31 +19,20 @@ type Props = {
 };
 
 /** Base view component. */
-const View = ({
-  viewId,
-  headerText,
-  children,
-  style,
-  center = true,
-  paddingX,
-}: Props) => {
+const View = ({ viewId, headerText, children, style, center = true, paddingX }: Props) => {
   const windowHeight = window.innerHeight;
   const heightCalc =
-    headerText && window.innerWidth > 600
-      ? windowHeight - HEADER_HEIGHT
-      : windowHeight;
+    headerText && window.innerWidth > 600 ? windowHeight - HEADER_HEIGHT : windowHeight;
 
   return (
     <div className="view-style" id={viewId} style={style}>
-      {headerText && window.innerWidth > 600 && (
-        <ViewHeader text={headerText} />
-      )}
+      {headerText && window.innerWidth > 600 && <ViewHeader text={headerText} />}
       <div
         className="view-body"
         style={{
-          alignItems: center ? "center" : undefined,
+          alignItems: center ? 'center' : undefined,
           minHeight: `${heightCalc}px`,
-          padding: `24px ${paddingX ? `${paddingX}px` : "0px"} 0px ${paddingX ? `${paddingX}px` : "0px"}`,
+          padding: `24px ${paddingX ? `${paddingX}px` : '0px'} 0px ${paddingX ? `${paddingX}px` : '0px'}`,
         }}
       >
         {children}

@@ -2,10 +2,11 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { useRef, useEffect, useCallback } from 'react';
 import type { PerspectiveCamera as PerspectiveCameraType } from 'three';
+import type { Vector3 } from '~/types';
 
 type Props = {
-  position: [number, number, number];
-  baseRotation: [number, number, number];
+  position: Vector3;
+  baseRotation: Vector3;
   fov: number;
   /** Maximum rotation around Y-axis in radians (looking left/right) */
   maxRotationY?: number;
@@ -51,22 +52,25 @@ const DeviceOrientationCamera = ({
     return sign * (1 - Math.pow(1 - abs, 2));
   }, []);
 
-  const handleOrientation = useCallback((event: DeviceOrientationEvent) => {
-    const { beta, gamma } = event;
-    if (beta === null || gamma === null) return;
+  const handleOrientation = useCallback(
+    (event: DeviceOrientationEvent) => {
+      const { beta, gamma } = event;
+      if (beta === null || gamma === null) return;
 
-    const centeredBeta = beta - 45;
-    const normalizedY = gamma / maxTiltAngle;
-    const normalizedX = centeredBeta / maxTiltAngle;
+      const centeredBeta = beta - 45;
+      const normalizedY = gamma / maxTiltAngle;
+      const normalizedX = centeredBeta / maxTiltAngle;
 
-    const dampenedY = applyDampening(normalizedY);
-    const dampenedX = applyDampening(normalizedX);
+      const dampenedY = applyDampening(normalizedY);
+      const dampenedX = applyDampening(normalizedX);
 
-    targetRotation.current = {
-      x: dampenedX * maxRotationX,
-      y: dampenedY * maxRotationY,
-    };
-  }, [maxRotationX, maxRotationY, maxTiltAngle, applyDampening]);
+      targetRotation.current = {
+        x: dampenedX * maxRotationX,
+        y: dampenedY * maxRotationY,
+      };
+    },
+    [maxRotationX, maxRotationY, maxTiltAngle, applyDampening]
+  );
 
   const startListening = useCallback(() => {
     if (isListening.current) return;

@@ -1,5 +1,5 @@
-import { type ReactNode, useCallback } from "react";
-import "./Grid.css";
+import { type ReactNode, useCallback } from 'react';
+import './Grid.css';
 
 /** Types */
 
@@ -27,7 +27,7 @@ const Grid = ({ center = true, gutter = 16, children }: Props) => {
   );
 
   return (
-    <div className={`grid-container ${center ? "grid-center" : ""}`}>
+    <div className={`grid-container ${center ? 'grid-center' : ''}`}>
       {children.map((c) => wrapChild(c))}
     </div>
   );

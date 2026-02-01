@@ -1,6 +1,6 @@
-import { type ReactNode, useMemo } from "react";
-import * as Views from "~/views";
-import "./Navigation.css";
+import { type ReactNode, useMemo } from 'react';
+import * as Views from '~/views';
+import './Navigation.css';
 
 /** Order in which the pages appear in the nav bar and content. */
 const NAV_ORDER = {
@@ -22,11 +22,7 @@ const Navigation = () => {
     [ViewType]
   );
 
-  return (
-    <div className="page-wrapper">
-      {renderPages}
-    </div>
-  );
+  return <div className="page-wrapper">{renderPages}</div>;
 };
 
 /** Exports */

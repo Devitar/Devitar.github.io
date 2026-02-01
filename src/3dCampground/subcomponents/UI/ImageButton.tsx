@@ -1,4 +1,4 @@
-import "./ImageButton.css";
+import './ImageButton.css';
 
 type Props = {
   image: string;
@@ -8,13 +8,7 @@ type Props = {
   onClick: () => void;
 };
 
-const ImageButton = ({
-  image,
-  alt,
-  width = "5rem",
-  height = "5rem",
-  onClick,
-}: Props) => (
+const ImageButton = ({ image, alt, width = '5rem', height = '5rem', onClick }: Props) => (
   <button
     className="image-button"
     style={{ width, height }}
@@ -23,7 +17,7 @@ const ImageButton = ({
       onClick();
     }}
   >
-    <img src={image} alt={alt || ""} className="image-button-image" />
+    <img src={image} alt={alt || ''} className="image-button-image" />
   </button>
 );
 

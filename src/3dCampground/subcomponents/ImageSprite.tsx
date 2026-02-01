@@ -10,9 +10,9 @@ type Props = {
   /** Path to the image texture */
   imagePath: string;
   /** Position in 3D space */
-  position: [number, number, number];
+  position: Vector3;
   /** Scale of the sprite */
-  scale?: [number, number, number];
+  scale?: Vector3;
   /** Whether the sprite is visible */
   isVisible?: boolean;
   /** Name for the sprite */
@@ -34,12 +34,14 @@ const ImageSprite = ({
   position,
   scale = [0.4, 0.6, 1],
   isVisible = true,
-  name = "sprite",
+  name = 'sprite',
   sound,
   affectedByLighting = false,
   brightness = 1,
 }: Props) => {
-  const { get: { isMuted } } = useContext(AppContext);
+  const {
+    get: { isMuted },
+  } = useContext(AppContext);
   const disableInteraction = useInteraction();
   const texture = useLoader(TextureLoader, imagePath);
   const { play: playSound } = useSound(sound?.soundPath, {
@@ -56,7 +58,12 @@ const ImageSprite = ({
 
   if (affectedByLighting) {
     return (
-      <mesh position={position} scale={scale} name={name} onClick={sound && !disableInteraction ? playSound : undefined}>
+      <mesh
+        position={position}
+        scale={scale}
+        name={name}
+        onClick={sound && !disableInteraction ? playSound : undefined}
+      >
         <planeGeometry args={[1, 1]} />
         <meshStandardMaterial
           map={textureToUse}
@@ -69,7 +76,12 @@ const ImageSprite = ({
   }
 
   return (
-    <sprite position={position} scale={scale} name={name} onClick={sound && !disableInteraction ? playSound : undefined}>
+    <sprite
+      position={position}
+      scale={scale}
+      name={name}
+      onClick={sound && !disableInteraction ? playSound : undefined}
+    >
       <spriteMaterial
         map={textureToUse}
         transparent

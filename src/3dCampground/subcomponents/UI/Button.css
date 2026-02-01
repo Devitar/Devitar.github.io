@@ -8,7 +8,9 @@
   border: none;
   border-radius: 0.4rem;
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.1s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.1s ease;
 }
 
 .binder-button:hover {
