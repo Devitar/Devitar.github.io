@@ -29,7 +29,7 @@ const Flashlight = ({
   useSoundOnChange(FlashlightSound, isFlashlightOn, { volume: 0.5, isMuted });
 
   return (
-    <group name="flashlight" position={position} rotation={rotation} scale={scale}>
+    <group name='flashlight' position={position} rotation={rotation} scale={scale}>
       {/* Invisible cube for click detection */}
       <mesh
         scale={[0.05, 0.07, 0.05]}

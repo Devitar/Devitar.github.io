@@ -59,7 +59,7 @@ const Skybox = () => {
       {isNightTime && (
         <>
           <group
-            name="big_dipper"
+            name='big_dipper'
             position={[-1.18, 1.95, -0.63]}
             rotation={[-0.057859925759693155, 0.07155343523626997, -0.2801141128557414]}
           >

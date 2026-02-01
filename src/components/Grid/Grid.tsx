@@ -17,7 +17,7 @@ const Grid = ({ center = true, gutter = 16, children }: Props) => {
     (child: ReactNode) => (
       <div
         key={Math.random()}
-        className="grid-column"
+        className='grid-column'
         style={{ margin: `0px ${gutter}px 0px ${gutter}px` }}
       >
         {child}

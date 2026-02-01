@@ -6,6 +6,20 @@
   padding-left: var(--spacing-md);
 }
 
+.resume-page > .paper-wrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.resume-page > .paper-wrapper > div {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .resume-scroll-container {
   flex: 1;
   min-height: 0;

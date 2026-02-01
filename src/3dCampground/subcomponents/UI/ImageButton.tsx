@@ -10,14 +10,14 @@ type Props = {
 
 const ImageButton = ({ image, alt, width = '5rem', height = '5rem', onClick }: Props) => (
   <button
-    className="image-button"
+    className='image-button'
     style={{ width, height }}
     onClick={(e) => {
       e.stopPropagation();
       onClick();
     }}
   >
-    <img src={image} alt={alt || ''} className="image-button-image" />
+    <img src={image} alt={alt || ''} className='image-button-image' />
   </button>
 );
 

@@ -14,7 +14,7 @@ const Header = ({ children, className = '', color }: Props) => {
       className={`binder-header ${className}`}
       style={color ? { backgroundColor: color } : undefined}
     >
-      <h1 className="binder-header-text">{children}</h1>
+      <h1 className='binder-header-text'>{children}</h1>
     </div>
   );
 };

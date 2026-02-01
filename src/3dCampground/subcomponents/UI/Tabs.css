@@ -8,7 +8,7 @@
 }
 
 .binder-tabs-tab {
-  font-family: 'Arial', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 1.8rem;
   font-weight: bold;
   text-transform: uppercase;
@@ -36,14 +36,13 @@
   box-shadow: 0.4rem 0 0 0 var(--color-tab-bg-hover);
 }
 
-.binder-tabs-tab--active {
-  background-color: var(--color-primary);
-  color: var(--color-text-white);
+.binder-tabs-tab-active {
+  background-color: var(--color-tab-active);
 }
 
-.binder-tabs-tab--active:hover {
-  background-color: var(--color-primary-dark);
-  box-shadow: 0.4rem 0 0 0 var(--color-primary-dark);
+.binder-tabs-tab-active:hover {
+  background-color: var(--color-tab-active);
+  box-shadow: 0.4rem 0 0 0 var(--color-tab-active);
 }
 
 /* Larger touch targets for mobile (content gets scaled down significantly) */

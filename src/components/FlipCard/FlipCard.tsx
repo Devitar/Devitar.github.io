@@ -18,16 +18,16 @@ type Props = {
 /** A card that flips to reveal an image and button on hover. */
 const FlipCard = ({ title, subtitle, subtitle2, url, image }: Props) => {
   return (
-    <div className="flip-card-wrapper">
-      <div className="flip-card-inner">
-        <div className="flip-card-front">
+    <div className='flip-card-wrapper'>
+      <div className='flip-card-inner'>
+        <div className='flip-card-front'>
           <h1>{title}</h1>
           <p>{subtitle}</p>
           <p>{subtitle2}</p>
         </div>
-        <div className="flip-card-back">
-          <img className="flip-card-image" src={image} alt="Portfolio Site Screenshot" />
-          <button className="flip-card-button" onClick={() => window.open(url, '')}>
+        <div className='flip-card-back'>
+          <img className='flip-card-image' src={image} alt='Portfolio Site Screenshot' />
+          <button className='flip-card-button' onClick={() => window.open(url, '')}>
             View Project
           </button>
         </div>

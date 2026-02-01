@@ -1,6 +1,6 @@
 const Mountains = () => (
   <>
-    <group name="mountain" position={[3.05, 0, 0]} scale={[1.49, 1, 1]}>
+    <group name='mountain' position={[3.05, 0, 0]} scale={[1.49, 1, 1]}>
       <mesh position={[-1.54, 0.5, -0.1]} name={'mountain_left'}>
         <shapeGeometry />
         <meshStandardMaterial color={'#a89d9e'} />
@@ -26,7 +26,7 @@ const Mountains = () => (
         <meshStandardMaterial color={'#a89d9e'} />
       </mesh>
     </group>
-    <group name="mountain" position={[-0.29, 0, 0]} scale={[1.49, 1, 1]}>
+    <group name='mountain' position={[-0.29, 0, 0]} scale={[1.49, 1, 1]}>
       <mesh position={[-1.54, 0.5, -0.1]} name={'mountain_left'}>
         <shapeGeometry />
         <meshStandardMaterial color={'#a89d9e'} />

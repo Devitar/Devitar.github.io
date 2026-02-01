@@ -6,19 +6,19 @@ import { Divider, Text } from '~/components';
 
 const Contact = () => {
   return (
-    <div className="page-wrapper contact-page">
-      <h2 className="header">ELEVATION</h2>
-      <img src={UtahMap} alt="Utah Elevation Map" className="map" />
-      <div className="links">
-        <Text fontSize={24} link="email">
+    <div className='page-wrapper contact-page'>
+      <h2 className='header'>ELEVATION</h2>
+      <img src={UtahMap} alt='Utah Elevation Map' className='map' />
+      <div className='links'>
+        <Text fontSize={24} link='email'>
           devin.curtis1210@gmail.com
         </Text>
-        <Divider color="rgba(0,0,0,0.25)" />
-        <Text fontSize={24} link mask="My Github">
+        <Divider color='rgba(0,0,0,0.25)' />
+        <Text fontSize={24} link mask='My Github'>
           https://github.com/Devitar
         </Text>
-        <Divider color="rgba(0,0,0,0.25)" />
-        <Text fontSize={24} link mask="My LinkedIn">
+        <Divider color='rgba(0,0,0,0.25)' />
+        <Text fontSize={24} link mask='My LinkedIn'>
           https://www.linkedin.com/in/devin-curtis/
         </Text>
       </div>

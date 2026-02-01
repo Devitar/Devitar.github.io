@@ -25,10 +25,10 @@ const View = ({ viewId, headerText, children, style, center = true, paddingX }: 
     headerText && window.innerWidth > 600 ? windowHeight - HEADER_HEIGHT : windowHeight;
 
   return (
-    <div className="view-style" id={viewId} style={style}>
+    <div className='view-style' id={viewId} style={style}>
       {headerText && window.innerWidth > 600 && <ViewHeader text={headerText} />}
       <div
-        className="view-body"
+        className='view-body'
         style={{
           alignItems: center ? 'center' : undefined,
           minHeight: `${heightCalc}px`,

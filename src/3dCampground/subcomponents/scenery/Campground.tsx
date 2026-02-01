@@ -33,7 +33,7 @@ const Campground = () => {
 
       {/* Campfire logs bundle */}
       <group
-        name="campfire"
+        name='campfire'
         position={[0, 0.01, 2.73]}
         scale={[0.34, 0.34, 0.34]}
         rotation={[0, -0.26179938779914963, 0]}
@@ -103,7 +103,7 @@ const Campground = () => {
 
       {/* Tent */}
       <group
-        name="tent"
+        name='tent'
         position={[-0.23, 0.0075, 2.39]}
         rotation={[0, 0.4188790204786392, 0]}
         scale={[0.75, 0.68, 0.61]}

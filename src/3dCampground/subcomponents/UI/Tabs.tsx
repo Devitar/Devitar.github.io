@@ -20,7 +20,7 @@ const Tabs = ({ tabs, activeTab, onTabChange, className = '' }: Props) => (
       return (
         <button
           key={tab.id}
-          className={`binder-tabs-tab ${isActive ? 'binder-tabs-tab--active' : ''}`}
+          className={`binder-tabs-tab ${isActive ? 'binder-tabs-tab-active' : ''}`}
           onClick={() => onTabChange?.(tab)}
           style={!isActive && tab.color ? { backgroundColor: tab.color } : undefined}
         >

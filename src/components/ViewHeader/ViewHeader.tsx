@@ -12,8 +12,8 @@ type Props = {
 
 /** Renders text as a header. */
 const ViewHeader = ({ text }: Props) => (
-  <div className="view-header">
-    <div className="view-header-text">{text}</div>
+  <div className='view-header'>
+    <div className='view-header-text'>{text}</div>
   </div>
 );
 

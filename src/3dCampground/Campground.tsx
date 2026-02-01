@@ -93,13 +93,13 @@ export default function Scene() {
     <>
       <ImageButton
         image={isMuted ? SoundOff : SoundOn}
-        alt="mute and unmute"
-        height="5rem"
-        width="6rem"
+        alt='mute and unmute'
+        height='5rem'
+        width='6rem'
         onClick={() => setIsMuted((prev: boolean) => !prev)}
       />
       <Canvas
-        className="main-canvas"
+        className='main-canvas'
         dpr={[1, 2]}
         gl={{
           antialias: !isMobile,
@@ -141,7 +141,7 @@ export default function Scene() {
             position={[isMobile ? 0.125 : 0.25, 0.2, 3]}
             intensity={0.25}
             distance={0.3}
-            color="#fffaf0"
+            color='#fffaf0'
           />
         )}
 
@@ -167,10 +167,10 @@ export default function Scene() {
           coverInsideContent={
             <BinderView>
               <Header>Survival Guide</Header>
-              <div className="text-section">
+              <div className='text-section'>
                 <PaperEffect>
-                  <Text fontSize={4} className="handwritten-text">
-                    Thank you for visiting my <span className="custom-strike">portfolio</span>{' '}
+                  <Text fontSize={4} className='handwritten-text'>
+                    Thank you for visiting my <span className='custom-strike'>portfolio</span>{' '}
                     campsite!
                     <br />
                     <br />
@@ -183,7 +183,7 @@ export default function Scene() {
                     <br />
                     <br />
                   </Text>
-                  <Text bold fontSize={3} className="handwritten-text">
+                  <Text bold fontSize={3} className='handwritten-text'>
                     <i style={{ textDecoration: 'underline' }}>
                       P.S. Don't make eye contact with the sasquatch.
                     </i>
@@ -191,7 +191,7 @@ export default function Scene() {
                 </PaperEffect>
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                <Button variant="secondary" onClick={() => setIsBookOpen(false)}>
+                <Button variant='secondary' onClick={() => setIsBookOpen(false)}>
                   Close
                 </Button>
               </div>
@@ -221,7 +221,7 @@ export default function Scene() {
           position={isMobile ? [0.15, 0.05, 2.15] : [0.3, 0.075, 2.15]}
           scale={[0.15, 0.15, 1]}
           isVisible={showSasquatch}
-          name="sasquatch"
+          name='sasquatch'
           sound={{
             soundPath: SasquatchGrowl,
             volume: 0.1,

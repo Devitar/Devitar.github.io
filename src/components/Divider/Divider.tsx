@@ -15,7 +15,7 @@ type Props = {
 const Divider = ({ color = 'black', spacing = 12, vertical = false }: Props) =>
   vertical ? (
     <div
-      className="vertical-divider"
+      className='vertical-divider'
       style={{
         backgroundColor: color,
         margin: `0px ${spacing}px 0px ${spacing}px`,
@@ -23,7 +23,7 @@ const Divider = ({ color = 'black', spacing = 12, vertical = false }: Props) =>
     />
   ) : (
     <div
-      className="horizontal-divider"
+      className='horizontal-divider'
       style={{
         backgroundColor: color,
         margin: `${spacing}px 0px ${spacing}px 0px`,

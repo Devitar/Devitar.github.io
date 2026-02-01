@@ -64,7 +64,7 @@ const PDF = ({
             .fill(1)
             .map((_, i) => (
               <div className={`pdf-container ${showPageBorder ? 'pdf-with-border' : ''}`} key={i}>
-                {showPageNumber && <div className="pdf-page-text">{`Page ${i + 1}`}</div>}
+                {showPageNumber && <div className='pdf-page-text'>{`Page ${i + 1}`}</div>}
                 <Document file={pdf} onLoadError={console.error}>
                   <Page pageNumber={i + 1} width={width} />
                 </Document>

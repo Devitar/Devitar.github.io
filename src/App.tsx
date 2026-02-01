@@ -5,10 +5,10 @@ import { ErrorBoundary } from './components';
 /** The root application component. */
 const App = () => {
   return (
-    <div className="app">
+    <div className='app'>
       <ErrorBoundary>
         <AppContextProvider>
-          <div className="app_background_container">
+          <div className='app_background_container'>
             <Campground />
           </div>
         </AppContextProvider>

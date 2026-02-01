@@ -2,6 +2,10 @@
   position: relative;
 }
 
+.paper-wrapper.no-paper-bg::after {
+  display: none;
+}
+
 .paper-wrapper::after {
   background: linear-gradient(
     to bottom,
