@@ -58,6 +58,17 @@ export default function Scene() {
   const [activeTab, setActiveTab] = useState<Tab>({ id: 1, label: 'Projects' });
   const [isCanvasReady, setIsCanvasReady] = useState(false);
   const [isModalClosed, setIsModalClosed] = useState(false);
+  const [zoomScale, setZoomScale] = useState(1);
+  const [resetTrigger, setResetTrigger] = useState(0);
+
+  const resetZoom = useCallback(() => {
+    setResetTrigger((prev) => prev + 1);
+  }, []);
+
+  const handleCloseBook = useCallback(() => {
+    resetZoom();
+    setIsBookOpen(false);
+  }, [resetZoom, setIsBookOpen]);
 
   /** Audio */
 
@@ -104,7 +115,7 @@ export default function Scene() {
       <MobileModal
         title='Welcome!'
         content={`
-          Thanks for visiting my portfolio! It looks like you're viewing this on a mobile device - 
+          Thanks for visiting my portfolio! It looks like you're viewing this on a mobile device -
           It should still work, but you'll get the best experience on a larger screen.
         `}
         buttonText='Got it'
@@ -115,6 +126,13 @@ export default function Scene() {
           }
         }}
       />
+      {isMobile && zoomScale > 1.1 && (
+        <div className='reset-zoom-container'>
+          <Button variant='secondary' onClick={resetZoom}>
+            Reset Zoom
+          </Button>
+        </div>
+      )}
       <Canvas
         className='main-canvas'
         dpr={[1, 2]}
@@ -142,6 +160,10 @@ export default function Scene() {
           maxTiltAngle={25}
           smoothing={0.06}
           enabled={isMobile && !isBookOpen}
+          enablePinchZoom={isMobile && isBookOpen}
+          minFov={25}
+          onZoomChange={setZoomScale}
+          resetTrigger={resetTrigger}
         />
         <GlobalAudio url={FireLoop} isPlaying={isFireOn} volume={isMuted ? 0 : 1.5} />
         <GlobalAudio
@@ -180,6 +202,8 @@ export default function Scene() {
           isActive={isBookOpen}
           isOpen={isBookOpen}
           isMobile={isMobile}
+          zoomScale={zoomScale}
+          baseFov={isMobile ? 60 : 50}
           onClick={() => setIsBookOpen(true)}
           coverText={{
             title: 'Survival Guide',
@@ -212,7 +236,7 @@ export default function Scene() {
                 </PaperEffect>
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                <Button variant='secondary' onClick={() => setIsBookOpen(false)}>
+                <Button variant='secondary' onClick={handleCloseBook}>
                   Close
                 </Button>
               </div>

@@ -18,6 +18,16 @@ type Props = {
   smoothing?: number;
   /** Whether device orientation is enabled */
   enabled?: boolean;
+  /** Enable pinch-to-zoom on mobile */
+  enablePinchZoom?: boolean;
+  /** Minimum FOV when zoomed in */
+  minFov?: number;
+  /** Maximum FOV when zoomed out */
+  maxFov?: number;
+  /** Callback when zoom level changes, returns scale factor (1 = no zoom, >1 = zoomed in) */
+  onZoomChange?: (zoomScale: number) => void;
+  /** Increment to trigger a reset of zoom and orientation */
+  resetTrigger?: number;
 };
 
 /**
@@ -33,6 +43,11 @@ const DeviceOrientationCamera = ({
   maxTiltAngle = 25,
   smoothing = 0.06,
   enabled = true,
+  enablePinchZoom = false,
+  minFov = 20,
+  maxFov,
+  onZoomChange,
+  resetTrigger = 0,
 }: Props) => {
   const cameraRef = useRef<PerspectiveCameraType>(null);
   const { set } = useThree();
@@ -41,6 +56,15 @@ const DeviceOrientationCamera = ({
   const targetRotation = useRef({ x: 0, y: 0 });
   const currentRotation = useRef({ x: 0, y: 0 });
   const isListening = useRef(false);
+
+  // Mobile zoom state
+  const targetFov = useRef(fov);
+  const currentFov = useRef(fov);
+  const pinchZoomOffset = useRef({ x: 0, y: 0 });
+  const initialPinchDistance = useRef<number | null>(null);
+  const initialPinchFov = useRef(fov);
+  const effectiveMaxFov = maxFov ?? fov;
+  const lastReportedZoom = useRef(1);
 
   /**
    * Apply dampening - as value approaches max, movement slows down.
@@ -77,6 +101,75 @@ const DeviceOrientationCamera = ({
     isListening.current = true;
     window.addEventListener('deviceorientation', handleOrientation);
   }, [handleOrientation]);
+
+  // Mobile zoom handlers
+  const getDistance = useCallback((touches: TouchList) => {
+    const [t1, t2] = [touches[0], touches[1]];
+    return Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+  }, []);
+
+  const getPinchCenter = useCallback((touches: TouchList) => {
+    const [t1, t2] = [touches[0], touches[1]];
+    return {
+      x: (t1.clientX + t2.clientX) / 2,
+      y: (t1.clientY + t2.clientY) / 2,
+    };
+  }, []);
+
+  const handleTouchStart = useCallback(
+    (e: TouchEvent) => {
+      if (!enablePinchZoom || e.touches.length !== 2) return;
+      initialPinchDistance.current = getDistance(e.touches);
+      initialPinchFov.current = currentFov.current;
+
+      // Calculate offset from center of screen
+      const center = getPinchCenter(e.touches);
+      const screenCenterX = window.innerWidth / 2;
+      const screenCenterY = window.innerHeight / 2;
+
+      // Normalize to -1 to 1 range
+      pinchZoomOffset.current = {
+        x: (center.x - screenCenterX) / screenCenterX,
+        y: (center.y - screenCenterY) / screenCenterY,
+      };
+    },
+    [enablePinchZoom, getDistance, getPinchCenter]
+  );
+
+  const handleTouchMove = useCallback(
+    (e: TouchEvent) => {
+      if (!enablePinchZoom || e.touches.length !== 2 || initialPinchDistance.current === null)
+        return;
+
+      const currentDistance = getDistance(e.touches);
+      const scale = currentDistance / initialPinchDistance.current;
+
+      // Invert scale for FOV (pinch in = smaller FOV = zoom in)
+      const newFov = initialPinchFov.current / scale;
+      targetFov.current = Math.max(minFov, Math.min(effectiveMaxFov, newFov));
+
+      // Update pinch center for camera orientation
+      const center = getPinchCenter(e.touches);
+      const screenCenterX = window.innerWidth / 2;
+      const screenCenterY = window.innerHeight / 2;
+
+      pinchZoomOffset.current = {
+        x: (center.x - screenCenterX) / screenCenterX,
+        y: (center.y - screenCenterY) / screenCenterY,
+      };
+    },
+    [enablePinchZoom, getDistance, getPinchCenter, minFov, effectiveMaxFov]
+  );
+
+  const handleTouchEnd = useCallback(
+    (e: TouchEvent) => {
+      if (!enablePinchZoom) return;
+      if (e.touches.length < 2) {
+        initialPinchDistance.current = null;
+      }
+    },
+    [enablePinchZoom]
+  );
 
   /**
    * Request permission for device orientation (required on iOS 13+).
@@ -140,7 +233,32 @@ const DeviceOrientationCamera = ({
     return () => window.removeEventListener('click', handleClick);
   }, [enabled, requestPermission]);
 
-  // Update camera rotation directly via useFrame - no React re-renders!
+  // Set up mobile zoom listeners
+  useEffect(() => {
+    if (!enablePinchZoom) return;
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [enablePinchZoom, handleTouchStart, handleTouchMove, handleTouchEnd]);
+
+  // Reset zoom and orientation when resetTrigger changes
+  useEffect(() => {
+    if (resetTrigger > 0) {
+      targetFov.current = fov;
+      pinchZoomOffset.current = { x: 0, y: 0 };
+      onZoomChange?.(1);
+      lastReportedZoom.current = 1;
+    }
+  }, [resetTrigger, fov, onZoomChange]);
+
+  // Update camera rotation and FOV directly via useFrame - no React re-renders!
   useFrame(() => {
     if (!cameraRef.current) return;
 
@@ -156,10 +274,30 @@ const DeviceOrientationCamera = ({
     if (Math.abs(dx) > 0.00001 || Math.abs(dy) > 0.00001) {
       currentRotation.current.x += dx * smoothing;
       currentRotation.current.y += dy * smoothing;
+    }
 
-      // Apply rotation offset to base rotation
-      cameraRef.current.rotation.x = baseRotation[0] + currentRotation.current.x;
-      cameraRef.current.rotation.y = baseRotation[1] + currentRotation.current.y;
+    // Calculate zoom-based rotation offset (look toward pinch point when zoomed)
+    const zoomFactor = 1 - (currentFov.current - minFov) / (effectiveMaxFov - minFov);
+    const zoomRotationX = pinchZoomOffset.current.y * zoomFactor * 0.15;
+    const zoomRotationY = -pinchZoomOffset.current.x * zoomFactor * 0.15;
+
+    // Apply rotation offset to base rotation (device orientation + zoom offset)
+    cameraRef.current.rotation.x = baseRotation[0] + currentRotation.current.x + zoomRotationX;
+    cameraRef.current.rotation.y = baseRotation[1] + currentRotation.current.y + zoomRotationY;
+
+    // Smoothly interpolate FOV
+    const dFov = targetFov.current - currentFov.current;
+    if (Math.abs(dFov) > 0.01) {
+      currentFov.current += dFov * smoothing * 2;
+      cameraRef.current.fov = currentFov.current;
+      cameraRef.current.updateProjectionMatrix();
+
+      // Report zoom change (baseFov / currentFov gives zoom scale)
+      const zoomScale = fov / currentFov.current;
+      if (onZoomChange && Math.abs(zoomScale - lastReportedZoom.current) > 0.01) {
+        lastReportedZoom.current = zoomScale;
+        onZoomChange(zoomScale);
+      }
     }
   });
 

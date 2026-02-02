@@ -59,6 +59,10 @@ type Props = {
   minScale?: number;
   /** Padding factor (0-1) when fitting to viewport. Default: 0.8 */
   viewportPadding?: number;
+  /** Zoom scale from pinch-to-zoom (1 = no zoom, >1 = zoomed in) */
+  zoomScale?: number;
+  /** Base FOV for viewport calculations (prevents recalculating when FOV changes during zoom) */
+  baseFov?: number;
 };
 
 /** A notebook binder with turnable pages. */
@@ -80,6 +84,8 @@ const SurvivalGuide = ({
   maxScale = 1.5,
   minScale = 0.8,
   viewportPadding = 0.8,
+  zoomScale = 1,
+  baseFov,
 }: Props) => {
   const { viewport, camera } = useThree();
   const { isMuted } = useAppContext();
@@ -99,7 +105,9 @@ const SurvivalGuide = ({
     }
 
     const perspectiveCamera = camera as ThreePerspectiveCamera;
-    const fovRadians = (perspectiveCamera.fov * Math.PI) / 180;
+    // Use baseFov if provided, otherwise fall back to camera.fov
+    const fovToUse = baseFov ?? perspectiveCamera.fov;
+    const fovRadians = (fovToUse * Math.PI) / 180;
 
     // Calculate z position - place binder at a distance that works well
     const binderZ = camera.position.z - 0.15;
@@ -141,6 +149,7 @@ const SurvivalGuide = ({
     minScale,
     viewportPadding,
     isMobile,
+    baseFov,
   ]);
 
   // Animate position, rotation, and scale between rest and active states
@@ -230,7 +239,7 @@ const SurvivalGuide = ({
             {isMobile ? (
               <div
                 style={{
-                  transform: `scale(${mobileContentScale}) translate(-50%, -50%)`,
+                  transform: `scale(${mobileContentScale * zoomScale}) translate(-50%, -50%)`,
                   transformOrigin: 'top left',
                   position: 'relative',
                   pointerEvents: 'auto',
@@ -307,7 +316,7 @@ const SurvivalGuide = ({
             {isMobile ? (
               <div
                 style={{
-                  transform: `scale(${mobileContentScale}) translate(-50%, -50%)`,
+                  transform: `scale(${mobileContentScale * zoomScale}) translate(-50%, -50%)`,
                   transformOrigin: 'top left',
                   overflow: 'visible',
                   position: 'relative',
