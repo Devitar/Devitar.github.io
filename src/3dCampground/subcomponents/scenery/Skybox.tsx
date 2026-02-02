@@ -76,6 +76,9 @@ const Skybox = () => {
           <TwinklingStar position={[-2.18, 2.12, -0.63]} />
           <TwinklingStar position={[-3.08, 2.76, -0.63]} />
           <TwinklingStar position={[-3.54, 1.03, -0.63]} />
+          <TwinklingStar position={[-4, 2, -0.63]} />
+          <TwinklingStar position={[-4, 3.5, -0.63]} />
+          <TwinklingStar position={[1.275, 2.5, -0.63]} />
           <TwinklingStar position={[-1.1, 1.01, -0.63]} />
           <TwinklingStar position={[0.52, 0.66, -0.63]} />
           <TwinklingStar position={[1.35, 1.35, -0.63]} />
