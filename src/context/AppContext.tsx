@@ -2,12 +2,22 @@ import {
   createContext,
   useContext,
   useState,
+  useEffect,
   type Dispatch,
   type SetStateAction,
   type ReactNode,
 } from 'react';
 
+/** Constants */
+
+const STORAGE_KEY = 'app-preferences';
+
 /** Types */
+
+type AppPreferences = {
+  isMuted: boolean;
+};
+
 type AppContextType = {
   get: {
     isFireOn: boolean;
@@ -27,6 +37,28 @@ type AppContextType = {
 
 type Props = {
   children: ReactNode;
+};
+
+/** Helpers */
+
+const getStoredPreferences = (): Partial<AppPreferences> => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch {
+    // Ignore parse errors
+  }
+  return {};
+};
+
+const setStoredPreferences = (prefs: AppPreferences): void => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+  } catch {
+    // Ignore storage errors
+  }
 };
 
 /** App-wide Context with default values. */
@@ -53,7 +85,12 @@ export const AppContextProvider = ({ children }: Props) => {
   const [isNightTime, setIsNightTime] = useState(true);
   const [isBookOpen, setIsBookOpen] = useState(false);
   const [isFlashlightOn, setIsFlashlightOn] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(() => getStoredPreferences().isMuted ?? false);
+
+  // Persist isMuted preference to localStorage
+  useEffect(() => {
+    setStoredPreferences({ isMuted });
+  }, [isMuted]);
 
   return (
     <AppContext.Provider
