@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc -b && vite build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "dev:host": "vite --host",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",

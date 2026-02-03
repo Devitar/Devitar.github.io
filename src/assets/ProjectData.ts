@@ -1,16 +1,17 @@
 const PROJECT_DATA = [
   // {
-  //   title: 'CSS Filter Converter',
-  //   subtitle: 'Web - TypeScript, React',
-  //   subtitle2: 'A tool for creating a CSS filter from a hexidecimal or RGB value.',
-  //   url: '/',
-  // },
-  // {
   //   title: 'MTG Proxy Generator',
   //   subtitle: 'Web - TypeScript, React',
   //   subtitle2: 'A tool for generating printable sheets of proxy cards for Magic: The Gathering.',
   //   url: '/',
   // },
+  {
+    title: 'CSS Filter Generator',
+    subtitle: 'Creates a CSS filter from a hexadecimal or RGB value.',
+    platform: 'Web',
+    technologies: 'TypeScript, React',
+    url: 'https://devitar.github.io/css-filter-generator/',
+  },
   {
     title: 'Furry Frenzy',
     subtitle: 'An adventure platformer created in the Roblox engine.',
