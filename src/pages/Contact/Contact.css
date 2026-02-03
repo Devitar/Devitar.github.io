@@ -3,14 +3,14 @@
   flex-direction: column;
 }
 
-.map {
+.contact-map {
   flex: 1;
   min-height: 0;
   width: 100%;
   object-fit: cover;
 }
 
-.links {
+.contact-links {
   flex-shrink: 0;
   margin-top: 2rem;
 

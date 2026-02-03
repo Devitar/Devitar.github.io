@@ -4,24 +4,24 @@
   padding: 0 3rem 2rem 3rem;
 }
 
-.entry {
+.projects-entry {
   color: var(--color-text-primary);
   display: block;
   margin-bottom: 2rem;
   text-decoration: none;
 }
 
-.entry:hover {
+.projects-entry:hover {
   color: var(--color-text-muted);
 }
 
-.chapter-row {
+.projects-chapter-row {
   align-items: baseline;
   display: flex;
   gap: 0.5rem;
 }
 
-.chapter {
+.projects-chapter {
   color: inherit;
   font-family: var(--font-display);
   font-size: 2.5rem;
@@ -29,14 +29,14 @@
   margin: 0;
 }
 
-.title {
+.projects-title {
   color: inherit;
   font-family: var(--font-body);
   font-size: 3rem;
   margin: 0.125rem 0 0 0;
 }
 
-.subtitle {
+.projects-subtitle {
   color: inherit;
   font-family: var(--font-body);
   font-size: 2rem;
@@ -47,14 +47,14 @@
   }
 }
 
-.dots {
+.projects-dots {
   border-bottom: 2px dotted var(--color-text-light);
   flex: 1;
   margin-bottom: var(--spacing-xs);
   min-width: 2rem;
 }
 
-.page-number {
+.projects-page-number {
   color: inherit;
   flex-shrink: 0;
   font-family: var(--font-display);

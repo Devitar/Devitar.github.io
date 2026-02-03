@@ -7,9 +7,9 @@ import { Divider, Text } from '~/components';
 const Contact = () => {
   return (
     <div className='page-wrapper contact-page'>
-      <h2 className='header'>ELEVATION</h2>
-      <img src={UtahMap} alt='Utah Elevation Map' className='map' />
-      <div className='links'>
+      <h2 className='page-header'>ELEVATION</h2>
+      <img src={UtahMap} alt='Utah Elevation Map' className='contact-map' />
+      <div className='contact-links'>
         <Text fontSize={24} link='email'>
           devin.curtis1210@gmail.com
         </Text>

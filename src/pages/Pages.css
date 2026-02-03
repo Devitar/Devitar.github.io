@@ -4,11 +4,11 @@
   width: 100%;
 }
 
-.underline {
+.page-underline {
   text-decoration: underline;
 }
 
-.header {
+.page-header {
   color: var(--color-text-primary);
   font-family: var(--font-display);
   font-size: 3.5rem;
