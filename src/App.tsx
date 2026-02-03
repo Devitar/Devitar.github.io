@@ -3,7 +3,7 @@ import { AppContextProvider, useAppContext } from '~/context/AppContext';
 import { Canvas } from '@react-three/fiber';
 import { Text, ErrorBoundary } from '~/components';
 import { useCallback, useState, type JSX } from 'react';
-import { useSoundOnChange } from '~/hooks';
+import { useIsMobile, useSoundOnChange } from '~/hooks';
 import { theme } from '~/theme';
 import type { Vector3 } from '~/types';
 import type { Tab } from '~/components';
@@ -94,7 +94,7 @@ function Scene() {
   // Show sasquatch only when it's dark (night, no fire, no flashlight)
   const showSasquatch = isNightTime && !isFireOn && !isFlashlightOn;
 
-  const isMobile = window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   /** Camera manipulation */
 
