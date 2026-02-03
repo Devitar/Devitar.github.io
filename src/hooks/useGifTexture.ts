@@ -1,11 +1,12 @@
 import { CanvasTexture, LinearFilter, NearestFilter } from 'three';
-import { decompressFrames, parseGIF } from 'gifuct-js';
+import { decompressFrames, parseGIF, type ParsedFrame } from 'gifuct-js';
 import { useEffect, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 
 const useGifTexture = (url: string, interval: number = 100) => {
   const [texture, setTexture] = useState<CanvasTexture | null>(null);
-  const [frames, setFrames] = useState<any[]>([]);
+  const [frames, setFrames] = useState<ParsedFrame[]>([]);
+  const textureRef = useRef<CanvasTexture | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const currentFrameRef = useRef(0);
   const lastFrameTimeRef = useRef(0);
@@ -16,7 +17,9 @@ const useGifTexture = (url: string, interval: number = 100) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    fetch(url)
+    const controller = new AbortController();
+    const signal = controller.signal;
+    fetch(url, { signal })
       .then((resp) => resp.arrayBuffer())
       .then((buff) => {
         const gif = parseGIF(buff);
@@ -30,16 +33,25 @@ const useGifTexture = (url: string, interval: number = 100) => {
           tex.minFilter = LinearFilter;
           tex.magFilter = NearestFilter;
           setTexture(tex);
+          textureRef.current = tex;
         }
       })
       .catch(console.error);
+
+    // Abort the request after 5 seconds to prevent hanging
+    setTimeout(() => controller.abort(), 5000);
+
+    return () => {
+      canvas.remove();
+      textureRef.current?.dispose();
+    };
   }, [url]);
 
   useFrame((state) => {
     if (!frames.length || !canvasRef.current || !texture) return;
 
     // Only update frame if enough time has passed
-    const currentTime = state.clock.elapsedTime * 1000; // Convert to milliseconds
+    const currentTime = state.clock.elapsedTime * 1000;
     if (currentTime - lastFrameTimeRef.current < interval) return;
 
     lastFrameTimeRef.current = currentTime;

@@ -160,7 +160,7 @@ const GlobalAudio = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 }: 
         }
       }
     }
-  }, [isPlaying, fadeDuration, fadeVolume, volume, setVolumeInstant]);
+  }, [fadeDuration, fadeVolume, isPlaying, setVolumeInstant, soundRef.current, volume]);
 
   return null;
 };

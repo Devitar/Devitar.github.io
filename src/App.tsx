@@ -31,7 +31,15 @@ import {
   SurvivalGuide,
   Trees,
 } from '~/three';
-import { BinderView, Button, Header, Tabs, ImageButton, PaperEffect, MobileModal } from '~/components';
+import {
+  BinderView,
+  Button,
+  Header,
+  Tabs,
+  ImageButton,
+  PaperEffect,
+  MobileModal,
+} from '~/components';
 
 /** Pages */
 
@@ -48,6 +56,11 @@ const TAB_MAP: Tab[] = [
   { id: 2, label: 'Resume' },
   { id: 3, label: 'Contact' },
 ];
+
+/** Constants */
+
+const BOOK_OPEN_DELAY = 1000; // ms
+const MOBILE_BOOK_OPEN_DELAY = 500; // ms
 
 /** The main scene content. */
 function Scene() {
@@ -123,7 +136,7 @@ function Scene() {
         onClose={() => {
           setIsModalClosed(true);
           if (isCanvasReady) {
-            setTimeout(() => setIsBookOpen(true), 500);
+            setTimeout(() => setIsBookOpen(true), MOBILE_BOOK_OPEN_DELAY);
           }
         }}
       />
@@ -144,9 +157,9 @@ function Scene() {
         onCreated={() => {
           setIsCanvasReady(true);
           if (!isMobile) {
-            setTimeout(() => setIsBookOpen(true), 1000);
+            setTimeout(() => setIsBookOpen(true), BOOK_OPEN_DELAY);
           } else if (isModalClosed) {
-            setTimeout(() => setIsBookOpen(true), 500);
+            setTimeout(() => setIsBookOpen(true), MOBILE_BOOK_OPEN_DELAY);
           }
         }}
       >

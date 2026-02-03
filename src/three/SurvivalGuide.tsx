@@ -205,7 +205,8 @@ const SurvivalGuide = ({
   return (
     <animated.group
       position={position}
-      rotation={rotation as unknown as Vector3}
+      // @ts-expect-error The runtime values are correct, but the types from the packages are not compatible.
+      rotation={rotation}
       scale={scale}
       onClick={(e) => {
         e.stopPropagation();
@@ -256,14 +257,18 @@ const SurvivalGuide = ({
       </group>
 
       {/* Front cover */}
-      <animated.group position={coverPosition as unknown as Vector3} rotation-y={coverRotation}>
+      {/* @ts-expect-error The runtime values are correct, but the types from the packages are not compatible. */}
+      <animated.group position={coverPosition} rotation-y={coverRotation}>
         {/* Front face of cover - with texture */}
         <mesh position={[0.05, 0, 0.0005]}>
           <planeGeometry args={[0.1, 0.15]} />
           <meshStandardMaterial side={FrontSide}>
             <RenderTexture attach='map' anisotropy={16}>
               <PerspectiveCamera makeDefault manual aspect={0.1 / 0.15} position={[0, 0, 0.5]} />
-              <color attach='background' args={[coverText?.backgroundColor ?? theme.scene.bookCover]} />
+              <color
+                attach='background'
+                args={[coverText?.backgroundColor ?? theme.scene.bookCover]}
+              />
               {coverText && (
                 <>
                   <Text
@@ -303,7 +308,10 @@ const SurvivalGuide = ({
         {/* Back face of cover - plain for inside content */}
         <mesh position={[0.05, 0, -0.0005]}>
           <planeGeometry args={[0.1, 0.15]} />
-          <meshStandardMaterial color={coverText?.backgroundColor ?? theme.scene.bookCover} side={BackSide} />
+          <meshStandardMaterial
+            color={coverText?.backgroundColor ?? theme.scene.bookCover}
+            side={BackSide}
+          />
         </mesh>
         {coverInsideContent && isOpen && (!isMobile || isCoverAnimationComplete) && (
           <Html

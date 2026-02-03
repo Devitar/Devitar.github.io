@@ -14,7 +14,7 @@ type Props = {
   /** How many pages from the PDF should be displayed. */
   numberOfPages?: number;
   /** The PDF file to be displayed. Import it as a module: import PDF from "{filepath}/{file}.pdf" */
-  pdf: any;
+  pdf: File;
   /** Maximum width of the PDF in pixels. If not provided, PDF takes full container width. */
   maxWidth?: number;
   /** Shows page number above the PDF page. Default: false */
