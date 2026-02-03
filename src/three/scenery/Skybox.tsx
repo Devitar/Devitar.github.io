@@ -26,7 +26,12 @@ const Skybox = () => {
 
       {/* Directional sunlight during day */}
       {!isNightTime && (
-        <directionalLight position={[5, 5, 2]} intensity={2} color={theme.scene.directionalSun} castShadow />
+        <directionalLight
+          position={[5, 5, 2]}
+          intensity={2}
+          color={theme.scene.directionalSun}
+          castShadow
+        />
       )}
 
       {/* Moon - visible at night */}
