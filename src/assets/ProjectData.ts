@@ -22,7 +22,7 @@ const PROJECT_DATA = [
     title: 'Hangman Game',
     subtitle: 'A classic game of hangman.',
     platform: 'Web',
-    technologies: 'Elm',
+    technologies: 'Elm, Python (Flask backend)',
     url: 'https://devitar.github.io/hangman/',
   },
 ];
