@@ -6,8 +6,8 @@ const PROJECT_DATA = [
   //   url: '/',
   // },
   {
-    title: 'CSS Filter Generator',
-    subtitle: 'Creates a CSS filter from a hexadecimal or RGB value.',
+    title: 'SVG Recolor Tool',
+    subtitle: 'Creates a CSS filter from a hexadecimal or RGB value to recolor any SVG.',
     platform: 'Web',
     technologies: 'TypeScript, React',
     url: 'https://devitar.github.io/css-filter-generator/',
