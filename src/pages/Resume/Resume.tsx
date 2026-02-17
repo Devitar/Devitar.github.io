@@ -6,7 +6,7 @@ import resume from '~/assets/Devin_Curtis_Resume_2026_Redacted.pdf';
 const Resume = () => {
   return (
     <div className='page-wrapper resume-page'>
-      <h2 className='header'>HISTORY</h2>
+      <h2 className='page-header'>HISTORY</h2>
       <PaperEffect paperBackground={false}>
         <div className='resume-scroll-container'>
           <PDF pdf={resume} numberOfPages={2} />
