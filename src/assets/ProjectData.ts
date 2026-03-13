@@ -16,8 +16,8 @@ const PROJECT_DATA = [
     title: 'MTG Proxy Generator',
     subtitle: 'Creates printable pages of Magic: The Gathering cards from a deck list.',
     platform: 'Web',
-    technologies: 'TypeScript, React, C# (ASP.NET Core backend)',
-    url: 'https://devitar-mtg-proxy-generator-ddghfkhjhyb7acab.westus3-01.azurewebsites.net/',
+    technologies: 'TypeScript, React, C# (ASP.NET Core backend), Docker',
+    url: 'https://mtg-proxy-generator.onrender.com',
   },
   {
     title: 'Furry Frenzy',
