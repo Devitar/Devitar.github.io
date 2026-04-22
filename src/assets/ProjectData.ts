@@ -6,6 +6,14 @@ const PROJECT_DATA = [
   //   url: '/',
   // },
   {
+    title: 'Guidance - D&D Companion',
+    subtitle:
+      'A comprehensive D&D 5e companion app, with character creation, leveling up, combat tracking, 3d dice rolling, and much more!',
+    platform: 'Web (PWA)',
+    technologies: 'TypeScript, Preact, OGL, cannon-es',
+    url: 'https://guidance-character-sheet.onrender.com/',
+  },
+  {
     title: 'SVG Recolor Tool',
     subtitle: 'Creates a CSS filter from a hexadecimal or RGB value to recolor any SVG.',
     platform: 'Web',
