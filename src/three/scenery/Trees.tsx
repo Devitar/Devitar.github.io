@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { theme } from '~/theme';
 
 const Trees = () => (
@@ -668,4 +669,4 @@ const Trees = () => (
   </>
 );
 
-export default Trees;
+export default memo(Trees);

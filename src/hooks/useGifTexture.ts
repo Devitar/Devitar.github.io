@@ -10,6 +10,7 @@ const useGifTexture = (url: string, interval: number = 100) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const currentFrameRef = useRef(0);
   const lastFrameTimeRef = useRef(0);
+  const imageDataRef = useRef<ImageData | null>(null);
 
   useEffect(() => {
     const canvas = document.createElement('canvas');
@@ -61,11 +62,14 @@ const useGifTexture = (url: string, interval: number = 100) => {
     if (!ctx) return;
 
     const frame = frames[currentFrameRef.current];
-    const imageData = new ImageData(
-      new Uint8ClampedArray(frame.patch),
-      frame.dims.width,
-      frame.dims.height
-    );
+    const { width, height } = frame.dims;
+
+    let imageData = imageDataRef.current;
+    if (!imageData || imageData.width !== width || imageData.height !== height) {
+      imageData = new ImageData(width, height);
+      imageDataRef.current = imageData;
+    }
+    imageData.data.set(frame.patch);
 
     ctx.putImageData(imageData, 0, 0);
     texture.needsUpdate = true;

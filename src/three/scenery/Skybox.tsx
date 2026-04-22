@@ -1,9 +1,14 @@
-import { useContext } from 'react';
+import { memo, useContext } from 'react';
 import { useSpring, animated, config } from '@react-spring/three';
+import { MeshBasicMaterial, MeshStandardMaterial } from 'three';
 import { AppContext } from '~/context/AppContext';
 import { useInteraction } from '~/hooks';
 import { theme } from '~/theme';
 import TwinklingStar from '../TwinklingStar';
+
+const moonMaterial = new MeshBasicMaterial({ color: theme.scene.moon });
+const sunMaterial = new MeshBasicMaterial({ color: theme.scene.sun });
+const groundMaterial = new MeshStandardMaterial({ color: theme.scene.ground });
 
 const Skybox = () => {
   const {
@@ -42,9 +47,9 @@ const Skybox = () => {
         scale={[0.5, 0.5, 0.01]}
         name={'moon'}
         onClick={disableInteraction ? undefined : () => isNightTime && setIsNightTime(false)}
+        material={moonMaterial}
       >
         <boxGeometry />
-        <meshBasicMaterial color={theme.scene.moon} />
         {isNightTime && <pointLight intensity={2} />}
       </animated.mesh>
 
@@ -56,9 +61,9 @@ const Skybox = () => {
         scale={[0.5, 0.5, 0.01]}
         name={'sun'}
         onClick={disableInteraction ? undefined : () => !isNightTime && setIsNightTime(true)}
+        material={sunMaterial}
       >
         <boxGeometry />
-        <meshBasicMaterial color={theme.scene.sun} />
         <animated.pointLight intensity={sunIntensity} color={theme.scene.sunGlow} />
       </animated.mesh>
 
@@ -103,12 +108,11 @@ const Skybox = () => {
       </mesh>
 
       {/* Ground */}
-      <mesh scale={[20, 0.01, 19.47]} position={[0, 0, 8]} name={'ground'}>
+      <mesh scale={[20, 0.01, 19.47]} position={[0, 0, 8]} name={'ground'} material={groundMaterial}>
         <boxGeometry />
-        <meshStandardMaterial color={theme.scene.ground} />
       </mesh>
     </>
   );
 };
 
-export default Skybox;
+export default memo(Skybox);
