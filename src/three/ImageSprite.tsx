@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { useLoader } from '@react-three/fiber';
 import { TextureLoader, Color } from 'three';
 import { useSound, useInteraction } from '~/hooks';
@@ -50,12 +50,14 @@ const ImageSprite = ({
     isMuted,
   });
 
+  const brightnessColor = useMemo(
+    () => new Color(brightness, brightness, brightness),
+    [brightness]
+  );
+
   if (!isVisible) return null;
 
   const textureToUse = Array.isArray(texture) ? texture[0] : texture;
-
-  // Create color multiplier for brightness (values > 1 make it brighter)
-  const brightnessColor = new Color(brightness, brightness, brightness);
 
   if (affectedByLighting) {
     return (

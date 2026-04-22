@@ -62,7 +62,6 @@ const Flashlight = ({
           intensity={isFlashlightOn ? 2 : 0}
           distance={3}
           color={theme.scene.flashlightBeam}
-          castShadow
         />
       </mesh>
     </group>

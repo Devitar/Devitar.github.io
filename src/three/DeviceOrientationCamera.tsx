@@ -1,6 +1,6 @@
 import { useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
-import { useRef, useEffect, useCallback } from 'react';
+import { memo, useRef, useEffect, useCallback } from 'react';
 import type { PerspectiveCamera as PerspectiveCameraType } from 'three';
 import type { Vector3 } from '~/types';
 
@@ -312,4 +312,4 @@ const DeviceOrientationCamera = ({
   );
 };
 
-export default DeviceOrientationCamera;
+export default memo(DeviceOrientationCamera);

@@ -1,9 +1,44 @@
-import { useContext } from 'react';
+import { memo, useContext } from 'react';
 import { useSpring, animated, config } from '@react-spring/three';
+import { MeshBasicMaterial, MeshStandardMaterial } from 'three';
 import { AppContext } from '~/context/AppContext';
 import { useInteraction } from '~/hooks';
 import { theme } from '~/theme';
-import TwinklingStar from '../TwinklingStar';
+import TwinklingStars from '../TwinklingStars';
+import type { Vector3 } from '~/types';
+
+const moonMaterial = new MeshBasicMaterial({ color: theme.scene.moon });
+const sunMaterial = new MeshBasicMaterial({ color: theme.scene.sun });
+const groundMaterial = new MeshStandardMaterial({ color: theme.scene.ground });
+
+const BIG_DIPPER_STARS: Array<{ position: Vector3 }> = [
+  { position: [0, 0, 0] },
+  { position: [0.4, 0, 0] },
+  { position: [0.45, -0.3, 0] },
+  { position: [0.05, -0.3, 0] },
+  { position: [-0.21, 0.2, 0] },
+  { position: [-0.48, 0.46, 0] },
+  { position: [-0.82, 0.5, 0] },
+];
+
+const LOOSE_STARS: Array<{ position: Vector3 }> = [
+  { position: [0.07, 1.68, -0.63] },
+  { position: [-0.66, 2.88, -0.63] },
+  { position: [-2.18, 2.12, -0.63] },
+  { position: [-3.08, 2.76, -0.63] },
+  { position: [-3.54, 1.03, -0.63] },
+  { position: [-4, 2, -0.63] },
+  { position: [-4, 3.5, -0.63] },
+  { position: [1.275, 2.5, -0.63] },
+  { position: [-1.1, 1.01, -0.63] },
+  { position: [0.52, 0.66, -0.63] },
+  { position: [1.35, 1.35, -0.63] },
+  { position: [0.57, 3.22, -0.63] },
+  { position: [1.87, 3.05, -0.63] },
+  { position: [2.42, 1.78, -0.63] },
+  { position: [3.07, 2.44, -0.63] },
+  { position: [-2.83, 1.78, -0.63] },
+];
 
 const Skybox = () => {
   const {
@@ -30,7 +65,6 @@ const Skybox = () => {
           position={[5, 5, 2]}
           intensity={2}
           color={theme.scene.directionalSun}
-          castShadow
         />
       )}
 
@@ -42,9 +76,9 @@ const Skybox = () => {
         scale={[0.5, 0.5, 0.01]}
         name={'moon'}
         onClick={disableInteraction ? undefined : () => isNightTime && setIsNightTime(false)}
+        material={moonMaterial}
       >
         <boxGeometry />
-        <meshBasicMaterial color={theme.scene.moon} />
         {isNightTime && <pointLight intensity={2} />}
       </animated.mesh>
 
@@ -56,9 +90,9 @@ const Skybox = () => {
         scale={[0.5, 0.5, 0.01]}
         name={'sun'}
         onClick={disableInteraction ? undefined : () => !isNightTime && setIsNightTime(true)}
+        material={sunMaterial}
       >
         <boxGeometry />
-        <meshBasicMaterial color={theme.scene.sun} />
         <animated.pointLight intensity={sunIntensity} color={theme.scene.sunGlow} />
       </animated.mesh>
 
@@ -69,30 +103,9 @@ const Skybox = () => {
             position={[-1.18, 1.95, -0.63]}
             rotation={[-0.057859925759693155, 0.07155343523626997, -0.2801141128557414]}
           >
-            <TwinklingStar position={[0, 0, 0]} name={'megrez'} />
-            <TwinklingStar position={[0.4, 0, 0]} name={'dubhe'} />
-            <TwinklingStar position={[0.45, -0.3, 0]} name={'merak'} />
-            <TwinklingStar position={[0.05, -0.3, 0]} name={'phecda'} />
-            <TwinklingStar position={[-0.21, 0.2, 0]} name={'alioth'} />
-            <TwinklingStar position={[-0.48, 0.46, 0]} name={'mizar'} />
-            <TwinklingStar position={[-0.82, 0.5, 0]} name={'alkaid'} />
+            <TwinklingStars stars={BIG_DIPPER_STARS} name='big_dipper_stars' />
           </group>
-          <TwinklingStar position={[0.07, 1.68, -0.63]} />
-          <TwinklingStar position={[-0.66, 2.88, -0.63]} />
-          <TwinklingStar position={[-2.18, 2.12, -0.63]} />
-          <TwinklingStar position={[-3.08, 2.76, -0.63]} />
-          <TwinklingStar position={[-3.54, 1.03, -0.63]} />
-          <TwinklingStar position={[-4, 2, -0.63]} />
-          <TwinklingStar position={[-4, 3.5, -0.63]} />
-          <TwinklingStar position={[1.275, 2.5, -0.63]} />
-          <TwinklingStar position={[-1.1, 1.01, -0.63]} />
-          <TwinklingStar position={[0.52, 0.66, -0.63]} />
-          <TwinklingStar position={[1.35, 1.35, -0.63]} />
-          <TwinklingStar position={[0.57, 3.22, -0.63]} />
-          <TwinklingStar position={[1.87, 3.05, -0.63]} />
-          <TwinklingStar position={[2.42, 1.78, -0.63]} />
-          <TwinklingStar position={[3.07, 2.44, -0.63]} />
-          <TwinklingStar position={[-2.83, 1.78, -0.63]} />
+          <TwinklingStars stars={LOOSE_STARS} name='loose_stars' />
         </>
       )}
 
@@ -103,12 +116,11 @@ const Skybox = () => {
       </mesh>
 
       {/* Ground */}
-      <mesh scale={[20, 0.01, 19.47]} position={[0, 0, 8]} name={'ground'}>
+      <mesh scale={[20, 0.01, 19.47]} position={[0, 0, 8]} name={'ground'} material={groundMaterial}>
         <boxGeometry />
-        <meshStandardMaterial color={theme.scene.ground} />
       </mesh>
     </>
   );
 };
 
-export default Skybox;
+export default memo(Skybox);

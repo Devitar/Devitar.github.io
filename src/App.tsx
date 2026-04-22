@@ -2,7 +2,7 @@ import './App.css';
 import { AppContextProvider, useAppContext } from '~/context/AppContext';
 import { Canvas } from '@react-three/fiber';
 import { Text, ErrorBoundary } from '~/components';
-import { useCallback, useState, type JSX } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState, type JSX } from 'react';
 import { useIsMobile, useSoundOnChange } from '~/hooks';
 import { theme } from '~/theme';
 import type { Vector3 } from '~/types';
@@ -43,7 +43,13 @@ import {
 
 /** Pages */
 
-import { Projects, Resume, Contact } from '~/pages';
+const importProjects = () => import('~/pages/Projects/Projects');
+const importResume = () => import('~/pages/Resume/Resume');
+const importContact = () => import('~/pages/Contact/Contact');
+
+const Projects = lazy(importProjects);
+const Resume = lazy(importResume);
+const Contact = lazy(importContact);
 
 const PAGE_MAP: Record<number, JSX.Element | undefined> = {
   1: <Projects />,
@@ -61,6 +67,12 @@ const TAB_MAP: Tab[] = [
 
 const BOOK_OPEN_DELAY = 1000; // ms
 const MOBILE_BOOK_OPEN_DELAY = 500; // ms
+
+const REST_POSITION: Vector3 = [0.13, 0.025, 2.6];
+const REST_ROTATION: Vector3 = [-Math.PI / 8, 0, 0.05];
+const DESKTOP_CAMERA_POSITION: Vector3 = [0.21, 0.03, 3.04];
+const DESKTOP_CAMERA_ROTATION: Vector3 = [0.27925268031909284, 0.13962634015954653, 0];
+const MOBILE_CAMERA_ROTATION: Vector3 = [0.1, 0.125, 0];
 
 /** The main scene content. */
 function Scene() {
@@ -84,10 +96,75 @@ function Scene() {
     setIsBookOpen(false);
   }, [resetZoom, setIsBookOpen]);
 
+  const handleOpenBook = useCallback(() => setIsBookOpen(true), [setIsBookOpen]);
+
+  const coverText = useMemo(
+    () => ({
+      title: 'Survival Guide',
+      subtitle: 'by Devin Curtis',
+      backgroundColor: theme.scene.bookCover,
+    }),
+    []
+  );
+
+  const coverInsideContent = useMemo(
+    () => (
+      <BinderView>
+        <div className='text-section'>
+          <PaperEffect>
+            <Text fontSize={4} className='handwritten-text'>
+              Thank you for visiting my <span className='custom-strike'>portfolio</span> campsite!
+              <br />
+              <br />
+              This guide contains tips and tricks for surviving the wilderness of web development.
+              <br />
+              <br />
+              If at any time you'd like to stop reading and explore the environment, simply click
+              the close button below. Happy camping!
+              <br />
+              <br />
+            </Text>
+            <Text bold fontSize={3} className='handwritten-text'>
+              <i style={{ textDecoration: 'underline' }}>
+                P.S. Don't make eye contact with the sasquatch.
+              </i>
+            </Text>
+          </PaperEffect>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+          <Button variant='secondary' onClick={handleCloseBook}>
+            Close
+          </Button>
+        </div>
+      </BinderView>
+    ),
+    [handleCloseBook]
+  );
+
+  const pageContent = useMemo(
+    () => (
+      <>
+        <Tabs activeTab={activeTab.id} onTabChange={setActiveTab} tabs={TAB_MAP} />
+        <BinderView>
+          <Header>{activeTab.label}</Header>
+          <Suspense fallback={null}>{PAGE_MAP[activeTab.id]}</Suspense>
+        </BinderView>
+      </>
+    ),
+    [activeTab]
+  );
+
   /** Audio */
 
   // Play page turn sound on tab change
   useSoundOnChange(PageTurnSound, activeTab.id, { volume: 0.5, isMuted });
+
+  /** Warm lazy-loaded page chunks in the background so tab clicks feel instant. */
+  useEffect(() => {
+    importProjects();
+    importResume();
+    importContact();
+  }, []);
 
   /** Flags */
 
@@ -111,11 +188,17 @@ function Scene() {
     return baseHeight + Math.max(0, adjustment);
   }, [isMobile]);
 
-  const cameraPosition: Vector3 = isMobile ? [0.075, getCameraY(), 3] : [0.21, 0.03, 3.04];
+  const cameraPosition = useMemo<Vector3>(
+    () => (isMobile ? [0.075, getCameraY(), 3] : DESKTOP_CAMERA_POSITION),
+    [isMobile, getCameraY]
+  );
 
-  const cameraRotation: Vector3 = isMobile
-    ? [0.1, 0.125, 0]
-    : [0.27925268031909284, 0.13962634015954653, 0];
+  const cameraRotation = useMemo<Vector3>(
+    () => (isMobile ? MOBILE_CAMERA_ROTATION : DESKTOP_CAMERA_ROTATION),
+    [isMobile]
+  );
+
+  const activeRotation = useMemo<Vector3>(() => [isMobile ? 0.1 : 0.2, 0.125, 0], [isMobile]);
 
   return (
     <>
@@ -205,10 +288,10 @@ function Scene() {
 
         {/* BOOK */}
         <SurvivalGuide
-          restPosition={[0.13, 0.025, 2.6]}
-          restRotation={[-Math.PI / 8, 0, 0.05]}
+          restPosition={REST_POSITION}
+          restRotation={REST_ROTATION}
           restScale={0.3}
-          activeRotation={[isMobile ? 0.1 : 0.2, 0.125, 0]}
+          activeRotation={activeRotation}
           fitToViewport
           maxScale={2}
           minScale={0.1}
@@ -218,57 +301,10 @@ function Scene() {
           isMobile={isMobile}
           zoomScale={zoomScale}
           baseFov={isMobile ? 60 : 50}
-          onClick={() => setIsBookOpen(true)}
-          coverText={{
-            title: 'Survival Guide',
-            subtitle: 'by Devin Curtis',
-            backgroundColor: theme.scene.bookCover,
-          }}
-          coverInsideContent={
-            <BinderView>
-              <div className='text-section'>
-                <PaperEffect>
-                  <Text fontSize={4} className='handwritten-text'>
-                    Thank you for visiting my <span className='custom-strike'>portfolio</span>{' '}
-                    campsite!
-                    <br />
-                    <br />
-                    This guide contains tips and tricks for surviving the wilderness of web
-                    development.
-                    <br />
-                    <br />
-                    If at any time you'd like to stop reading and explore the environment, simply
-                    click the close button below. Happy camping!
-                    <br />
-                    <br />
-                  </Text>
-                  <Text bold fontSize={3} className='handwritten-text'>
-                    <i style={{ textDecoration: 'underline' }}>
-                      P.S. Don't make eye contact with the sasquatch.
-                    </i>
-                  </Text>
-                </PaperEffect>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                <Button variant='secondary' onClick={handleCloseBook}>
-                  Close
-                </Button>
-              </div>
-            </BinderView>
-          }
-          pageContent={
-            <>
-              <Tabs
-                activeTab={activeTab.id}
-                onTabChange={(tab) => setActiveTab(tab)}
-                tabs={TAB_MAP}
-              />
-              <BinderView>
-                <Header>{activeTab.label}</Header>
-                {PAGE_MAP[activeTab.id]}
-              </BinderView>
-            </>
-          }
+          onClick={handleOpenBook}
+          coverText={coverText}
+          coverInsideContent={coverInsideContent}
+          pageContent={pageContent}
         />
 
         {/* CAMP */}
