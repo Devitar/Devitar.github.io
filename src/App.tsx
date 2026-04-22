@@ -2,7 +2,7 @@ import './App.css';
 import { AppContextProvider, useAppContext } from '~/context/AppContext';
 import { Canvas } from '@react-three/fiber';
 import { Text, ErrorBoundary } from '~/components';
-import { lazy, Suspense, useCallback, useMemo, useState, type JSX } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState, type JSX } from 'react';
 import { useIsMobile, useSoundOnChange } from '~/hooks';
 import { theme } from '~/theme';
 import type { Vector3 } from '~/types';
@@ -43,9 +43,13 @@ import {
 
 /** Pages */
 
-const Projects = lazy(() => import('~/pages/Projects/Projects'));
-const Resume = lazy(() => import('~/pages/Resume/Resume'));
-const Contact = lazy(() => import('~/pages/Contact/Contact'));
+const importProjects = () => import('~/pages/Projects/Projects');
+const importResume = () => import('~/pages/Resume/Resume');
+const importContact = () => import('~/pages/Contact/Contact');
+
+const Projects = lazy(importProjects);
+const Resume = lazy(importResume);
+const Contact = lazy(importContact);
 
 const PAGE_MAP: Record<number, JSX.Element | undefined> = {
   1: <Projects />,
@@ -154,6 +158,13 @@ function Scene() {
 
   // Play page turn sound on tab change
   useSoundOnChange(PageTurnSound, activeTab.id, { volume: 0.5, isMuted });
+
+  /** Warm lazy-loaded page chunks in the background so tab clicks feel instant. */
+  useEffect(() => {
+    importProjects();
+    importResume();
+    importContact();
+  }, []);
 
   /** Flags */
 
