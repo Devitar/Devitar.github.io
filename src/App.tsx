@@ -90,6 +90,64 @@ function Scene() {
     setIsBookOpen(false);
   }, [resetZoom, setIsBookOpen]);
 
+  const handleOpenBook = useCallback(() => setIsBookOpen(true), [setIsBookOpen]);
+
+  const coverText = useMemo(
+    () => ({
+      title: 'Survival Guide',
+      subtitle: 'by Devin Curtis',
+      backgroundColor: theme.scene.bookCover,
+    }),
+    []
+  );
+
+  const coverInsideContent = useMemo(
+    () => (
+      <BinderView>
+        <div className='text-section'>
+          <PaperEffect>
+            <Text fontSize={4} className='handwritten-text'>
+              Thank you for visiting my <span className='custom-strike'>portfolio</span> campsite!
+              <br />
+              <br />
+              This guide contains tips and tricks for surviving the wilderness of web development.
+              <br />
+              <br />
+              If at any time you'd like to stop reading and explore the environment, simply click
+              the close button below. Happy camping!
+              <br />
+              <br />
+            </Text>
+            <Text bold fontSize={3} className='handwritten-text'>
+              <i style={{ textDecoration: 'underline' }}>
+                P.S. Don't make eye contact with the sasquatch.
+              </i>
+            </Text>
+          </PaperEffect>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+          <Button variant='secondary' onClick={handleCloseBook}>
+            Close
+          </Button>
+        </div>
+      </BinderView>
+    ),
+    [handleCloseBook]
+  );
+
+  const pageContent = useMemo(
+    () => (
+      <>
+        <Tabs activeTab={activeTab.id} onTabChange={setActiveTab} tabs={TAB_MAP} />
+        <BinderView>
+          <Header>{activeTab.label}</Header>
+          {PAGE_MAP[activeTab.id]}
+        </BinderView>
+      </>
+    ),
+    [activeTab]
+  );
+
   /** Audio */
 
   // Play page turn sound on tab change
@@ -230,57 +288,10 @@ function Scene() {
           isMobile={isMobile}
           zoomScale={zoomScale}
           baseFov={isMobile ? 60 : 50}
-          onClick={() => setIsBookOpen(true)}
-          coverText={{
-            title: 'Survival Guide',
-            subtitle: 'by Devin Curtis',
-            backgroundColor: theme.scene.bookCover,
-          }}
-          coverInsideContent={
-            <BinderView>
-              <div className='text-section'>
-                <PaperEffect>
-                  <Text fontSize={4} className='handwritten-text'>
-                    Thank you for visiting my <span className='custom-strike'>portfolio</span>{' '}
-                    campsite!
-                    <br />
-                    <br />
-                    This guide contains tips and tricks for surviving the wilderness of web
-                    development.
-                    <br />
-                    <br />
-                    If at any time you'd like to stop reading and explore the environment, simply
-                    click the close button below. Happy camping!
-                    <br />
-                    <br />
-                  </Text>
-                  <Text bold fontSize={3} className='handwritten-text'>
-                    <i style={{ textDecoration: 'underline' }}>
-                      P.S. Don't make eye contact with the sasquatch.
-                    </i>
-                  </Text>
-                </PaperEffect>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                <Button variant='secondary' onClick={handleCloseBook}>
-                  Close
-                </Button>
-              </div>
-            </BinderView>
-          }
-          pageContent={
-            <>
-              <Tabs
-                activeTab={activeTab.id}
-                onTabChange={(tab) => setActiveTab(tab)}
-                tabs={TAB_MAP}
-              />
-              <BinderView>
-                <Header>{activeTab.label}</Header>
-                {PAGE_MAP[activeTab.id]}
-              </BinderView>
-            </>
-          }
+          onClick={handleOpenBook}
+          coverText={coverText}
+          coverInsideContent={coverInsideContent}
+          pageContent={pageContent}
         />
 
         {/* CAMP */}

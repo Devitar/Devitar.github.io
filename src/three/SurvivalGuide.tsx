@@ -2,7 +2,7 @@ import { useSpring, animated } from '@react-spring/three';
 import { Html, Text, RenderTexture, PerspectiveCamera } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { FrontSide, BackSide, PerspectiveCamera as ThreePerspectiveCamera } from 'three';
-import { type ReactNode, useMemo, useState, useEffect } from 'react';
+import { memo, type ReactNode, useMemo, useState, useEffect } from 'react';
 import { theme } from '~/theme';
 
 /** Fonts */
@@ -358,4 +358,4 @@ const SurvivalGuide = ({
   );
 };
 
-export default SurvivalGuide;
+export default memo(SurvivalGuide);
