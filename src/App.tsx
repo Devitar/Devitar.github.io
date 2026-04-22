@@ -2,7 +2,7 @@ import './App.css';
 import { AppContextProvider, useAppContext } from '~/context/AppContext';
 import { Canvas } from '@react-three/fiber';
 import { Text, ErrorBoundary } from '~/components';
-import { useCallback, useMemo, useState, type JSX } from 'react';
+import { lazy, Suspense, useCallback, useMemo, useState, type JSX } from 'react';
 import { useIsMobile, useSoundOnChange } from '~/hooks';
 import { theme } from '~/theme';
 import type { Vector3 } from '~/types';
@@ -43,7 +43,9 @@ import {
 
 /** Pages */
 
-import { Projects, Resume, Contact } from '~/pages';
+const Projects = lazy(() => import('~/pages/Projects/Projects'));
+const Resume = lazy(() => import('~/pages/Resume/Resume'));
+const Contact = lazy(() => import('~/pages/Contact/Contact'));
 
 const PAGE_MAP: Record<number, JSX.Element | undefined> = {
   1: <Projects />,
@@ -141,7 +143,7 @@ function Scene() {
         <Tabs activeTab={activeTab.id} onTabChange={setActiveTab} tabs={TAB_MAP} />
         <BinderView>
           <Header>{activeTab.label}</Header>
-          {PAGE_MAP[activeTab.id]}
+          <Suspense fallback={null}>{PAGE_MAP[activeTab.id]}</Suspense>
         </BinderView>
       </>
     ),
