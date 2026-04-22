@@ -2,7 +2,7 @@ import './App.css';
 import { AppContextProvider, useAppContext } from '~/context/AppContext';
 import { Canvas } from '@react-three/fiber';
 import { Text, ErrorBoundary } from '~/components';
-import { useCallback, useState, type JSX } from 'react';
+import { useCallback, useMemo, useState, type JSX } from 'react';
 import { useIsMobile, useSoundOnChange } from '~/hooks';
 import { theme } from '~/theme';
 import type { Vector3 } from '~/types';
@@ -62,6 +62,12 @@ const TAB_MAP: Tab[] = [
 const BOOK_OPEN_DELAY = 1000; // ms
 const MOBILE_BOOK_OPEN_DELAY = 500; // ms
 
+const REST_POSITION: Vector3 = [0.13, 0.025, 2.6];
+const REST_ROTATION: Vector3 = [-Math.PI / 8, 0, 0.05];
+const DESKTOP_CAMERA_POSITION: Vector3 = [0.21, 0.03, 3.04];
+const DESKTOP_CAMERA_ROTATION: Vector3 = [0.27925268031909284, 0.13962634015954653, 0];
+const MOBILE_CAMERA_ROTATION: Vector3 = [0.1, 0.125, 0];
+
 /** The main scene content. */
 function Scene() {
   const { isFireOn, isFlashlightOn, isNightTime, isBookOpen, isMuted, setIsBookOpen, setIsMuted } =
@@ -111,11 +117,17 @@ function Scene() {
     return baseHeight + Math.max(0, adjustment);
   }, [isMobile]);
 
-  const cameraPosition: Vector3 = isMobile ? [0.075, getCameraY(), 3] : [0.21, 0.03, 3.04];
+  const cameraPosition = useMemo<Vector3>(
+    () => (isMobile ? [0.075, getCameraY(), 3] : DESKTOP_CAMERA_POSITION),
+    [isMobile, getCameraY]
+  );
 
-  const cameraRotation: Vector3 = isMobile
-    ? [0.1, 0.125, 0]
-    : [0.27925268031909284, 0.13962634015954653, 0];
+  const cameraRotation = useMemo<Vector3>(
+    () => (isMobile ? MOBILE_CAMERA_ROTATION : DESKTOP_CAMERA_ROTATION),
+    [isMobile]
+  );
+
+  const activeRotation = useMemo<Vector3>(() => [isMobile ? 0.1 : 0.2, 0.125, 0], [isMobile]);
 
   return (
     <>
@@ -205,10 +217,10 @@ function Scene() {
 
         {/* BOOK */}
         <SurvivalGuide
-          restPosition={[0.13, 0.025, 2.6]}
-          restRotation={[-Math.PI / 8, 0, 0.05]}
+          restPosition={REST_POSITION}
+          restRotation={REST_ROTATION}
           restScale={0.3}
-          activeRotation={[isMobile ? 0.1 : 0.2, 0.125, 0]}
+          activeRotation={activeRotation}
           fitToViewport
           maxScale={2}
           minScale={0.1}
