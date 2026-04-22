@@ -6,7 +6,7 @@ export { default as GlobalAudio } from './GlobalAudio';
 export { default as ImageSprite } from './ImageSprite';
 export { default as SmokeSprite } from './SmokeSprite';
 export { default as SurvivalGuide } from './SurvivalGuide';
-export { default as TwinklingStar } from './TwinklingStar';
+export { default as TwinklingStars } from './TwinklingStars';
 
 // Re-export scenery components
 export * from './scenery';

@@ -1,6 +1,6 @@
 import { AudioListener, Audio, AudioLoader } from 'three';
 import { useEffect, useRef, useCallback } from 'react';
-import { useThree } from '@react-three/fiber';
+import { useThree, useFrame } from '@react-three/fiber';
 
 /** Types */
 
@@ -15,6 +15,14 @@ type Props = {
   fadeDuration?: number;
 };
 
+type FadeState = {
+  startVolume: number;
+  targetVolume: number;
+  startTime: number;
+  duration: number;
+  onComplete?: () => void;
+};
+
 /** Plays a given sound. */
 const GlobalAudio = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 }: Props) => {
   const { camera } = useThree();
@@ -22,7 +30,7 @@ const GlobalAudio = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 }: 
   const isLoadedRef = useRef(false);
   const hasStartedRef = useRef(false);
   const isPlayingRef = useRef(isPlaying);
-  const fadeAnimationRef = useRef<number | null>(null);
+  const fadeStateRef = useRef<FadeState | null>(null);
   const volumeRef = useRef(volume);
 
   // Keep refs in sync with props
@@ -32,11 +40,8 @@ const GlobalAudio = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 }: 
 
   useEffect(() => {
     volumeRef.current = volume;
-    // Cancel any ongoing fade animation so it doesn't override the new volume
-    if (fadeAnimationRef.current) {
-      cancelAnimationFrame(fadeAnimationRef.current);
-      fadeAnimationRef.current = null;
-    }
+    // Cancel any ongoing fade so it doesn't override the new volume
+    fadeStateRef.current = null;
     // Apply volume change to currently playing audio
     if (soundRef.current && isLoadedRef.current && hasStartedRef.current) {
       soundRef.current.setVolume(volume);
@@ -45,21 +50,15 @@ const GlobalAudio = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 }: 
 
   /** Set volume instantly using Web Audio API (bypasses Three.js's gradual setTargetAtTime) */
   const setVolumeInstant = useCallback((sound: Audio, value: number) => {
-    // Cancel any scheduled changes and set value directly
     sound.gain.gain.cancelScheduledValues(0);
     sound.gain.gain.value = value;
   }, []);
 
-  /** Fade volume from current to target over duration */
+  /** Start a fade from the current volume to the target over the given duration. */
   const fadeVolume = useCallback(
     (targetVolume: number, duration: number, onComplete?: () => void) => {
       const sound = soundRef.current;
       if (!sound) return;
-
-      // Cancel any existing fade
-      if (fadeAnimationRef.current) {
-        cancelAnimationFrame(fadeAnimationRef.current);
-      }
 
       if (duration <= 0) {
         sound.setVolume(targetVolume);
@@ -67,31 +66,37 @@ const GlobalAudio = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 }: 
         return;
       }
 
-      const startVolume = sound.getVolume();
-      const startTime = performance.now();
-
-      const animate = (currentTime: number) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-
-        // Ease out curve for smoother fade
-        const easedProgress = 1 - Math.pow(1 - progress, 2);
-        const newVolume = startVolume + (targetVolume - startVolume) * easedProgress;
-
-        sound.setVolume(newVolume);
-
-        if (progress < 1) {
-          fadeAnimationRef.current = requestAnimationFrame(animate);
-        } else {
-          fadeAnimationRef.current = null;
-          onComplete?.();
-        }
+      fadeStateRef.current = {
+        startVolume: sound.getVolume(),
+        targetVolume,
+        startTime: performance.now(),
+        duration,
+        onComplete,
       };
-
-      fadeAnimationRef.current = requestAnimationFrame(animate);
     },
     []
   );
+
+  // Drive active fades from the R3F render loop instead of a separate rAF.
+  useFrame(() => {
+    const fade = fadeStateRef.current;
+    const sound = soundRef.current;
+    if (!fade || !sound) return;
+
+    const elapsed = performance.now() - fade.startTime;
+    const progress = Math.min(elapsed / fade.duration, 1);
+    // Ease out curve for smoother fade
+    const easedProgress = 1 - Math.pow(1 - progress, 2);
+    const newVolume = fade.startVolume + (fade.targetVolume - fade.startVolume) * easedProgress;
+
+    sound.setVolume(newVolume);
+
+    if (progress >= 1) {
+      const onComplete = fade.onComplete;
+      fadeStateRef.current = null;
+      onComplete?.();
+    }
+  });
 
   useEffect(() => {
     const listener = new AudioListener();
@@ -128,9 +133,7 @@ const GlobalAudio = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 }: 
     // Clean up on unmount
     return () => {
       document.removeEventListener('click', handleFirstClick);
-      if (fadeAnimationRef.current) {
-        cancelAnimationFrame(fadeAnimationRef.current);
-      }
+      fadeStateRef.current = null;
       if (sound.isPlaying) {
         sound.stop();
       }
@@ -160,7 +163,7 @@ const GlobalAudio = ({ url, volume = 0.5, isPlaying = true, fadeDuration = 0 }: 
         }
       }
     }
-  }, [fadeDuration, fadeVolume, isPlaying, setVolumeInstant, soundRef.current, volume]);
+  }, [fadeDuration, fadeVolume, isPlaying, setVolumeInstant, volume]);
 
   return null;
 };

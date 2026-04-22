@@ -88,7 +88,7 @@ const SurvivalGuide = ({
   zoomScale = 1,
   baseFov,
 }: Props) => {
-  const { viewport, camera } = useThree();
+  const { viewport, camera, size } = useThree();
   const { isMuted } = useAppContext();
   useSoundOnChange(BookCloseSound, isOpen, { volume: 0.15, isMuted });
 
@@ -192,15 +192,15 @@ const SurvivalGuide = ({
     const binderViewHeightPx = 120 * 16; // 1920px
 
     // Target: content should fill most of the screen on mobile
-    const targetWidth = window.innerWidth * 0.75;
-    const targetHeight = window.innerHeight * 0.9;
+    const targetWidth = size.width * 0.75;
+    const targetHeight = size.height * 0.9;
 
     // Calculate scale to fit within target dimensions while maintaining aspect ratio
     const scaleByWidth = targetWidth / binderViewWidthPx;
     const scaleByHeight = targetHeight / binderViewHeightPx;
 
     return Math.min(scaleByWidth, scaleByHeight);
-  }, [isMobile]);
+  }, [isMobile, size.width, size.height]);
 
   return (
     <animated.group
